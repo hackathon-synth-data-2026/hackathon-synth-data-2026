@@ -1,0 +1,54 @@
+{
+  "baseline": {
+    "admissions": 170,
+    "deaths": 12
+  },
+  "excluded_short_stays": 2,
+  "landmark_hours": 24,
+  "cohort_rule": "visit_concept_id in (8870,262,9201); duration >= 24h",
+  "feature_window": "[admission, admission+24h)",
+  "split_seed": 0,
+  "total": {
+    "admissions": 168,
+    "patients": 88,
+    "deaths": 11
+  },
+  "train": {
+    "admissions": 135,
+    "patients": 70,
+    "deaths": 9,
+    "mortality_rate": 0.06666666666666667
+  },
+  "test": {
+    "admissions": 33,
+    "patients": 18,
+    "deaths": 2,
+    "mortality_rate": 0.06060606060606061
+  },
+  "measurement_coverage_admissions": {
+    "heart_rate": 75,
+    "resp_rate": 75,
+    "spo2": 75,
+    "sbp": 75,
+    "dbp": 75,
+    "map": 75,
+    "temperature_c": 70,
+    "creatinine": 162,
+    "bun": 162,
+    "glucose": 161,
+    "hemoglobin": 162,
+    "hematocrit": 162,
+    "wbc": 162,
+    "platelets": 161,
+    "sodium": 163,
+    "potassium": 163,
+    "chloride": 163,
+    "bicarbonate": 162,
+    "anion_gap": 162,
+    "calcium": 145,
+    "inr": 138,
+    "pt": 138,
+    "lactate": 91
+  },
+  "warning": "Small demo dataset. Do not use identifiers as predictors. Fit preprocessing on training data only."
+}
