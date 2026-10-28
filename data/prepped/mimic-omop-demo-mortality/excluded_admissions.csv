@@ -1,0 +1,3 @@
+person_id,visit_occurrence_id,visit_start_datetime,visit_end_datetime,stay_hours,hospital_mortality,exclusion_reason
+2601314283911413076,3689687882644440322,2137-10-08 18:16:00,2137-10-09 15:30:00,21.233333333333334,1,stay_shorter_than_24_hours
+8527170356523164323,6691804058585947484,2180-05-06 19:17:00,2180-05-07 17:15:00,21.966666666666665,0,stay_shorter_than_24_hours

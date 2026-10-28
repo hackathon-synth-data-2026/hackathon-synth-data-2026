@@ -1,0 +1,188 @@
+{
+    "tables": {
+        "bt": {
+            "columns": {
+                "age_at_admission": {
+                    "sdtype": "numerical"
+                },
+                "anion_gap_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "anion_gap_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "bicarbonate_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "bicarbonate_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "bun_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "bun_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "calcium_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "calcium_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "chloride_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "chloride_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "copd_history": {
+                    "sdtype": "categorical"
+                },
+                "creatinine_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "creatinine_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "dbp_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "dbp_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "diabetes_history": {
+                    "sdtype": "categorical"
+                },
+                "ethnicity": {
+                    "sdtype": "categorical"
+                },
+                "gender": {
+                    "sdtype": "categorical"
+                },
+                "glucose_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "glucose_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "heart_failure_history": {
+                    "sdtype": "categorical"
+                },
+                "heart_rate_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "heart_rate_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "hematocrit_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "hematocrit_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "hemoglobin_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "hemoglobin_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "hospital_mortality": {
+                    "sdtype": "categorical"
+                },
+                "hypertension_history": {
+                    "sdtype": "categorical"
+                },
+                "inr_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "inr_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "lactate_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "lactate_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "map_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "map_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "mi_history": {
+                    "sdtype": "categorical"
+                },
+                "platelets_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "platelets_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "potassium_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "potassium_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "prior_hospital_admissions": {
+                    "sdtype": "numerical"
+                },
+                "pt_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "pt_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "race": {
+                    "sdtype": "categorical"
+                },
+                "resp_rate_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "resp_rate_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "sbp_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "sbp_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "sodium_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "sodium_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "spo2_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "spo2_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "temperature_c_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "temperature_c_n_24h": {
+                    "sdtype": "numerical"
+                },
+                "visit": {
+                    "sdtype": "categorical"
+                },
+                "visit_occurrence_id": {
+                    "sdtype": "id"
+                },
+                "wbc_mean_24h": {
+                    "sdtype": "numerical"
+                },
+                "wbc_n_24h": {
+                    "sdtype": "numerical"
+                }
+            },
+            "primary_key": "visit_occurrence_id"
+        }
+    },
+    "relationships": [],
+    "METADATA_SPEC_VERSION": "V1"
+}

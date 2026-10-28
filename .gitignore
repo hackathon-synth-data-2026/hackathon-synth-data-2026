@@ -4,7 +4,13 @@ __pycache__/
 build/
 dist/
 wheels/
-data/mimic-demo-omop
+
+# Ignore everything inside data
+/data/*
+
+# Allow selected subfolders
+!/data/prepped/
+!/data/mortality-prediction-kaggle/
 
 *.egg-info
 
