@@ -6,12 +6,14 @@
       "control": 0
     },
     "categorical_vars": [
+      "mortality"
+    ],
+    "boolean_vars": [
       "Gender",
       "CCU",
       "CSRU",
       "SICU",
-      "MechVentLast8Hour",
-      "mortality"
+      "MechVentLast8Hour"
     ],
     "numerical_vars": [
       "SAPS-I",

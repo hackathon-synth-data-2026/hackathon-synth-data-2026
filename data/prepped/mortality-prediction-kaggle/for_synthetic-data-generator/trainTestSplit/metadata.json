@@ -1,7 +1,6 @@
 {
     "tables": {
         "bt": {
-            "primary_key": "recordid",
             "columns": {
                 "ALP_first": {
                     "sdtype": "numerical"
@@ -43,10 +42,10 @@
                     "sdtype": "numerical"
                 },
                 "CCU": {
-                    "sdtype": "categorical"
+                    "sdtype": "boolean"
                 },
                 "CSRU": {
-                    "sdtype": "categorical"
+                    "sdtype": "boolean"
                 },
                 "Cholesterol_first": {
                     "sdtype": "numerical"
@@ -97,7 +96,7 @@
                     "sdtype": "numerical"
                 },
                 "Gender": {
-                    "sdtype": "categorical"
+                    "sdtype": "boolean"
                 },
                 "Glucose_first": {
                     "sdtype": "numerical"
@@ -175,7 +174,7 @@
                     "sdtype": "numerical"
                 },
                 "MechVentLast8Hour": {
-                    "sdtype": "categorical"
+                    "sdtype": "boolean"
                 },
                 "MechVentStartTime": {
                     "sdtype": "numerical"
@@ -274,7 +273,7 @@
                     "sdtype": "numerical"
                 },
                 "SICU": {
-                    "sdtype": "categorical"
+                    "sdtype": "boolean"
                 },
                 "SOFA": {
                     "sdtype": "numerical"
@@ -366,7 +365,8 @@
                 "recordid": {
                     "sdtype": "id"
                 }
-            }
+            },
+            "primary_key": "recordid"
         }
     },
     "relationships": [],
