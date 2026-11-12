@@ -1,675 +1,328 @@
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "numpy>=2.0.0,<3.0.0",
+#     "pandas==2.3.3",
+#     "pyarrow>=24.0.0",
+#     "matplotlib>=3.10.9",
+#     "scikit-learn==1.9.1",
+#     "xgboost==3.4.1",
+# ]
+# ///
+
 """
-evaluate_utility.py — TSTR / TRTR utility evaluation of a synthetic dataset.
+Evaluate synthetic-data utility using XGBoost.
 
-Runnable entry point. Takes the path to a participant-supplied synthetic dataset
-and the experiment config, validates the submission against data_specs, then:
-  * prep X/y from the flat modeling table using the spec
-  * run the two comparisons on the SAME real test rows:
-      - TRTR: train on real_train,  test on real_test   (reference ceiling)
-      - TSTR: train on synth_train, test on real_test   (the claim under test)
-  * draw ROC / PR / calibration figures
-  * persist JSON-light metrics to <run_dir>/metrics/utility.json, pickling the
-    fitted models to <run_dir>/artifacts
-  * return {"trtr": ..., "tstr": ...}
+TRTR: train on real data, evaluate on real test data.
+TSTR: train on synthetic data, evaluate on the same real test data.
 
-The TRTR-vs-TSTR gap (especially on PR-AUC) is the utility headline.
+The existing "pr_auc" output key denotes average precision.
 
-Usage
------
-    uv run evaluate_utility.py <path_to_experiment_config.json> --synth <synthetic.csv>
-    uv run evaluate_utility.py <path_to_experiment_config.json> --synth <synthetic.csv> --validate-only
+Usage:
+    uv run evaluate_utility.py config.json --synth synthetic.csv
+    uv run evaluate_utility.py config.json --synth synthetic.csv --validate-only
 """
 
 import argparse
 import json
-import os
-import sys
+import pickle
 from pathlib import Path
+
+import matplotlib
+
+matplotlib.use("Agg")
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-from sklearn.metrics import (roc_curve, precision_recall_curve, brier_score_loss,
-                             confusion_matrix, roc_auc_score, average_precision_score)
 from sklearn.calibration import calibration_curve
-import pickle
-
-# import load
-# import provenance
-# import utility_metrics as um
-# from io_utils import ensure_run_dirs, write_json, strip_and_pickle_model
-# from log_experiment import RunLogger
-
-# --------------------------------------------------------------------------- #
-# JSON safety: numpy scalars/arrays and pandas objects aren't serializable      #
-# as-is. Every stage writes JSON, so this lives once, here.                    #
-# --------------------------------------------------------------------------- #
-class NpEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, np.integer):
-            return int(o)
-        if isinstance(o, np.floating):
-            return float(o)
-        if isinstance(o, np.ndarray):
-            return o.tolist()
-        if isinstance(o, pd.DataFrame):
-            return o.reset_index().to_dict(orient="records")
-        if isinstance(o, pd.Series):
-            return o.to_dict()
-        return super().default(o)
-
-
-def write_json(path, obj):
-    """Dump obj to path as JSON, tolerating numpy/pandas types."""
-    with open(path, "w") as f:
-        json.dump(obj, f, indent=2, cls=NpEncoder)
-
-
-# --------------------------------------------------------------------------- #
-# Run folder layout — identical for every stage so the sweep aggregator can    #
-# rely on a uniform structure.                                                 #
-# --------------------------------------------------------------------------- #
-def ensure_run_dirs(run_dir):
-    """Create (if needed) and return the standard run subfolders.
-
-    Returns (run_dir, figures, metrics, artifacts) as Path objects.
-    """
-    run_dir = Path(run_dir)
-    figures = run_dir / "figures"
-    metrics = run_dir / "metrics"
-    artifacts = run_dir / "artifacts"
-    for d in (figures, metrics, artifacts):
-        d.mkdir(parents=True, exist_ok=True)
-    return run_dir, figures, metrics, artifacts
-
-
-# --------------------------------------------------------------------------- #
-# X/y preparation                                                              #
-# --------------------------------------------------------------------------- #
-def _prep_xy(df, target_col, target_mapping, drop_cols, categorical_cols):
-    """Split a flat table into (X, y). One-hot encodes categoricals; column
-    alignment between train and test is handled by the caller."""
-    y = df[target_col].map(target_mapping).astype(int)
-    feature_cols = [c for c in df.columns
-                    if c not in set(drop_cols) | {target_col}]
-    X = df[feature_cols].copy()
-    cats = [c for c in categorical_cols if c in X.columns]
-    if cats:
-        for cat in cats:
-            X[cat] = X[cat].astype('category')
-        # X = pd.get_dummies(X, columns=cats, dtype=int)
-    return X, y
-
-
-def _align_columns(X_train, X_test):
-    """Ensure test has exactly the training columns, in the same order
-    (one-hot categories present in one split but not the other -> 0)."""
-    X_test = X_test.reindex(columns=X_train.columns, fill_value=0)
-    return X_train, X_test
-
-
-# --------------------------------------------------------------------------- #
-# Figures (domain-specific — stay local to this stage)                         #
-# --------------------------------------------------------------------------- #
-def _save_utility_figures(trtr, tstr, save_dir):
-    # ROC — TRTR vs TSTR on the same axes
-    fig, ax = plt.subplots(figsize=(6, 6))
-    for res, name in ((trtr, "TRTR"), (tstr, "TSTR")):
-        fpr, tpr, _ = roc_curve(res["_y_true"], res["_y_prob"])
-        ax.plot(fpr, tpr, label=f"{name} (AUC={res['auc']:.3f})")
-    ax.plot([0, 1], [0, 1], "k--", alpha=0.4)
-    ax.set_xlabel("False positive rate"); ax.set_ylabel("True positive rate")
-    ax.set_title("ROC — TRTR vs TSTR"); ax.legend()
-    fig.tight_layout(); fig.savefig(save_dir / "roc_trtr_vs_tstr.png", bbox_inches="tight")
-    plt.close(fig)
-
-    # PR — the more informative curve under class imbalance
-    fig, ax = plt.subplots(figsize=(6, 6))
-    for res, name in ((trtr, "TRTR"), (tstr, "TSTR")):
-        prec, rec, _ = precision_recall_curve(res["_y_true"], res["_y_prob"])
-        ax.plot(rec, prec, label=f"{name} (PR-AUC={res['pr_auc']:.3f})")
-    ax.axhline(trtr["class_prevalence_test"], color="k", ls="--", alpha=0.4,
-               label=f"prevalence={trtr['class_prevalence_test']:.3f}")
-    ax.set_xlabel("Recall"); ax.set_ylabel("Precision")
-    ax.set_title("Precision-Recall — TRTR vs TSTR"); ax.legend()
-    fig.tight_layout(); fig.savefig(save_dir / "pr_trtr_vs_tstr.png", bbox_inches="tight")
-    plt.close(fig)
-
-
-def plot_calibration(y_true, prob_tstr, prob_trtr, save_dir,
-                     n_bins=10, strategy="quantile",
-                     filename="calibration_tstr_vs_trtr"):
-    """
-    Parameters
-    ----------
-    y_true      : true labels of the REAL test set (0/1)
-    prob_tstr   : predicted P(y=1) from the synthetic-trained model, on real test
-    prob_trtr   : predicted P(y=1) from the real-trained model, on real test
-    save_dir    : figures directory
-    n_bins      : number of calibration bins
-    strategy    : 'quantile' (equal-count bins; better for small / imbalanced data)
-                  or 'uniform' (equal-width bins)
-    filename    : stem for the saved figure (no extension)
-
-    Returns
-    -------
-    dict of Brier scores (lower = better calibrated) for recording in utility.json
-    """
-    save_dir = Path(save_dir)
-    save_dir.mkdir(parents=True, exist_ok=True)
-
-    y_true = np.asarray(y_true)
-    curves = {
-        "TRTR": (np.asarray(prob_trtr), "tab:blue"),
-        "TSTR": (np.asarray(prob_tstr), "tab:orange"),
-    }
-
-    fig, ax = plt.subplots(figsize=(6, 6))
-    ax.plot([0, 1], [0, 1], "k--", alpha=0.5, label="perfect calibration")
-
-    briers = {}
-    for name, (prob, color) in curves.items():
-        brier = brier_score_loss(y_true, prob)
-        briers[f"brier_{name.lower()}"] = float(brier)
-        # frac_pos = observed fraction positive per bin (y); mean_pred = mean predicted per bin (x)
-        frac_pos, mean_pred = calibration_curve(
-            y_true, prob, n_bins=n_bins, strategy=strategy)
-        ax.plot(mean_pred, frac_pos, marker="o", color=color,
-                label=f"{name} (Brier={brier:.3f})")
-
-    ax.set_xlabel("Mean predicted probability (per bin)")
-    ax.set_ylabel("Observed fraction positive (per bin)")
-    ax.set_title("Calibration — TSTR vs TRTR (on real test set)")
-    ax.set_xlim(0, 1); ax.set_ylim(0, 1)
-    ax.legend(loc="upper left")
-    fig.tight_layout()
-    for ext in ("png", "eps"):
-        fig.savefig(save_dir / f"{filename}.{ext}", bbox_inches="tight")
-    plt.close(fig)
-
-    # difference is the headline: positive => TSTR worse-calibrated than TRTR
-    briers["brier_diff_tstr_minus_trtr"] = (
-        briers["brier_tstr"] - briers["brier_trtr"])
-    return briers
-
-
-# --------------------------------------------------------------------------- #
-# Comparison of AUC between TRTR and TSTR                                      #
-# --------------------------------------------------------------------------- #
-def bootstrap_metric_difference_ci(y_true, y_prob_trtr, y_prob_tstr, n_bootstrap):
-    auc_diffs = []
-    ap_diffs = []
-    n = n_bootstrap
-    rng = np.random.RandomState(42)
-    test_size = len(y_true)
-    for _ in range(n):
-        idx = rng.randint(0, test_size, size=test_size)
-        if len(np.unique(y_true[idx])) < 2:      # skip degenerate resamples (only 1 class)
-            continue
-        auc_diffs.append(roc_auc_score(y_true[idx], y_prob_trtr[idx])
-                    - roc_auc_score(y_true[idx], y_prob_tstr[idx]))
-        ap_diffs.append(average_precision_score(y_true[idx], y_prob_trtr[idx])
-                    - average_precision_score(y_true[idx], y_prob_tstr[idx]))
-
-    def ci(d): return np.percentile(d, [2.5, 97.5])
-
-    return {"auc_diff_ci": ci(auc_diffs), "pr_auc_diff_ci": ci(ap_diffs)}
-
-"""
-utility_metrics.py — downstream-model training/evaluation computation.
-
-Model-agnostic: given prepared (X_train, y_train, X_test, y_test) and a model
-class + kwargs, fit and score. Knows nothing about splits, files, or the spec —
-that wiring lives in evaluate_utility.py. Used for both TRTR and TSTR by calling
-it twice with different training data and the SAME real test set.
-"""
-
-from sklearn.metrics import (precision_score, recall_score, f1_score,
-                             accuracy_score, roc_auc_score,
-                             average_precision_score)
 from sklearn.inspection import permutation_importance
-import pandas as pd
+from sklearn.metrics import (
+    accuracy_score,
+    average_precision_score,
+    brier_score_loss,
+    confusion_matrix,
+    f1_score,
+    precision_recall_curve,
+    precision_score,
+    recall_score,
+    roc_auc_score,
+    roc_curve,
+)
 
 
-def evaluate_downstream_utility(X_train, y_train, X_test, y_test,
-                                model_class=None,
-                                model_kwargs=None,
-                                threshold=0.5):
-    """
-    Fit a downstream classifier and evaluate on the (real) test set.
-
-    AUC and PR-AUC are threshold-free and are the headline numbers — especially
-    PR-AUC, given the transfusion label is a minority class. precision/recall/f1
-    depend on `threshold` (default 0.5, recorded in the output) and should be
-    read as secondary. Designed for fixed-hyperparameter baseline comparison.
-    """
-    # 1. Defaults (XGBoost imported lazily so the module loads without it)
-    if model_class is None:
-        from xgboost import XGBClassifier
-        model_class = XGBClassifier
-    if model_kwargs is None:
-        model_kwargs = {
-            'n_estimators': 100,
-            'max_depth': 6,
-            'learning_rate': 0.1,
-            'eval_metric': 'logloss',
-            'random_state': 42,
-            'n_jobs': -1,
-            'enable_categorical': True,
-        }
-
-    # 2. Train
-    model = model_class(**model_kwargs)
-    model.fit(X_train, y_train)
-
-    # 3. Score — get probabilities robustly, then threshold consistently
-    if hasattr(model, "predict_proba"):
-        y_prob = model.predict_proba(X_test)[:, 1]
-    elif hasattr(model, "decision_function"):     # e.g. SVM without probability
-        s = model.decision_function(X_test)
-        y_prob = (s - s.min()) / (s.max() - s.min() + 1e-12)
-    else:
-        y_prob = model.predict(X_test).astype(float)
-    y_pred = (y_prob >= threshold).astype(int)     # honor the recorded threshold
-
-    # 4. Permutation importance
-    perm_imp = permutation_importance(model, X_test, y_test, n_repeats=10,
-                                  random_state=model_kwargs['random_state'], scoring='roc_auc')
-    feat_names = getattr(model, 'feature_names_in_', X_test.columns)
-    feats_df = pd.DataFrame({
-        'permutation_importance_mean': perm_imp.importances_mean,
-        'permutation_importance_std': perm_imp.importances_std
-    }, index=feat_names).sort_values('permutation_importance_mean', ascending=False)
-
-    # 5. Structured results
-    n_pos = int(y_test.sum())
-    return {
-        "n_positive": n_pos,
-        "n_negative": int(len(y_test) - n_pos),
-        "class_prevalence_test": float(y_test.mean()),
-        "class_prevalence_train": float(y_train.mean()),
-        "auc": float(roc_auc_score(y_test, y_prob)),           # headline (ranking)
-        "pr_auc": float(average_precision_score(y_test, y_prob)),  # headline (imbalance)
-        "precision": float(precision_score(y_test, y_pred, zero_division=0)),
-        "recall": float(recall_score(y_test, y_pred, zero_division=0)),
-        "f1": float(f1_score(y_test, y_pred, zero_division=0)),
-        "accuracy": float(accuracy_score(y_test, y_pred)),
-        "threshold": float(threshold),
-        "model_class": model_class.__name__,
-        "model_kwargs": model_kwargs,
-        "fitted_model": model,                     # adapter strips this to artifacts/
-        "n_train": int(len(X_train)),
-        "n_test": int(len(X_test)),
-        "permutation_importances_df": feats_df,
-        # kept for the ROC/PR figures the adapter draws:
-        "_y_true": y_test,
-        "_y_prob": y_prob,
-    }
-
-# --------------------------------------------------------------------------- #
-# Main evaluation logic                                                        #
-# --------------------------------------------------------------------------- #
-def evaluate_utility(synth_train_df,
-                     real_train_df,
-                     real_test_df,
-                     run_dir,
-                     *,
-                     target_col,
-                     target_mapping,
-                     drop_cols=["patientid"],
-                     categorical_cols=None,
-                     model_class=None,
-                     model_kwargs=None,
-                     n_bootstrap=100,
-                     threshold=0.5):
-    """
-    Parameters
-    ----------
-    synth_train_df : synthetic data (participant submission) -> TSTR train
-    real_train_df  : real TRAIN split -> TRTR train
-    real_test_df   : held-out real split -> the common test set for BOTH
-    run_dir        : per-run output folder
-    target_col, drop_cols, categorical_cols : from the shared data_spec
-
-    Returns
-    -------
-    {"trtr": {...}, "tstr": {...}}  (also written to metrics/utility.json)
-    """
-    assert isinstance(drop_cols, list), 'drop_cols must be a list'
-    assert isinstance(categorical_cols, list), 'categorical_cols must be a list'
-
-    run_dir, figs, metrics_dir, artifacts = ensure_run_dirs(run_dir)
-
-    # test set is prepped ONCE and shared, so TRTR and TSTR are compared fairly
-    X_test, y_test = _prep_xy(real_test_df, target_col, target_mapping, drop_cols, categorical_cols)
-
-    def _run(train_df):
-        X_tr, y_tr = _prep_xy(train_df, target_col, target_mapping, drop_cols, categorical_cols)
-        X_tr, X_te = _align_columns(X_tr, X_test)     # test conforms to train's columns
-        return evaluate_downstream_utility(
-            X_tr, y_tr, X_te, y_test,
-            model_class=model_class, model_kwargs=model_kwargs, threshold=threshold)
-
-    trtr = _run(real_train_df)     # reference: train on real
-    tstr = _run(synth_train_df)    # the claim: train on synthetic
-
-    _save_utility_figures(trtr, tstr, figs)
-
-    for res, name in ((trtr, "trtr"), (tstr, "tstr")):
-        # confusion matrices as csv (cheap, useful for the thresholded read)
-        y_pred = (res["_y_prob"] >= threshold).astype(int)
-        cm = confusion_matrix(res["_y_true"], y_pred)
-        pd.DataFrame(cm, index=["true_neg", "true_pos"],
-                     columns=["pred_neg", "pred_pos"]).to_csv(
-        metrics_dir / f"confusion_{name}.csv")
-
-    briers = plot_calibration(trtr['_y_true'], tstr["_y_prob"], trtr["_y_prob"], save_dir=figs)
-
-    metric_cis = bootstrap_metric_difference_ci(trtr['_y_true'], trtr['_y_prob'], tstr['_y_prob'], n_bootstrap)
-
-    # strip heavy models + non-serializable arrays before JSON
-    for res, name in ((trtr, "trtr"), (tstr, "tstr")):
-        strip_and_pickle_model(res, "fitted_model", artifacts, f"{name}_model.pkl")
-        res.pop("_y_true", None)
-        res.pop("_y_prob", None)
-
-        perm_df = res.pop("permutation_importances_df", None)
-        if perm_df is not None:
-            res["permutation_importances"] = (
-                perm_df.reset_index()
-                    .rename(columns={"index": "feature"})
-                    .to_dict(orient="records"))
-            # also persist as csv for eyeballing
-            perm_df.to_csv(metrics_dir / f"downstream_model_permutation_importance_{name}.csv")
-
-    result = {
-        "trtr": trtr,
-        "tstr": tstr,
-        'auc_ci_low': metric_cis['auc_diff_ci'][0],
-        'auc_ci_high': metric_cis['auc_diff_ci'][1],
-        'pr_auc_diff_ci_low': metric_cis['pr_auc_diff_ci'][0],
-        'pr_auc_diff_ci_high': metric_cis['pr_auc_diff_ci'][1],
-        # the headline: how much utility is lost by training on synthetic
-        "auc_gap_trtr_minus_tstr": float(trtr["auc"] - tstr["auc"]),
-        "pr_auc_gap_trtr_minus_tstr": float(trtr["pr_auc"] - tstr["pr_auc"]),
-    }
-    result.update(briers)
-    write_json(metrics_dir / "utility.json", result)
-    _write_summary(metrics_dir / "utility_summary.txt", result)
-    return result
+DEFAULT_PARAMS = {
+    "n_estimators": 100,
+    "max_depth": 6,
+    "learning_rate": 0.1,
+    "eval_metric": "logloss",
+    "random_state": 42,
+    "n_jobs": -1,
+    "enable_categorical": True,
+    "tree_method": "hist",
+}
 
 
-def _write_summary(path, r):
-    t, s = r["trtr"], r["tstr"]
+# ---------------------------------------------------------------------------
+# File handling
+# ---------------------------------------------------------------------------
 
-    # CIs are on the DIFFERENCE (gap); crossing zero = within noise
-    auc_low, auc_high = r["auc_ci_low"], r["auc_ci_high"]
-    pr_low, pr_high = r["pr_auc_diff_ci_low"], r["pr_auc_diff_ci_high"]
+def write_json(path, value):
+    def encode(obj):
+        if isinstance(obj, np.generic):
+            return obj.item()
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        raise TypeError(f"Cannot serialize {type(obj).__name__}")
 
-    def verdict(lo, hi):
-        return ("within noise — gap NOT distinguishable from 0"
-                if lo <= 0 <= hi else
-                "gap is distinguishable from 0")
-
-    lines = [
-        "UTILITY SUMMARY (TRTR = train real, TSTR = train synthetic; same test set)",
-        "=" * 60,
-        f"class prevalence (test): {t['class_prevalence_test']:.3f}   "
-        f"(n_pos={t['n_positive']}, n_neg={t['n_negative']})",
-        "",
-        f"{'':12}{'AUC':>10}{'PR-AUC':>10}{'F1':>10}{'recall':>10}",
-        f"{'TRTR':12}{t['auc']:>10.3f}{t['pr_auc']:>10.3f}{t['f1']:>10.3f}{t['recall']:>10.3f}",
-        f"{'TSTR':12}{s['auc']:>10.3f}{s['pr_auc']:>10.3f}{s['f1']:>10.3f}{s['recall']:>10.3f}",
-        "",
-        f"AUC gap    (TRTR - TSTR): {r['auc_gap_trtr_minus_tstr']:+.3f}   "
-        f"95% CI [{auc_low:+.3f}, {auc_high:+.3f}]",
-        f"    -> {verdict(auc_low, auc_high)}",
-        f"PR-AUC gap (TRTR - TSTR): {r['pr_auc_gap_trtr_minus_tstr']:+.3f}   "
-        f"95% CI [{pr_low:+.3f}, {pr_high:+.3f}]   ",
-        f"    -> {verdict(pr_low, pr_high)}",
-        "",
-        f"threshold for F1/recall: {s['threshold']}",
-    ]
-    with open(path, "w") as f:
-        f.write("\n".join(lines) + "\n")
-
-
-# --------------------------------------------------------------------------- #
-# Input loading                                                                #
-# --------------------------------------------------------------------------- #
-import warnings
-def enforce_dtypes(df, data_specs):
-    df = df.copy()
-    try:
-        for col in data_specs['boolean_vars']:
-            if col in df.columns:
-                df[col] = df[col].astype('boolean')
-    except KeyError:
-        pass
-    for col in data_specs['categorical_vars']:
-        if col in df.columns:
-            df[col] = df[col].astype('object')
-    for col in data_specs['numerical_vars']:
-        if col in df.columns:
-            # Keep int/float as-is; only convert if needed
-            if not pd.api.types.is_numeric_dtype(df[col]):
-                df[col] = pd.to_numeric(df[col])
-    return df
-
-def load_dataset(data_path, data_specs):
-    df = pd.read_parquet(data_path)
-
-    # Read feature definitions
-    input_vars = list(data_specs["input_vars"])
-    categorical_vars = set(data_specs.get("categorical_vars", []))
-    numerical_vars = set(data_specs.get("numerical_vars", []))
-    boolean_vars = set(data_specs.get("boolean_vars", []))
-
-    identifier_var = data_specs["identifier_var"]
-    target_var = data_specs["target_var"]
-    split_var = data_specs.get("split_var")
-
-    required_cols = [*input_vars, target_var]
-    # Identifier and split are metadata, not model inputs.
-    # They are retained if present.
-    optional_cols = [
-        col for col in [identifier_var, split_var]
-        if col is not None
-    ]
-    keep_cols = list(dict.fromkeys(required_cols + optional_cols))
-
-    feature_types = {
-    "categorical_vars": categorical_vars - {target_var},
-    "numerical_vars": numerical_vars,
-    "boolean_vars": boolean_vars,
-    }
-    declared = set().union(*feature_types.values())
-    present = set(df.columns)
-    missing = declared - present
-    extra = present - declared
-    unused_features = declared - set(input_vars)
-
-    if unused_features:
-        raise ValueError(
-            "Features declared in type lists but absent from "
-            f"'input_vars': {sorted(unused_features)}"
-        )
-    if missing:
-        raise ValueError(f"Spec declares columns absent from data: {sorted(missing)}")
-    if extra:
-        warnings.warn(f"Data has columns not in spec: {sorted(extra)}")
-        # Report and remove unselected columns
-        dropped_cols = sorted(set(df.columns) - set(keep_cols))
-        if dropped_cols:
-            print(
-                f"[INFO] Dropping {len(dropped_cols)} columns "
-                "not selected in data_specs['input_vars']:"
-            )
-            print("       " + ", ".join(dropped_cols))
-
-        df = df[[col for col in keep_cols if col in df.columns]].copy()
-        print(
-            f"[INFO] Loaded {len(df)} rows with "
-            f"{len(input_vars)} selected input features."
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(
+            value,
+            handle,
+            indent=2,
+            default=encode,
+            allow_nan=False,
         )
 
-    if df[data_specs['identifier_var']].duplicated().any():
-        raise ValueError(f"'{data_specs['identifer_var']}' has duplicates — not one row per patient?")
-    if df[data_specs['identifier_var']].isna().any():
-        raise ValueError(
-            f"Identifier '{data_specs['identifier_var']}' contains missing values."
-        )
-
-    for col in data_specs['numerical_vars']:
-        if not pd.api.types.is_numeric_dtype(df[col]):
-            raise ValueError(f"'{col}' declared numerical but dtype is {df[col].dtype}")
-
-    present_target = set(df[data_specs['target_var']].unique())
-    declared_target = set(data_specs['target_mapping'].keys())
-    missing_target = declared_target - present_target
-    extra_target = present_target - declared_target
-    if missing_target:
-        raise ValueError(f"Spec declares target groups absent from data: {sorted(missing_target)}")
-    if extra_target:
-        raise ValueError(f"Unexpected target labels in data: these groups are not in spec: {sorted(extra_target)}")
-    if df[data_specs['target_var']].isna().any():
-        raise ValueError(
-            f"Target '{data_specs['target_var']}' contains missing values."
-        )
-
-    df = enforce_dtypes(df, data_specs)
-    df = df[sorted(df.columns)]
-
-    return df
-
-
-def load_train_and_test(df_path, data_specs):
-    df_train = load_dataset(os.path.join(df_path, 'real_train.parquet'), data_specs)
-    df_test = load_dataset(os.path.join(df_path, 'real_test.parquet'), data_specs)
-
-    return df_train, df_test
 
 def load_table(path):
-    p = str(path)
-    if p.endswith((".parquet", ".pq")):
-        return pd.read_parquet(p)
-    if p.endswith((".tsv", ".txt")):
-        return pd.read_csv(p, sep="\t")
-    return pd.read_csv(p)                      # .csv / .csv.gz
+    suffix = str(path).lower()
+
+    if suffix.endswith((".parquet", ".pq")):
+        return pd.read_parquet(path)
+
+    if suffix.endswith((".tsv", ".txt")):
+        return pd.read_csv(path, sep="\t")
+
+    return pd.read_csv(path)
 
 
-def load_real_splits(experiment_config, data_specs):
-    """Real (train, test). Prefer explicit paths, else the shared trainTestSplit dir."""
-    rt = experiment_config.get('real_train_path')
-    rte = experiment_config.get('real_test_path')
-    if rt and rte:
-        return load_table(rt), load_table(rte)
-    return load_train_and_test(experiment_config['real_data_path'], data_specs)
+# ---------------------------------------------------------------------------
+# Validation
+# ---------------------------------------------------------------------------
+
+def validate_spec(spec):
+    """Return the ordered feature names and their declared types."""
+    target = spec["target_var"]
+    features = spec.get("input_vars")
+
+    types = {
+        key: [
+            column
+            for column in spec.get(key, [])
+            if column != target
+        ]
+        for key in (
+            "numerical_vars",
+            "boolean_vars",
+            "categorical_vars",
+        )
+    }
+
+    declared = [
+        column
+        for columns in types.values()
+        for column in columns
+    ]
+
+    if features is None:
+        features = declared.copy()
+
+    if not features or len(features) != len(set(features)):
+        raise ValueError(
+            "input_vars must contain unique feature names"
+        )
+
+    if (
+        len(declared) != len(set(declared))
+        or set(declared) != set(features)
+    ):
+        raise ValueError(
+            "Every input feature must have exactly one declared type"
+        )
+
+    metadata = {
+        target,
+        spec.get("identifier_var"),
+        spec.get("split_var"),
+    } - {None}
+
+    if set(features) & metadata:
+        raise ValueError(
+            "Target, identifier and split columns cannot be features"
+        )
+
+    if set(spec["target_mapping"].values()) != {0, 1}:
+        raise ValueError(
+            "target_mapping must map labels to both 0 and 1"
+        )
+
+    return list(features), types
 
 
-# --------------------------------------------------------------------------- #
-# The pattern both fidelity and utility repeat: a results dict contains a       #
-# heavy fitted model that must NOT go into JSON. Pop it, pickle it to           #
-# artifacts/, and replace it with the pickle's path. Enforced in one place so   #
-# the "no heavy objects in JSON" rule can't drift between stages.               #
-# --------------------------------------------------------------------------- #
-def strip_and_pickle_model(result, key, artifacts_dir, filename):
-    """Pop result[key] (a fitted model), pickle it to artifacts_dir/filename,
-    and set result[key + '_path'] to that location. No-op if key is absent.
+def map_target(values, mapping):
+    """Allow JSON string keys to match inferred integer target labels."""
+    mapped = values.map(mapping)
+    missing = mapped.isna() & values.notna()
 
-    Mutates and returns `result` for convenience.
-    """
-    model = result.pop(key, None)
-    if model is not None:
-        artifacts_dir = Path(artifacts_dir)
-        artifacts_dir.mkdir(parents=True, exist_ok=True)
-        path = artifacts_dir / filename
-        with open(path, "wb") as f:
-            pickle.dump(model, f)
-        result[f"{key}_path"] = str(path)
-    return result
+    if missing.any():
+        string_mapping = {
+            str(key): value
+            for key, value in mapping.items()
+        }
 
-# --------------------------------------------------------------------------- #
-# Format validation against data_specs                                         #
-# --------------------------------------------------------------------------- #
-def validate_synthetic_submission(synth_df, data_specs):
-    """Gate a submission against data_specs and return (sanitized_df, report).
+        if len(string_mapping) != len(mapping):
+            raise ValueError(
+                "Ambiguous target labels after string conversion"
+            )
 
-    Two reasons this must run before evaluate_utility():
-      * _align_columns() reindexes the real TEST set onto the SYNTHETIC column
-        set, so a missing column would be silently dropped rather than raising.
-      * _prep_xy() builds X from every column present, so extra columns would
-        become features — and because each arm aligns to its own training
-        columns, TRTR and TSTR would then be evaluated on different feature
-        sets. The returned frame is restricted to the spec's column set so both
-        arms see identical features.
-    """
-    target_var = data_specs['target_var']
-    target_mapping = data_specs['target_mapping']
-    id_var = data_specs.get('identifier_var')
-    num_vars = list(data_specs.get('numerical_vars', []))
-    bool_vars = list(data_specs.get('boolean_vars', []))
-    required = list(dict.fromkeys(
-        data_specs.get('input_vars') or (num_vars + bool_vars)))
+        mapped.loc[missing] = (
+            values.loc[missing]
+            .astype(str)
+            .map(string_mapping)
+        )
 
-    errors, warnings = [], []
+    return mapped
 
-    missing = [c for c in required if c not in synth_df.columns]
+
+def validate_table(df, spec):
+    """Return a normalized table and a structured validation report."""
+    features, types = validate_spec(spec)
+    target = spec["target_var"]
+    identifier = spec.get("identifier_var")
+    df = df.copy()
+
+    errors = []
+    warnings = []
+
+    if not df.columns.is_unique:
+        errors.append("duplicate column names")
+
+    missing = [
+        column
+        for column in features
+        if column not in df.columns
+    ]
+
     if missing:
-        errors.append(f"missing required feature columns: {missing}")
-    if target_var not in synth_df.columns:
-        errors.append(f"missing target column: '{target_var}'")
-    if id_var and id_var not in synth_df.columns:
-        warnings.append(f"missing identifier column: '{id_var}' (ignored by the scorer)")
+        errors.append(
+            f"missing required feature columns: {missing}"
+        )
 
-    keep = ([id_var] if id_var else []) + required + [target_var]
-    extra = [c for c in synth_df.columns
-             if c not in set(keep)]
+    if target not in df.columns:
+        errors.append(f"missing target column: '{target}'")
+
+    if identifier and identifier not in df.columns:
+        warnings.append(
+            f"missing identifier column: '{identifier}' "
+            "(ignored by scorer)"
+        )
+
+    keep = (
+        ([identifier] if identifier else [])
+        + features
+        + [target]
+    )
+    extra = [
+        column
+        for column in df.columns
+        if column not in keep
+    ]
+
     if extra:
-        warnings.append(f"{len(extra)} extra column(s) ignored: {extra[:10]}")
+        warnings.append(
+            f"{len(extra)} extra column(s) ignored: {extra[:10]}"
+        )
 
-    if len(synth_df) == 0:
-        errors.append("synthetic table has 0 rows")
+    if df.empty:
+        errors.append("table has 0 rows")
 
-    # target must map to 0/1 with both classes present
-    if target_var in synth_df.columns:
-        mapped = synth_df[target_var].map(target_mapping)
-        if mapped.isna().any():
-            bad = sorted(set(synth_df.loc[mapped.isna(), target_var].astype(str).unique()))
-            errors.append(f"unmappable target values {bad}; "
-                          f"allowed per target_mapping: {sorted(map(str, target_mapping))}")
-        else:
-            n_pos, n_neg = int(mapped.sum()), int(len(mapped) - mapped.sum())
-            if n_pos == 0 or n_neg == 0:
-                errors.append(f"degenerate synthetic target: n_pos={n_pos}, "
-                              "n_neg={n_neg}; both classes are required to fit the model")
+    if df.columns.is_unique:
+        if target in df.columns:
+            mapped = map_target(
+                df[target],
+                spec["target_mapping"],
+            )
 
-    # declared numerical columns must be numerically parseable
-    for c in num_vars:
-        if c in synth_df.columns and synth_df[c].dtype == object:
-            coerced = pd.to_numeric(synth_df[c], errors="coerce")
-            if bool((synth_df[c].notna() & coerced.isna()).any()):
-                errors.append(f"column '{c}' is declared numerical but holds "
-                              "non-numeric values")
+            if mapped.isna().any():
+                bad = sorted(
+                    df.loc[mapped.isna(), target]
+                    .astype(str)
+                    .unique()
+                )
+                errors.append(
+                    f"missing or unmappable target values: {bad}"
+                )
+            elif set(mapped.unique()) != {0, 1}:
+                errors.append(
+                    "target must contain both classes"
+                )
 
-    # boolean columns: representation drift (0/1 vs True/False) is the common failure
-    for c in bool_vars:
-        if c in synth_df.columns:
-            vals = set(synth_df[c].dropna().unique().tolist())
-            if not vals <= {0, 1, True, False, 0.0, 1.0}:
-                errors.append(f"boolean column '{c}' has unexpected values: "
-                              f"{sorted(map(str, vals))[:8]}")
+        for column in types["numerical_vars"]:
+            if column not in df.columns:
+                continue
 
-    # informational: SDV regenerates the primary key; collisions are a leakage
-    # question, not a utility one.
-    if id_var and id_var in synth_df.columns and synth_df[id_var].duplicated().any():
-        warnings.append(f"duplicate values in '{id_var}'")
+            values = pd.to_numeric(
+                df[column],
+                errors="coerce",
+            )
+
+            if (df[column].notna() & values.isna()).any():
+                errors.append(
+                    f"non-numeric values in '{column}'"
+                )
+            elif np.isinf(
+                values.to_numpy(
+                    dtype=float,
+                    na_value=np.nan,
+                )
+            ).any():
+                errors.append(
+                    f"infinite values in '{column}'"
+                )
+            else:
+                df[column] = values.astype(float)
+
+        for column in types["boolean_vars"]:
+            if column not in df.columns:
+                continue
+
+            valid = (
+                df[column]
+                .dropna()
+                .isin([0, 1, True, False])
+                .all()
+            )
+
+            if not valid:
+                errors.append(
+                    f"'{column}' must contain 0/1, "
+                    "True/False, or missing values"
+                )
+            else:
+                df[column] = (
+                    df[column]
+                    .astype("boolean")
+                    .astype(float)
+                )
+
+        for column in types["categorical_vars"]:
+            if column in df.columns:
+                df[column] = df[column].astype("string")
+
+        if (
+            identifier
+            and identifier in df.columns
+            and df[identifier].duplicated().any()
+        ):
+            warnings.append(
+                f"duplicate values in '{identifier}'"
+            )
 
     report = {
-        "schema_check": "PASS" if not errors else "FAIL",
-        "n_rows": int(len(synth_df)),
-        "required_cols": required,
+        "schema_check": "FAIL" if errors else "PASS",
+        "n_rows": int(len(df)),
+        "required_cols": features,
         "missing_cols": missing,
         "ignored_extra_cols": extra,
         "errors": errors,
@@ -678,113 +331,676 @@ def validate_synthetic_submission(synth_df, data_specs):
 
     if errors:
         return None, report
-    return synth_df.loc[:, [c for c in keep if c in synth_df.columns]], report
+
+    selected = [
+        column
+        for column in keep
+        if column in df.columns
+    ]
+    return df.loc[:, selected], report
 
 
-# --------------------------------------------------------------------------- #
-# Downstream model from config                                                 #
-# --------------------------------------------------------------------------- #
-def _resolve_model_class(name):
-    """Map the config's model_class string to a class; None -> pipeline default."""
-    if name is None:
-        return None
-    if name == "XGBClassifier":
-        from xgboost import XGBClassifier; return XGBClassifier
-    if name == "HistGradientBoostingClassifier":
-        from sklearn.ensemble import HistGradientBoostingClassifier
-        return HistGradientBoostingClassifier
-    if name == "RandomForestClassifier":
-        from sklearn.ensemble import RandomForestClassifier; return RandomForestClassifier
-    if name == "LogisticRegression":
-        from sklearn.linear_model import LogisticRegression; return LogisticRegression
-    raise ValueError(f"Unknown model_class '{name}'; extend _resolve_model_class().")
+def load_real(path, spec):
+    df, report = validate_table(
+        load_table(path),
+        spec,
+    )
+
+    if report["errors"]:
+        raise ValueError(
+            f"Invalid real dataset {path}: "
+            + "; ".join(report["errors"])
+        )
+
+    identifier = spec.get("identifier_var")
+
+    if identifier and identifier in df.columns:
+        if (
+            df[identifier].isna().any()
+            or df[identifier].duplicated().any()
+        ):
+            raise ValueError(
+                f"Identifier '{identifier}' must be "
+                f"nonmissing and unique in {path}"
+            )
+
+    return df
 
 
-# --------------------------------------------------------------------------- #
-# Orchestration                                                                #
-# --------------------------------------------------------------------------- #
-def run_utility_eval(experiment_config, synthetic_data_path, logger=None):
-    data_specs = experiment_config['data_specs']
-    out_path = experiment_config['evaluation_output_path']
-    os.makedirs(out_path, exist_ok=True)
-    write_json(os.path.join(out_path, 'experiment_config.json'), experiment_config)
+def load_real_splits(config, spec):
+    train = config.get("real_train_path")
+    test = config.get("real_test_path")
 
-    print('Loading synthetic dataset...')
-    synth_df = load_table(synthetic_data_path)
+    if bool(train) != bool(test):
+        raise ValueError(
+            "Specify both real_train_path and "
+            "real_test_path, or neither"
+        )
 
-    print('Validating synthetic data against data_specs...')
-    synth_df, report = validate_synthetic_submission(synth_df, data_specs)
-    metrics_dir = os.path.join(out_path, 'metrics')
-    os.makedirs(metrics_dir, exist_ok=True)
-    write_json(os.path.join(metrics_dir, 'schema_check.json'), report)
-    for w in report['warnings']:
-        print(f'  WARN: {w}')
-    if report['schema_check'] == 'FAIL':
-        raise ValueError("Synthetic submission does not match the data specs:\n  - "
-                         + "\n  - ".join(report['errors']))
-    print(f"  schema check PASSED ({report['n_rows']} rows, "
-          f"{len(report['required_cols'])} features)")
+    if not train:
+        directory = Path(config["real_data_path"])
+        train = directory / "real_train.parquet"
+        test = directory / "real_test.parquet"
 
-    if experiment_config.get('validate_only', False):
-        print('validate_only=true -> stopping before evaluation.')
+    return load_real(train, spec), load_real(test, spec)
+
+
+# ---------------------------------------------------------------------------
+# Model fitting and evaluation
+# ---------------------------------------------------------------------------
+
+def evaluate_arm(train, test, spec, params, threshold):
+    from xgboost import XGBClassifier
+
+    features, types = validate_spec(spec)
+
+    X_train = train[features].copy()
+    X_test = test[features].copy()
+
+    # XGBoost 2.x requires consistent category codes between fit and predict.
+    # Learn each vocabulary from this arm's training data only.
+    # Unseen test categories become missing values.
+    category_levels = {}
+
+    for column in types["categorical_vars"]:
+        levels = sorted(
+            X_train[column].dropna().unique().tolist()
+        )
+        category_levels[column] = levels
+
+        dtype = pd.CategoricalDtype(categories=levels)
+        X_train[column] = X_train[column].astype(dtype)
+        X_test[column] = X_test[column].astype(dtype)
+
+    y_train = map_target(
+        train[spec["target_var"]],
+        spec["target_mapping"],
+    ).astype(int)
+
+    y_test = map_target(
+        test[spec["target_var"]],
+        spec["target_mapping"],
+    ).astype(int)
+
+    model = XGBClassifier(**params)
+    model.fit(X_train, y_train)
+
+    # Store vocabularies with the pickled model for later reuse.
+    model.utility_category_levels_ = category_levels
+
+    positive_index = list(model.classes_).index(1)
+    probabilities = model.predict_proba(X_test)[:, positive_index]
+
+    if not np.isfinite(probabilities).all():
+        raise ValueError(
+            "Model returned non-finite probabilities"
+        )
+
+    predictions = (
+        probabilities >= threshold
+    ).astype(int)
+
+    importance = permutation_importance(
+        model,
+        X_test,
+        y_test,
+        n_repeats=10,
+        random_state=params["random_state"],
+        scoring="roc_auc",
+    )
+
+    importance_df = pd.DataFrame(
+        {
+            "permutation_importance_mean": (
+                importance.importances_mean
+            ),
+            "permutation_importance_std": (
+                importance.importances_std
+            ),
+        },
+        index=features,
+    ).sort_values(
+        "permutation_importance_mean",
+        ascending=False,
+    )
+
+    result = {
+        "n_positive": int(y_test.sum()),
+        "n_negative": int(len(y_test) - y_test.sum()),
+        "class_prevalence_test": float(y_test.mean()),
+        "class_prevalence_train": float(y_train.mean()),
+        "auc": float(
+            roc_auc_score(y_test, probabilities)
+        ),
+        "pr_auc": float(
+            average_precision_score(y_test, probabilities)
+        ),
+        "precision": float(
+            precision_score(
+                y_test, predictions, zero_division=0
+            )
+        ),
+        "recall": float(
+            recall_score(
+                y_test, predictions, zero_division=0
+            )
+        ),
+        "f1": float(
+            f1_score(
+                y_test, predictions, zero_division=0
+            )
+        ),
+        "accuracy": float(
+            accuracy_score(y_test, predictions)
+        ),
+        "threshold": float(threshold),
+        "model_class": "XGBClassifier",
+        "model_kwargs": dict(params),
+        "n_train": int(len(train)),
+        "n_test": int(len(test)),
+        "permutation_importances": (
+            importance_df
+            .rename_axis("feature")
+            .reset_index()
+            .to_dict(orient="records")
+        ),
+    }
+
+    return (
+        result,
+        model,
+        probabilities,
+        predictions,
+        importance_df,
+    )
+
+
+def bootstrap_gap(y, real_prob, synth_prob, count):
+    """Paired row-bootstrap intervals conditional on the fitted models."""
+    rng = np.random.RandomState(42)
+    auc_gaps = []
+    ap_gaps = []
+
+    for _ in range(count):
+        indices = rng.randint(
+            0, len(y), size=len(y)
+        )
+        labels = y[indices]
+
+        if len(np.unique(labels)) < 2:
+            continue
+
+        auc_gaps.append(
+            roc_auc_score(labels, real_prob[indices])
+            - roc_auc_score(labels, synth_prob[indices])
+        )
+        ap_gaps.append(
+            average_precision_score(
+                labels, real_prob[indices]
+            )
+            - average_precision_score(
+                labels, synth_prob[indices]
+            )
+        )
+
+    if not auc_gaps:
+        raise ValueError(
+            "No valid bootstrap samples; increase n_bootstrap"
+        )
+
+    return (
+        np.percentile(auc_gaps, [2.5, 97.5]),
+        np.percentile(ap_gaps, [2.5, 97.5]),
+    )
+
+
+# ---------------------------------------------------------------------------
+# Plots and summary
+# ---------------------------------------------------------------------------
+
+def save_figures(y, real_prob, synth_prob, results, directory):
+    curves = [
+        ("TRTR", real_prob, results["trtr"]),
+        ("TSTR", synth_prob, results["tstr"]),
+    ]
+
+    for kind in ("roc", "pr"):
+        fig, ax = plt.subplots(figsize=(6, 6))
+
+        for name, probability, metrics in curves:
+            if kind == "roc":
+                x, z, _ = roc_curve(y, probability)
+                label = (
+                    f"{name} (AUC={metrics['auc']:.3f})"
+                )
+            else:
+                precision, recall, _ = precision_recall_curve(
+                    y, probability
+                )
+                x, z = recall, precision
+                label = (
+                    f"{name} (PR-AUC={metrics['pr_auc']:.3f})"
+                )
+
+            ax.plot(x, z, label=label)
+
+        if kind == "roc":
+            ax.plot(
+                [0, 1], [0, 1],
+                "k--", alpha=0.4,
+            )
+            ax.set(
+                xlabel="False positive rate",
+                ylabel="True positive rate",
+                title="ROC — TRTR vs TSTR",
+            )
+        else:
+            ax.axhline(
+                y.mean(),
+                color="k",
+                ls="--",
+                alpha=0.4,
+                label=f"prevalence={y.mean():.3f}",
+            )
+            ax.set(
+                xlabel="Recall",
+                ylabel="Precision",
+                title="Precision-Recall — TRTR vs TSTR",
+            )
+
+        ax.legend()
+        fig.tight_layout()
+        fig.savefig(
+            directory / f"{kind}_trtr_vs_tstr.png",
+            bbox_inches="tight",
+        )
+        plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(6, 6))
+    ax.plot(
+        [0, 1], [0, 1],
+        "k--", alpha=0.5,
+        label="perfect calibration",
+    )
+
+    briers = {}
+
+    for name, probability, _ in curves:
+        score = float(
+            brier_score_loss(y, probability)
+        )
+        briers[f"brier_{name.lower()}"] = score
+
+        fraction, mean = calibration_curve(
+            y,
+            probability,
+            n_bins=10,
+            strategy="quantile",
+        )
+        ax.plot(
+            mean,
+            fraction,
+            marker="o",
+            label=f"{name} (Brier={score:.3f})",
+        )
+
+    ax.set(
+        xlabel="Mean predicted probability (per bin)",
+        ylabel="Observed fraction positive (per bin)",
+        title="Calibration — TSTR vs TRTR (on real test set)",
+        xlim=(0, 1),
+        ylim=(0, 1),
+    )
+    ax.legend(loc="upper left")
+    fig.tight_layout()
+
+    for extension in ("png", "eps"):
+        fig.savefig(
+            directory / f"calibration_tstr_vs_trtr.{extension}",
+            bbox_inches="tight",
+        )
+
+    plt.close(fig)
+
+    briers["brier_diff_tstr_minus_trtr"] = (
+        briers["brier_tstr"] - briers["brier_trtr"]
+    )
+
+    return briers
+
+
+def write_summary(path, result):
+    real = result["trtr"]
+    synth = result["tstr"]
+
+    lines = [
+        "UTILITY SUMMARY "
+        "(TRTR = train real, TSTR = train synthetic; same test set)",
+        "=" * 60,
+        (
+            "class prevalence (test): "
+            f"{real['class_prevalence_test']:.3f} "
+            f"(n_pos={real['n_positive']}, "
+            f"n_neg={real['n_negative']})"
+        ),
+        "",
+        (
+            f"{'':12}{'AUC':>10}{'PR-AUC':>10}"
+            f"{'F1':>10}{'recall':>10}"
+        ),
+    ]
+
+    for name, arm in (
+        ("TRTR", real),
+        ("TSTR", synth),
+    ):
+        lines.append(
+            f"{name:12}{arm['auc']:>10.3f}"
+            f"{arm['pr_auc']:>10.3f}"
+            f"{arm['f1']:>10.3f}"
+            f"{arm['recall']:>10.3f}"
+        )
+
+    for label, gap, low, high in (
+        (
+            "AUC",
+            "auc_gap_trtr_minus_tstr",
+            "auc_ci_low",
+            "auc_ci_high",
+        ),
+        (
+            "PR-AUC",
+            "pr_auc_gap_trtr_minus_tstr",
+            "pr_auc_diff_ci_low",
+            "pr_auc_diff_ci_high",
+        ),
+    ):
+        lo, hi = result[low], result[high]
+        verdict = (
+            "gap not statistically distinguishable from 0"
+            if lo <= 0 <= hi
+            else "gap is distinguishable from 0"
+        )
+
+        lines.extend([
+            "",
+            (
+                f"{label} gap (TRTR - TSTR): "
+                f"{result[gap]:+.3f} "
+                f"95% CI [{lo:+.3f}, {hi:+.3f}]"
+            ),
+            f"    -> {verdict}",
+        ])
+
+    lines.extend([
+        "",
+        f"threshold for F1/recall: {synth['threshold']}",
+    ])
+
+    path.write_text(
+        "\n".join(lines) + "\n",
+        encoding="utf-8",
+    )
+
+
+# ---------------------------------------------------------------------------
+# Run evaluation
+# ---------------------------------------------------------------------------
+
+def run_utility_eval(config, synthetic_data_path):
+    spec = config["data_specs"]
+    validate_spec(spec)
+
+    output = Path(config["evaluation_output_path"])
+    figures, metrics, artifacts = [
+        output / name
+        for name in ("figures", "metrics", "artifacts")
+    ]
+
+    for directory in (figures, metrics, artifacts):
+        directory.mkdir(parents=True, exist_ok=True)
+
+    write_json(
+        output / "experiment_config.json",
+        config,
+    )
+
+    print("Loading and validating synthetic data...")
+    synthetic, report = validate_table(
+        load_table(synthetic_data_path),
+        spec,
+    )
+    write_json(
+        metrics / "schema_check.json",
+        report,
+    )
+
+    for warning in report["warnings"]:
+        print(f"  WARN: {warning}")
+
+    if report["errors"]:
+        raise ValueError(
+            "Invalid synthetic submission:\n  - "
+            + "\n  - ".join(report["errors"])
+        )
+
+    print(
+        f"  schema check PASSED ({report['n_rows']} rows)"
+    )
+
+    if config.get("validate_only", False):
         return report
 
-    print('Loading real train/test splits...')
-    realdf_train, realdf_test = load_real_splits(experiment_config, data_specs)
+    settings = config.get(
+        "downstream_model_kwargs", {}
+    )
 
-    print('Evaluating utility...')
-    model_kwargs = experiment_config['downstream_model_kwargs']
-    util_metrics = evaluate_utility(synth_df,
-                        realdf_train,
-                        realdf_test,
-                        out_path,
-                        target_col=data_specs['target_var'],
-                        target_mapping=data_specs['target_mapping'],
-                        drop_cols=[data_specs['identifier_var']],
-                        categorical_cols=data_specs['categorical_vars'],
-                        model_class=_resolve_model_class(model_kwargs['model_class']),
-                        model_kwargs=model_kwargs['hyperparameters'],
-                        n_bootstrap=model_kwargs['n_bootstrap'],
-                        threshold=model_kwargs['threshold'])
+    if settings.get("model_class") not in (
+        None, "XGBClassifier"
+    ):
+        raise ValueError(
+            "This evaluator supports only XGBClassifier"
+        )
 
-    return util_metrics
+    supplied = settings.get("hyperparameters")
+    params = (
+        dict(DEFAULT_PARAMS)
+        if supplied is None
+        else dict(supplied)
+    )
+    params.setdefault("random_state", 42)
+    params.setdefault("enable_categorical", True)
+    params.setdefault("tree_method", "hist")
 
+    if params["random_state"] is None:
+        raise ValueError(
+            "Use a fixed random_state for evaluation"
+        )
+
+    if params["enable_categorical"] is not True:
+        raise ValueError(
+            "enable_categorical must be True"
+        )
+
+    if params["tree_method"] not in ("hist", "approx"):
+        raise ValueError(
+            "Use tree_method='hist' or 'approx' "
+            "for categorical support"
+        )
+
+    threshold = settings.get("threshold", 0.5)
+    count = settings.get("n_bootstrap", 100)
+
+    if (
+        not isinstance(count, int)
+        or isinstance(count, bool)
+        or count < 1
+    ):
+        raise ValueError(
+            "n_bootstrap must be a positive integer"
+        )
+
+    if not 0 <= threshold <= 1:
+        raise ValueError(
+            "threshold must be between 0 and 1"
+        )
+
+    print("Loading real train/test splits...")
+    real_train, real_test = load_real_splits(
+        config, spec
+    )
+    results = {}
+    probabilities = {}
+
+    for name, train in (
+        ("trtr", real_train),
+        ("tstr", synthetic),
+    ):
+        print(f"Evaluating {name.upper()}...")
+
+        result, model, probability, prediction, importance = (
+            evaluate_arm(
+                train,
+                real_test,
+                spec,
+                params,
+                threshold,
+            )
+        )
+
+        model_path = artifacts / f"{name}_model.pkl"
+        with model_path.open("wb") as handle:
+            pickle.dump(model, handle)
+
+        result["fitted_model_path"] = str(model_path)
+
+        importance.to_csv(
+            metrics
+            / f"downstream_model_permutation_importance_{name}.csv"
+        )
+
+        y = map_target(
+            real_test[spec["target_var"]],
+            spec["target_mapping"],
+        ).to_numpy(dtype=int)
+
+        pd.DataFrame(
+            confusion_matrix(
+                y, prediction, labels=[0, 1]
+            ),
+            index=["true_neg", "true_pos"],
+            columns=["pred_neg", "pred_pos"],
+        ).to_csv(
+            metrics / f"confusion_{name}.csv"
+        )
+
+        results[name] = result
+        probabilities[name] = probability
+
+    auc_ci, ap_ci = bootstrap_gap(
+        y,
+        probabilities["trtr"],
+        probabilities["tstr"],
+        count,
+    )
+
+    results.update({
+        "auc_ci_low": auc_ci[0],
+        "auc_ci_high": auc_ci[1],
+        "pr_auc_diff_ci_low": ap_ci[0],
+        "pr_auc_diff_ci_high": ap_ci[1],
+        "auc_gap_trtr_minus_tstr": (
+            results["trtr"]["auc"]
+            - results["tstr"]["auc"]
+        ),
+        "pr_auc_gap_trtr_minus_tstr": (
+            results["trtr"]["pr_auc"]
+            - results["tstr"]["pr_auc"]
+        ),
+    })
+
+    results.update(
+        save_figures(
+            y,
+            probabilities["trtr"],
+            probabilities["tstr"],
+            results,
+            figures,
+        )
+    )
+
+    write_json(
+        metrics / "utility.json",
+        results,
+    )
+    write_summary(
+        metrics / "utility_summary.txt",
+        results,
+    )
+
+    print(
+        (metrics / "utility_summary.txt").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Command-line interface
+# ---------------------------------------------------------------------------
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Evaluate a synthetic dataset's downstream utility (TSTR vs TRTR).")
-    parser.add_argument('experiment_config',
-                        help='Path to the experiment config JSON.')
-    parser.add_argument('--synth', default=None,
-                        help='Path to the synthetic dataset. Falls back to the '
-                             '"synthetic_data_path" key in the config.')
-    parser.add_argument('--output-path', default=None,
-                        help='Override evaluation_output_path / output_path.')
-    parser.add_argument('--validate-only', action='store_true',
-                        help='Run the format checks only, then exit.')
+        description=(
+            "Evaluate synthetic-data utility with XGBoost."
+        )
+    )
+    parser.add_argument(
+        "experiment_config",
+        help="Path to the experiment config JSON",
+    )
+    parser.add_argument(
+        "--synth",
+        help="Synthetic dataset; overrides synthetic_data_path",
+    )
+    parser.add_argument(
+        "--output-path",
+        help="Override evaluation_output_path",
+    )
+    parser.add_argument(
+        "--validate-only",
+        action="store_true",
+    )
+
     args = parser.parse_args()
 
-    with open(args.experiment_config, 'r') as f:
-        experiment_config = json.load(f)
+    with open(
+        args.experiment_config,
+        encoding="utf-8",
+    ) as handle:
+        config = json.load(handle)
 
-    synth_path = args.synth or experiment_config.get('synthetic_data_path')
-    if not synth_path:
-        parser.error("No synthetic dataset given: pass --synth or set "
-                     "'synthetic_data_path' in the config.")
+    synthetic_path = (
+        args.synth
+        or config.get("synthetic_data_path")
+    )
+
+    if not synthetic_path:
+        parser.error(
+            "Pass --synth or set synthetic_data_path "
+            "in the config"
+        )
 
     if args.output_path:
-        experiment_config['evaluation_output_path'] = args.output_path
+        config["evaluation_output_path"] = args.output_path
+
     if args.validate_only:
-        experiment_config['validate_only'] = True
-    out_path = experiment_config['evaluation_output_path']
-    os.makedirs(out_path, exist_ok=True)
+        config["validate_only"] = True
 
-    run_utility_eval(experiment_config, synth_path)
-
+    run_utility_eval(config, synthetic_path)
 
 
 if __name__ == "__main__":
     main()
-
-    # Usage
-    # uv run evaluate_utility.py <path_to_experiment_config.json> --synth <path_to_synthetic_data.csv>
