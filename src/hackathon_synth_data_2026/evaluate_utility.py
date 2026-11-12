@@ -152,37 +152,9 @@ def validate_spec(spec):
             "Target, identifier and split columns cannot be features"
         )
 
-    if set(spec["target_mapping"].values()) != {0, 1}:
-        raise ValueError(
-            "target_mapping must map labels to both 0 and 1"
-        )
 
     return list(features), types
 
-
-def map_target(values, mapping):
-    """Allow JSON string keys to match inferred integer target labels."""
-    mapped = values.map(mapping)
-    missing = mapped.isna() & values.notna()
-
-    if missing.any():
-        string_mapping = {
-            str(key): value
-            for key, value in mapping.items()
-        }
-
-        if len(string_mapping) != len(mapping):
-            raise ValueError(
-                "Ambiguous target labels after string conversion"
-            )
-
-        mapped.loc[missing] = (
-            values.loc[missing]
-            .astype(str)
-            .map(string_mapping)
-        )
-
-    return mapped
 
 
 def validate_table(df, spec):
@@ -194,6 +166,7 @@ def validate_table(df, spec):
 
     errors = []
     warnings = []
+
 
     if not df.columns.is_unique:
         errors.append("duplicate column names")
@@ -239,24 +212,15 @@ def validate_table(df, spec):
 
     if df.columns.is_unique:
         if target in df.columns:
-            mapped = map_target(
-                df[target],
-                spec["target_mapping"],
-            )
-
-            if mapped.isna().any():
-                bad = sorted(
-                    df.loc[mapped.isna(), target]
-                    .astype(str)
-                    .unique()
-                )
-                errors.append(
-                    f"missing or unmappable target values: {bad}"
-                )
-            elif set(mapped.unique()) != {0, 1}:
-                errors.append(
-                    "target must contain both classes"
-                )
+            import pdb; pdb.set_trace()
+            target_col = df[target]
+            if target_col.isna().any():
+                errors.append("target contains missing values")
+            elif not target_col.isin([0, 1]).all():
+                errors.append("target must contain only 0 and 1")
+            elif target_col.nunique() != 2:
+                errors.append("target must contain both classes")
+                
 
         for column in types["numerical_vars"]:
             if column not in df.columns:
@@ -412,15 +376,9 @@ def evaluate_arm(train, test, spec, params, threshold):
         X_train[column] = X_train[column].astype(dtype)
         X_test[column] = X_test[column].astype(dtype)
 
-    y_train = map_target(
-        train[spec["target_var"]],
-        spec["target_mapping"],
-    ).astype(int)
+    y_train = train[spec["target_var"]].astype(int)
 
-    y_test = map_target(
-        test[spec["target_var"]],
-        spec["target_mapping"],
-    ).astype(int)
+    y_test = test[spec["target_var"]].astype(int)
 
     model = XGBClassifier(**params)
     model.fit(X_train, y_train)
@@ -879,10 +837,7 @@ def run_utility_eval(config, synthetic_data_path):
             / f"downstream_model_permutation_importance_{name}.csv"
         )
 
-        y = map_target(
-            real_test[spec["target_var"]],
-            spec["target_mapping"],
-        ).to_numpy(dtype=int)
+        y = real_test[spec["target_var"]].to_numpy(dtype=int)
 
         pd.DataFrame(
             confusion_matrix(
