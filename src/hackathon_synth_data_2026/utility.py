@@ -212,7 +212,6 @@ def validate_table(df, spec):
 
     if df.columns.is_unique:
         if target in df.columns:
-            import pdb; pdb.set_trace()
             target_col = df[target]
             if target_col.isna().any():
                 errors.append("target contains missing values")
