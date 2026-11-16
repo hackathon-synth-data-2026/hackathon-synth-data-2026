@@ -708,7 +708,7 @@ def run_utility_eval(config, synthetic_data_path):
     spec = config["data_specs"]
     validate_spec(spec)
 
-    output = Path(config["evaluation_output_path"])
+    output = Path(config["evaluation_output_path"]) / "utility"
     figures, metrics, artifacts = [
         output / name
         for name in ("figures", "metrics", "artifacts")

@@ -432,7 +432,7 @@ def run_fidelity_eval(
 
     directory = (
         resolve(config["evaluation_output_path"])
-        / "metrics"
+        / "fidelity" / "metrics"
     )
     directory.mkdir(parents=True, exist_ok=True)
 

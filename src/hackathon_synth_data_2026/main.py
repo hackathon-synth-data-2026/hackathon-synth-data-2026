@@ -45,7 +45,7 @@ def load_config(config_path):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Evaluate synthetic-data utility and fidelity."
+        description="Evaluate synthetic-data utility, fidelity, and privacy."
     )
     parser.add_argument(
         "experiment_config",
@@ -123,21 +123,25 @@ def main():
     print("\n=== Fidelity evaluation ===", flush=True)
     run_fidelity_eval(config, synthetic_path)
 
+    from privacy import run_privacy_eval
+
+    print("\n=== Privacy evaluation ===", flush=True)
+    run_privacy_eval(config, synthetic_path)
+
     # Read the JSON reports rather than serializing fidelity's
     # in-memory return value, which also contains DataFrames.
     metrics_dir = (
-        Path(config["evaluation_output_path"]) / "metrics"
+        Path(config["evaluation_output_path"])
     )
     report = {}
-
-    for name in ("utility", "fidelity"):
-        report_file = metrics_dir / f"{name}.json"
-
+    for name in ("utility", "fidelity", "privacy"):
+        report_file = metrics_dir / name / "metrics" / f"{name}.json"
+        import pdb; pdb.set_trace()
         with report_file.open(encoding="utf-8") as handle:
             report[name] = json.load(handle)
 
     report_path = metrics_dir / "evaluation.json"
-
+    import pdb; pdb.set_trace()
     with report_path.open("w", encoding="utf-8") as handle:
         json.dump(report, handle, indent=2)
 
@@ -156,6 +160,14 @@ def main():
         print("Fidelity score: undefined; inspect fidelity.json")
     else:
         print(f"Fidelity score: {score:.3f}")
+
+    privacy_summary = report["privacy"]["summary"]
+    print(
+        "Privacy score: "
+        f"{privacy_summary['privacy_score']:.3f}")
+    print(
+        "Privacy score basis: "
+        f"{privacy_summary['score_basis']}")
 
     print(f"Combined report: {report_path}")
 

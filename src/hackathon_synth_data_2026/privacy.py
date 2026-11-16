@@ -42,12 +42,20 @@ def unit(value):
     return isinstance(value, (int, float)) and not isinstance(value, bool) and 0 <= value <= 1 and math.isfinite(value)
 
 
-def config_from(path=None, threshold=None):
+def config_from(path=None, threshold=None, overrides=None):
     config = dict(DEFAULTS)
     if path is not None:
         custom = json.loads(path.read_text(encoding='utf-8'))
         require(isinstance(custom, dict) and set(custom) <= set(DEFAULTS), 'Unbekannte/ungültige Konfigurationsfelder')
         config.update(custom)
+    if overrides is not None:
+        require(
+            isinstance(overrides, dict)
+            and set(overrides) <= set(DEFAULTS),
+            "Unknown/invalid privacy configuration fields",
+        )
+        config.update(overrides)
+
     if threshold is not None:
         config.update(near_threshold=threshold, threshold_source='CLI-Vorgabe; extern zu begründen')
     require(unit(config['near_threshold']) and config['near_threshold'] < 1, 'Nähe-Schwelle muss in [0,1) liegen')
@@ -74,13 +82,112 @@ def copy_audit(train, synthetic):
                 duplicate_rows_all=int(synthetic.duplicated(keep=False).sum()))
 
 
-def load_data(paths, config):
+def read_profile(path, name, data_specs=None):
+    """Read a complete feature-and-target table."""
+    spec = data_specs or {}
+    identifier = spec.get("identifier_var", "recordid")
+    target = spec.get("target_var", "In-hospital_death")
+
+    require(
+        identifier is not None,
+        "Privacy evaluation requires an identifier column",
+    )
+
+    path = Path(path)
+
+    if path.suffix.lower() in (".parquet", ".pq"):
+        frame = pd.read_parquet(path)
+    else:
+        separator = (
+            "\t"
+            if path.suffix.lower() in (".tsv", ".txt")
+            else ","
+        )
+
+        with path.open(
+            newline="",
+            encoding="utf-8-sig",
+        ) as stream:
+            header = next(
+                csv.reader(stream, delimiter=separator),
+                [],
+            )
+
+        require(
+            header
+            and all(header)
+            and len(header) == len(set(header)),
+            f"{name}: empty or duplicate column names",
+        )
+
+        frame = pd.read_csv(
+            path,
+            sep=separator,
+            dtype={identifier: "string"},
+        )
+
+    require(
+        frame.columns.is_unique
+        and all(
+            isinstance(column, str) and column
+            for column in frame.columns
+        ),
+        f"{name}: empty or duplicate column names",
+    )
+    require(
+        identifier in frame,
+        f"{name}: missing identifier column {identifier!r}",
+    )
+    require(
+        target in frame,
+        f"{name}: missing target column {target!r}",
+    )
+    require(
+        frame[target].notna().all()
+        and frame[target].isin([0, 1]).all(),
+        f"{name}: target must contain nonmissing 0/1 values",
+    )
+
+    # Preserve the existing scoring code's internal column names.
+    require(
+        identifier == "recordid" or "recordid" not in frame,
+        f"{name}: conflicting identifier columns",
+    )
+    require(
+        target == "In-hospital_death"
+        or "In-hospital_death" not in frame,
+        f"{name}: conflicting target columns",
+    )
+
+    split = spec.get("split_var")
+    require(
+        split not in (identifier, target),
+        "Split column must differ from ID and target",
+    )
+
+    if split and split in frame:
+        frame = frame.drop(columns=split)
+
+    frame = frame.rename(
+        columns={
+            identifier: "recordid",
+            target: "In-hospital_death",
+        }
+    )
+    frame["recordid"] = frame["recordid"].astype("string")
+
+    return frame
+
+
+def load_data(paths, config, data_specs=None):
     raw, data, checks = {}, {}, {}
+
     for name, path in paths.items():
-        with path.open(newline='', encoding='utf-8-sig') as stream:
-            header = next(csv.reader(stream), [])
-        require(header and all(header) and len(header) == len(set(header)), f'{name}: leere/doppelte Spaltennamen')
-        raw[name] = pd.read_csv(path, dtype={'recordid': 'string'})
+        raw[name] = read_profile(
+            path,
+            name,
+            data_specs,
+        )
     columns = list(raw['train'].columns)
     require('recordid' in columns and len(columns) > 1, 'recordid oder Profilmerkmale fehlen')
     cats = set(config['categorical_columns']) | set(BINARY)
@@ -196,7 +303,7 @@ def setup(args):
     require(type(args.budget) is int and args.budget > 0 and bool(args.seeds)
             and all(type(seed) is int and 0 <= seed < 2**32 for seed in args.seeds)
             and len(args.seeds) == len(set(args.seeds)), 'Ungültiges Budget/Seeds')
-    config = config_from(args.config, args.near_threshold)
+    config = config_from(args.config, args.near_threshold, getattr(args, "privacy_options", None),)
     paths = {k: getattr(args, k) for k in ['train', 'control', 'synthetic']}
     packages = ['numpy', 'pandas']
     versions = {}
@@ -475,7 +582,7 @@ def write_csv(path, rows, default_fields):
 
 def write_result(folder, result, metadata):
     folder.mkdir(parents=True, exist_ok=True)
-    (folder / 'results.json').write_text(json.dumps(dict(result, metadata=metadata), ensure_ascii=False,
+    (folder / 'privacy.json').write_text(json.dumps(dict(result, metadata=metadata), ensure_ascii=False,
                                                    indent=2, allow_nan=False), encoding='utf-8')
     s = result['summary']
     write_csv(folder / 'summary.csv', [dict(s, **s['components'])], ['privacy_score', 'status'])
@@ -491,8 +598,20 @@ def source_hashes():
     return {path.name: hashlib.sha256(path.read_bytes()).hexdigest()}
 
 
-def evaluate_privacy(*, train, control, synthetic, budget=500, seeds=None,
-                     config_path=None, near_threshold=None, output=None, progress=False):
+def evaluate_privacy(
+    *,
+    train,
+    control,
+    synthetic,
+    budget=500,
+    seeds=None,
+    config_path=None,
+    near_threshold=None,
+    output=None,
+    progress=False,
+    privacy_options=None,
+    data_specs=None,
+    ):  
     """Öffentliche Schnittstelle für das zentrale Evaluationsskript.
 
     train/control/synthetic: CSV-Pfade (str oder pathlib.Path), keine DataFrames.
@@ -511,16 +630,27 @@ def evaluate_privacy(*, train, control, synthetic, budget=500, seeds=None,
     folder = None
     try:
         candidate_seeds = list(SEEDS) if seeds is None else list(seeds)
-        args = argparse.Namespace(train=Path(train), control=Path(control), synthetic=Path(synthetic),
-                                  budget=budget, seeds=candidate_seeds,
-                                  config=Path(config_path) if config_path is not None else None,
-                                  near_threshold=near_threshold)
+        args = argparse.Namespace(
+            train=Path(train),
+            control=Path(control),
+            synthetic=Path(synthetic),
+            budget=budget,
+            seeds=candidate_seeds,
+            config=(
+                Path(config_path)
+                if config_path is not None
+                else None
+            ),
+            near_threshold=near_threshold,
+            privacy_options=privacy_options,
+        )
         config, paths, metadata = setup(args)
         planned_seeds = args.seeds
         metadata['source_sha256'] = source_hashes()
         metadata['effective_config_sha256'] = hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
         metadata['input_sha256'] = {k: hashlib.sha256(p.read_bytes()).hexdigest() for k, p in paths.items()}
-        data, metadata['data_checks'] = load_data(paths, config)
+        metadata["data_specs"] = data_specs
+        data, metadata["data_checks"] = load_data(paths, config, data_specs,)
         result = evaluate(data, config, budget, planned_seeds, progress=progress)
     except Exception as exc:
         metadata['fatal_error'] = failure(exc)
@@ -537,19 +667,198 @@ def evaluate_privacy(*, train, control, synthetic, budget=500, seeds=None,
     return dict(result, metadata=metadata, output_folder=str(folder.resolve()) if folder else None)
 
 
-def main(argv=None):
-    try:
-        args = make_parser().parse_args(argv)
-        result = evaluate_privacy(
-            train=args.train, control=args.control, synthetic=args.synthetic,
-            budget=args.budget, seeds=args.seeds, config_path=args.config,
-            near_threshold=args.near_threshold, output=args.output, progress=False,
+def run_privacy_eval(
+    config,
+    synthetic_data_path,
+    *,
+    config_dir=None,
+):
+    """Run privacy evaluation using the shared configuration."""
+    base = (
+        Path(config_dir)
+        if config_dir is not None
+        else Path.cwd()
+    )
+
+    def resolve(value):
+        path = Path(value).expanduser()
+        return (
+            path
+            if path.is_absolute()
+            else (base / path).resolve()
         )
-        summary = result['summary']
-    except Exception as exc:
-        summary = aggregate(None, [], SEEDS, failure(exc))
-    print(f"{summary['privacy_score']:.6f}")
-    return 0 if summary['technically_complete'] else 2
+
+    train = config.get("real_train_path")
+    control = config.get("real_test_path")
+
+    require(
+        bool(train) == bool(control),
+        "Set both real_train_path and real_test_path, or neither",
+    )
+
+    if train:
+        train = resolve(train)
+        control = resolve(control)
+    else:
+        directory = resolve(config["real_data_path"])
+        train = directory / "real_train.parquet"
+        control = directory / "real_test.parquet"
+
+    settings = config.get("privacy", {})
+
+    require(
+        isinstance(settings, dict),
+        "privacy must be a JSON object",
+    )
+    require(
+        set(settings)
+        <= {"budget", "seeds", "config", "progress"},
+        "Unknown privacy settings",
+    )
+
+    metric_config = dict(settings.get("config", {}))
+    spec = config["data_specs"]
+
+    # Keep the original ICU binary-column handling.
+    # Explicitly configure any additional categorical features.
+    categories = metric_config.get(
+        "categorical_columns",
+        spec.get("categorical_vars", BINARY),
+    )
+
+    require(
+        isinstance(categories, list),
+        "categorical_columns must be a list",
+    )
+
+    aliases = {
+        spec.get("target_var"): "In-hospital_death",
+        spec.get("identifier_var"): "recordid",
+    }
+
+    metric_config["categorical_columns"] = list(
+        dict.fromkeys(
+            aliases.get(column, column)
+            for column in categories
+        )
+    )
+
+    result = evaluate_privacy(
+        train=train,
+        control=control,
+        synthetic=Path(synthetic_data_path),
+        budget=settings.get("budget", 500),
+        seeds=settings.get("seeds"),
+        privacy_options=metric_config,
+        data_specs=spec,
+        progress=settings.get("progress", False),
+    )
+
+    metrics = (
+        resolve(config["evaluation_output_path"])
+    )
+    metrics.mkdir(parents=True, exist_ok=True)
+
+    details = metrics / "privacy" / "metrics"
+
+    # Preserve the original detailed JSON and CSV exports.
+    write_result(
+        details,
+        result,
+        result["metadata"],
+    )
+
+    result["output_folder"] = str(details.resolve())
+
+    (metrics / "privacy.json").write_text(
+        json.dumps(
+            result,
+            ensure_ascii=False,
+            indent=2,
+            allow_nan=False,
+        ),
+        encoding="utf-8",
+    )
+
+    summary = result["summary"]
+
+    print(
+        f"Privacy score: {summary['privacy_score']:.6f}"
+    )
+    print(f"Score basis: {summary['score_basis']}")
+    print(
+        "Technically complete: "
+        f"{summary['technically_complete']}"
+    )
+
+    # The original evaluator catches technical errors and returns a
+    # fallback zero. Keep that result in the report, but stop the
+    # combined evaluation rather than presenting it as a valid score.
+    if not summary["technically_complete"]:
+        raise AuditError(
+            "Privacy evaluation is not technically complete; "
+            "see metrics/privacy.json"
+        )
+
+    return result
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        description="Evaluate privacy using the shared configuration."
+    )
+    parser.add_argument(
+        "experiment_config",
+        type=Path,
+        help="Path to config.json",
+    )
+    parser.add_argument(
+        "--synth",
+        type=Path,
+        help="Override synthetic_data_path",
+    )
+    parser.add_argument(
+        "--output-path",
+        type=Path,
+        help="Override evaluation_output_path",
+    )
+    args = parser.parse_args(argv)
+
+    config_path = args.experiment_config.resolve()
+
+    with config_path.open(encoding="utf-8") as handle:
+        config = json.load(handle)
+
+    if args.synth is not None:
+        synthetic_path = args.synth.expanduser().resolve()
+    elif config.get("synthetic_data_path"):
+        synthetic_path = Path(
+            config["synthetic_data_path"]
+        ).expanduser()
+
+        if not synthetic_path.is_absolute():
+            synthetic_path = config_path.parent / synthetic_path
+    else:
+        parser.error(
+            "Pass --synth or set synthetic_data_path in config.json"
+        )
+
+    if args.output_path is not None:
+        config["evaluation_output_path"] = str(
+            args.output_path.expanduser().resolve()
+        )
+
+    try:
+        run_privacy_eval(
+            config,
+            synthetic_path,
+            config_dir=config_path.parent,
+        )
+    except AuditError as exc:
+        print(f"Privacy evaluation failed: {exc}")
+        return 2
+
+    return 0
 
 
 if __name__ == '__main__':
