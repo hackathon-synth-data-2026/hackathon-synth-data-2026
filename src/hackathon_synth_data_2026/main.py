@@ -136,12 +136,10 @@ def main():
     report = {}
     for name in ("utility", "fidelity", "privacy"):
         report_file = metrics_dir / name / "metrics" / f"{name}.json"
-        import pdb; pdb.set_trace()
         with report_file.open(encoding="utf-8") as handle:
             report[name] = json.load(handle)
 
     report_path = metrics_dir / "evaluation.json"
-    import pdb; pdb.set_trace()
     with report_path.open("w", encoding="utf-8") as handle:
         json.dump(report, handle, indent=2)
 
