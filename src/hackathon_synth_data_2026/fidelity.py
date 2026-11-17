@@ -186,6 +186,7 @@ def evaluate_fidelity(
     id_col="recordid",
     time_col=None,
     split_col=None,
+    fidelity_kwargs=None,
 ):
     """Evaluate complete tables without modifying the caller's dataframes."""
     real, syn = real.copy(), syn.copy()
@@ -374,6 +375,7 @@ def evaluate_fidelity(
         cat,
         mi_real,
         mi_syn,
+        weights=fidelity_kwargs["score_weights"]
     )
 
     print("\n=== Fidelity score ===")
@@ -428,6 +430,7 @@ def run_fidelity_eval(
         id_col=spec.get("identifier_var", "recordid"),
         time_col=spec.get("time_var"),
         split_col=spec.get("split_var"),
+        fidelity_kwargs=config["fidelity_kwargs"]
     )
 
     directory = (

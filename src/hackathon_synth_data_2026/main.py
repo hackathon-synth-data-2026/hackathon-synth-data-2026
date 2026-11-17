@@ -11,7 +11,96 @@
 # ]
 # ///
 
-"""Run utility and fidelity evaluation using one configuration."""
+"""
+Evaluate synthetic-data utility, fidelity, and privacy.
+
+Expected files
+--------------
+    evaluation/
+    ├── main.py
+    ├── utility.py
+    ├── fidelity.py
+    ├── privacy.py
+    └── config.json
+
+Input data
+----------
+Real training, real test, and synthetic datasets must contain complete
+feature-and-target tables. Do not supply X and y as separate files.
+
+The target column is specified by data_specs.target_var and must contain
+nonmissing binary labels: 0 = survival, 1 = in-hospital death.
+
+Dataset paths, feature definitions, and evaluation settings are supplied
+through config.json. CSV and Parquet are supported by the evaluators.
+
+Usage examples
+--------------
+Run these commands from the starterpack root.
+
+1. Use config.json beside main.py, including its synthetic_data_path:
+
+    uv run evaluation/main.py
+
+2. Specify a configuration file explicitly:
+
+    uv run evaluation/main.py evaluation/config.json
+
+3. Evaluate your own synthetic dataset:
+
+    uv run evaluation/main.py --synth data/submission.parquet
+
+4. Specify both the configuration and synthetic dataset:
+
+    uv run evaluation/main.py evaluation/config.json --synth data/submission.csv
+
+5. Save reports in a different output directory:
+
+    uv run evaluation/main.py --synth data/submission.parquet --output-path results/my-run
+
+6. Run only the utility evaluator's submission-schema checks:
+
+    uv run evaluation/main.py --synth data/submission.parquet --validate-only
+
+    This skips all metric calculations. It does not check every
+    fidelity- or privacy-specific requirement.
+
+7. Show command-line help:
+
+    uv run evaluation/main.py --help
+
+Path resolution
+---------------
+- The default configuration is config.json beside main.py.
+- Relative paths inside config.json are resolved relative to that file.
+- Paths passed through --synth and --output-path are resolved relative
+  to your current working directory.
+- CLI overrides take precedence over the corresponding config values.
+- validate_only=true in config.json also skips metric calculations.
+
+Outputs
+-------
+Reports are saved under evaluation_output_path:
+
+    utility/metrics/utility.json
+    fidelity/metrics/fidelity.json
+    privacy/metrics/privacy.json
+    evaluation.json
+
+Individual evaluators also produce plots, CSV diagnostics, and artifacts.
+evaluation.json combines the three reports; it does not calculate a
+single overall leaderboard score.
+
+Reproducible environment
+------------------------
+Create a script lockfile and distribute it with the starterpack:
+
+    uv lock --script evaluation/main.py
+
+Then run with the locked dependencies:
+
+    uv run --locked evaluation/main.py --synth data/submission.parquet
+"""
 
 import argparse
 import json

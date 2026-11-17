@@ -682,7 +682,7 @@ def write_summary(path, result):
         lines.extend([
             "",
             (
-                f"{label} gap (TRTR - TSTR): "
+                f"{label} gap (TSTR - TRTR): "
                 f"{result[gap]:+.3f} "
                 f"95% CI [{lo:+.3f}, {hi:+.3f}]"
             ),
@@ -864,12 +864,12 @@ def run_utility_eval(config, synthetic_data_path):
         "pr_auc_diff_ci_low": ap_ci[0],
         "pr_auc_diff_ci_high": ap_ci[1],
         "auc_gap_trtr_minus_tstr": (
-            results["trtr"]["auc"]
-            - results["tstr"]["auc"]
+            results["tstr"]["auc"]
+            - results["trtr"]["auc"]
         ),
         "pr_auc_gap_trtr_minus_tstr": (
-            results["trtr"]["pr_auc"]
-            - results["tstr"]["pr_auc"]
+            results["tstr"]["pr_auc"]
+            - results["trtr"]["pr_auc"]
         ),
     })
 
