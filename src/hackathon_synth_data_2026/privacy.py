@@ -772,16 +772,6 @@ def run_privacy_eval(
 
     result["output_folder"] = str(details.resolve())
 
-    (metrics / "privacy.json").write_text(
-        json.dumps(
-            result,
-            ensure_ascii=False,
-            indent=2,
-            allow_nan=False,
-        ),
-        encoding="utf-8",
-    )
-
     summary = result["summary"]
 
     print(

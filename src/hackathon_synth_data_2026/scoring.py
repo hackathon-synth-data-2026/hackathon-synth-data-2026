@@ -84,6 +84,8 @@ def calculate_final_score(
         raise ValueError(
             "TRTR average precision must be positive"
         )
+    
+    utility_score = min(1.0, ap_tstr / ap_trtr)
 
     fidelity_score = unit_score(
         fidelity["score"],
@@ -116,7 +118,7 @@ def calculate_final_score(
     )
 
     scores = {
-        "utility": ap_tstr / ap_trtr,
+        "utility": utility_score,
         "fidelity": fidelity_score,
         "privacy": privacy_score,
     }

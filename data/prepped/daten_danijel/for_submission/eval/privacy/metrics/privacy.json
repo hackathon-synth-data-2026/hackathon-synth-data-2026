@@ -240,7 +240,7 @@
           "excluded_rate": 0.0
         }
       },
-      "seconds": 4.321891732513905
+      "seconds": 4.401462692767382
     },
     {
       "group": "full",
@@ -402,7 +402,7 @@
           "excluded_rate": 0.0
         }
       },
-      "seconds": 4.392463255673647
+      "seconds": 4.396335240453482
     },
     {
       "group": "full",
@@ -564,7 +564,7 @@
           "excluded_rate": 0.0
         }
       },
-      "seconds": 4.353418756276369
+      "seconds": 4.371209185570478
     },
     {
       "group": "demographics",
@@ -726,7 +726,7 @@
           "excluded_rate": 0.0
         }
       },
-      "seconds": 0.2548501193523407
+      "seconds": 0.25915442034602165
     },
     {
       "group": "demographics",
@@ -888,7 +888,7 @@
           "excluded_rate": 0.0
         }
       },
-      "seconds": 0.2523815780878067
+      "seconds": 0.2695128582417965
     },
     {
       "group": "demographics",
@@ -1050,7 +1050,7 @@
           "excluded_rate": 0.0
         }
       },
-      "seconds": 0.2524503991007805
+      "seconds": 0.26327597722411156
     },
     {
       "group": "clinical_first",
@@ -1212,7 +1212,7 @@
           "excluded_rate": 0.0
         }
       },
-      "seconds": 0.2158392108976841
+      "seconds": 0.23667720705270767
     },
     {
       "group": "clinical_first",
@@ -1374,7 +1374,7 @@
           "excluded_rate": 0.0
         }
       },
-      "seconds": 0.21814099326729774
+      "seconds": 0.23089155182242393
     },
     {
       "group": "clinical_first",
@@ -1536,7 +1536,7 @@
           "excluded_rate": 0.0
         }
       },
-      "seconds": 0.2197941057384014
+      "seconds": 0.22298771515488625
     }
   ],
   "preprocessing": {
@@ -1836,7 +1836,7 @@
     }
   },
   "metadata": {
-    "started_utc": "2026-11-18T12:16:20.397934+00:00",
+    "started_utc": "2026-11-18T14:42:05.062085+00:00",
     "python": "3.12.14",
     "platform": "Linux-6.8.0-90-generic-x86_64-with-glibc2.35",
     "versions": {
@@ -1867,7 +1867,7 @@
       "synthetic": "/home/irene/projects/hackathon-synth-data-2026/data/prepped/daten_danijel/for_submission/synth_data.parquet"
     },
     "source_sha256": {
-      "privacy.py": "0feeffbb7c11ab52452dff397bb7d58c8fe03ccf370803012421d92e7c181d6d"
+      "privacy.py": "cfc241e2d9c67125da593762505d2ebcdf489a0b794a38582956ce4bfa9a5bfb"
     },
     "config_sha256": null,
     "scope": "Table release; fixed two-sided nearest-neighbor membership statistic; no Anonymeter",
@@ -2535,7 +2535,7 @@
       },
       "split_note": "Profilüberschneidungen sind Prüfhinweise; Personenunabhängigkeit extern bestätigen."
     },
-    "seconds": 15.242549624294043
+    "seconds": 15.432053063064814
   },
   "output_folder": null
 }
