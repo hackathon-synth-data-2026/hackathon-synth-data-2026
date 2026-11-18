@@ -194,12 +194,9 @@ def main():
         parser.error("Set data_specs.target_var in config.json")
 
     from utility import run_utility_eval
-
     synthetic_path = config["synthetic_data_path"]
-
     print("\n=== Utility evaluation ===", flush=True)
     run_utility_eval(config, synthetic_path)
-
     if config.get("validate_only", False):
         print(
             "\nSchema validation complete; "
@@ -208,12 +205,9 @@ def main():
         return
 
     from fidelity import run_fidelity_eval
-
     print("\n=== Fidelity evaluation ===", flush=True)
     run_fidelity_eval(config, synthetic_path)
-
     from privacy import run_privacy_eval
-
     print("\n=== Privacy evaluation ===", flush=True)
     run_privacy_eval(config, synthetic_path)
 
@@ -227,6 +221,21 @@ def main():
         report_file = metrics_dir / name / "metrics" / f"{name}.json"
         with report_file.open(encoding="utf-8") as handle:
             report[name] = json.load(handle)
+
+    from scoring import calculate_final_score
+    report["ranking"] = calculate_final_score(
+    report,
+    weights={
+        "utility": 1/3,
+        "fidelity": 1/3,
+        "privacy": 1/3})
+    report_path = metrics_dir / "evaluation.json"
+    with report_path.open("w", encoding="utf-8") as handle:
+        json.dump(report, handle, indent=2, allow_nan=False)
+    print(
+        "Final ranking points: "
+        f"{report['ranking']['final_points']:.2f}"
+    )
 
     report_path = metrics_dir / "evaluation.json"
     with report_path.open("w", encoding="utf-8") as handle:

@@ -1,15 +1,11 @@
 {
   "real_data_path": "/home/irene/projects/hackathon-synth-data-2026/data/prepped/mortality-prediction-kaggle/trainTestSplit",
-  "synthetic_data_path": "/home/irene/projects_output/hackathon/2026-11-12_GaussianCopula-kaggleDataset/synthetic_data/synthetic_data_forSubmision.parquet",
-  "evaluation_output_path": "/home/irene/projects_output/hackathon/2026-11-12_GaussianCopula-kaggleDataset/eval",
+  "synthetic_data_path": "/home/irene/projects/hackathon-synth-data-2026/src/daten_danijel/for_submission/synth_data.parquet",
+  "evaluation_output_path": "/home/irene/projects/hackathon-synth-data-2026/src/daten_danijel/for_submission/eval",
   "validate_only": false,
   "data_specs": {
   "identifier_var": "recordid",
   "target_var": "mortality",
-  "target_mapping": {
-  "case": 1,
-  "control": 0
-  },
   "categorical_vars": [
   "mortality"
   ],
@@ -258,16 +254,14 @@
   "UrineOutputSum"
   ]
   },
-  "synthesizer_kwargs": {
-    "synthesizer_name": "CTGAN",
-    "seed_value": 888,
-    "condition_var": null,
-    "nr_of_partitioning_bins": 4
-  },
   "fidelity_kwargs": {
-    "n_bins_histograms": 30,
-    "save_histograms": true,
-    "random_state_classifier": 42
+    "n_bins_histograms": 20,
+    "save_histograms": false,
+    "random_state_classifier": 42,
+    "score_weights": {"marginals": 1, 
+                    "correlation": 1, 
+                    "dependency": 1, 
+                    "missingness": 1}
   },
   "downstream_model_kwargs": {
     "model_class": "XGBClassifier",

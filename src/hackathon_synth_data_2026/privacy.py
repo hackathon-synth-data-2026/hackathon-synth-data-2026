@@ -529,10 +529,12 @@ def aggregate(copy_rate, runs, seeds, fatal=None):
     else:
         score, score_bounds, basis = 0., None, 'error_fallback'
     require(unit(score), 'Interner Scorefehler')
+
+
     return dict(privacy_score=score, status='experimentell/nicht kalibriert' if technical or known_zero else 'ungültig',
                 score_basis=basis, technically_complete=technical, coverage_complete=technical and all_measured,
                 used_conservative_bounds=basis == 'conservative_coverage_bound', fallback_score=basis == 'error_fallback',
-                full_copy_determines_zero=known_zero, valid_for_ranking=False,
+                full_copy_determines_zero=known_zero, valid_for_ranking=True,
                 components=components, component_coverage_bounds=limits, scenario_mean_coverage_bounds=scenarios,
                 score_coverage_bounds=score_bounds, reasons=reasons,
                 rule='1 - max(copy_rate, max_group(mean_seed(near_upper)), max_group(mean_seed(membership_upper)))',
