@@ -1,0 +1,2541 @@
+{
+  "summary": {
+    "privacy_score": 0.818196,
+    "status": "experimentell/nicht kalibriert",
+    "score_basis": "conservative_coverage_bound",
+    "technically_complete": true,
+    "coverage_complete": false,
+    "used_conservative_bounds": true,
+    "fallback_score": false,
+    "full_copy_determines_zero": false,
+    "valid_for_ranking": true,
+    "components": {
+      "copy_rate": 0.0,
+      "near_copy": 0.05237249774457914,
+      "membership": 0.181804
+    },
+    "component_coverage_bounds": {
+      "near_copy": [
+        0.001277503662588719,
+        0.05237249774457914
+      ],
+      "membership": [
+        0.039757333333333346,
+        0.181804
+      ]
+    },
+    "scenario_mean_coverage_bounds": {
+      "near_copy": {
+        "full": [
+          0.0,
+          0.0
+        ],
+        "demographics": [
+          0.0,
+          0.05237249774457914
+        ],
+        "clinical_first": [
+          0.001277503662588719,
+          0.001277503662588719
+        ]
+      },
+      "membership": {
+        "full": [
+          0.039757333333333346,
+          0.054391999999999996
+        ],
+        "demographics": [
+          0.0,
+          0.181804
+        ],
+        "clinical_first": [
+          0.009607999999999986,
+          0.0746706666666667
+        ]
+      }
+    },
+    "score_coverage_bounds": [
+      0.818196,
+      0.9602426666666667
+    ],
+    "reasons": [],
+    "rule": "1 - max(copy_rate, max_group(mean_seed(near_upper)), max_group(mean_seed(membership_upper)))",
+    "note": "Experimentelle Wettbewerbsheuristik. Coverage-Grenzen sind keine Konfidenzintervalle oder Datenschutzgarantie."
+  },
+  "copies": {
+    "rows": 2880,
+    "copied_rows": 0,
+    "copy_rate": 0.0,
+    "duplicate_rows_excess": 0,
+    "duplicate_rows_all": 0,
+    "status": "measured",
+    "coverage": {
+      "planned": 2880,
+      "evaluated": 2880,
+      "uncomparable": 0,
+      "excluded": 0,
+      "evaluated_rate": 1.0,
+      "uncomparable_rate": 0.0,
+      "excluded_rate": 0.0
+    }
+  },
+  "runs": [
+    {
+      "group": "full",
+      "seed": 42,
+      "targets_per_group": 500,
+      "synthetic_rows": 2880,
+      "tests": {
+        "near_copy": {
+          "status": "measured",
+          "measured_indicator": 0.0,
+          "coverage_bounds": [
+            0.0,
+            0.0
+          ],
+          "train_rate_bounds": [
+            0.0,
+            0.0
+          ],
+          "control_rate_bounds": [
+            0.0,
+            0.0
+          ],
+          "close_train": 0,
+          "close_control": 0,
+          "not_close_train": 2880,
+          "not_close_control": 2880,
+          "control_rate_one_possible": false,
+          "statistical_ci": null,
+          "coverage": {
+            "train_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "control_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "jointly_known": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": ""
+        },
+        "membership": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.04685600000000001,
+            0.054856000000000016
+          ],
+          "auc_coverage_bounds": [
+            0.472572,
+            0.476572
+          ],
+          "known_subset_auc": 0.4744698795180723,
+          "known_pair_ties": 0,
+          "constant_known_scores": false,
+          "statistical_ci": {
+            "auc": [
+              0.44480130522088357,
+              0.5133305220883534
+            ],
+            "indicator": [
+              0.0,
+              0.11039738955823286
+            ],
+            "nominal_level": 0.95,
+            "method": "stratified percentile bootstrap",
+            "scope": "known targets only; conditional on this synthetic table and preprocessing",
+            "contains_chance": true
+          },
+          "coverage": {
+            "train": {
+              "planned": 500,
+              "evaluated": 500,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "control": {
+              "planned": 500,
+              "evaluated": 498,
+              "uncomparable": 2,
+              "excluded": 0,
+              "evaluated_rate": 0.996,
+              "uncomparable_rate": 0.004,
+              "excluded_rate": 0.0
+            },
+            "rank_pairs": {
+              "planned": 250000,
+              "evaluated": 249000,
+              "uncomparable": 1000,
+              "excluded": 0,
+              "evaluated_rate": 0.996,
+              "uncomparable_rate": 0.004,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Ziele ohne zulässigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+        }
+      },
+      "eligibility": {
+        "train": {
+          "sampled": 500,
+          "eligible_by_observation_count": 500,
+          "insufficient_observation_count": 0,
+          "excluded": 0,
+          "not_sampled": 2380
+        },
+        "control": {
+          "sampled": 500,
+          "eligible_by_observation_count": 498,
+          "insufficient_observation_count": 2,
+          "excluded": 0,
+          "not_sampled": 220
+        },
+        "synthetic": {
+          "sampled": 2880,
+          "eligible_by_observation_count": 2880,
+          "insufficient_observation_count": 0,
+          "excluded": 0
+        }
+      },
+      "pair_coverage": {
+        "train": {
+          "planned": 1440000,
+          "evaluated": 1438096,
+          "uncomparable": 1904,
+          "excluded": 0,
+          "evaluated_rate": 0.9986777777777778,
+          "uncomparable_rate": 0.0013222222222222222,
+          "excluded_rate": 0.0
+        },
+        "control": {
+          "planned": 1440000,
+          "evaluated": 1433887,
+          "uncomparable": 6113,
+          "excluded": 0,
+          "evaluated_rate": 0.9957548611111111,
+          "uncomparable_rate": 0.004245138888888889,
+          "excluded_rate": 0.0
+        }
+      },
+      "seconds": 4.401462692767382
+    },
+    {
+      "group": "full",
+      "seed": 2026,
+      "targets_per_group": 500,
+      "synthetic_rows": 2880,
+      "tests": {
+        "near_copy": {
+          "status": "measured",
+          "measured_indicator": 0.0,
+          "coverage_bounds": [
+            0.0,
+            0.0
+          ],
+          "train_rate_bounds": [
+            0.0,
+            0.0
+          ],
+          "control_rate_bounds": [
+            0.0,
+            0.0
+          ],
+          "close_train": 0,
+          "close_control": 0,
+          "not_close_train": 2880,
+          "not_close_control": 2880,
+          "control_rate_one_possible": false,
+          "statistical_ci": null,
+          "coverage": {
+            "train_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "control_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "jointly_known": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": ""
+        },
+        "membership": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.011816000000000049,
+            0.019815999999999945
+          ],
+          "auc_coverage_bounds": [
+            0.490092,
+            0.494092
+          ],
+          "known_subset_auc": 0.4920602409638554,
+          "known_pair_ties": 0,
+          "constant_known_scores": false,
+          "statistical_ci": {
+            "auc": [
+              0.45566305220883535,
+              0.5268911646586345
+            ],
+            "indicator": [
+              0.0,
+              0.0886738955823293
+            ],
+            "nominal_level": 0.95,
+            "method": "stratified percentile bootstrap",
+            "scope": "known targets only; conditional on this synthetic table and preprocessing",
+            "contains_chance": true
+          },
+          "coverage": {
+            "train": {
+              "planned": 500,
+              "evaluated": 500,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "control": {
+              "planned": 500,
+              "evaluated": 498,
+              "uncomparable": 2,
+              "excluded": 0,
+              "evaluated_rate": 0.996,
+              "uncomparable_rate": 0.004,
+              "excluded_rate": 0.0
+            },
+            "rank_pairs": {
+              "planned": 250000,
+              "evaluated": 249000,
+              "uncomparable": 1000,
+              "excluded": 0,
+              "evaluated_rate": 0.996,
+              "uncomparable_rate": 0.004,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Ziele ohne zulässigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+        }
+      },
+      "eligibility": {
+        "train": {
+          "sampled": 500,
+          "eligible_by_observation_count": 500,
+          "insufficient_observation_count": 0,
+          "excluded": 0,
+          "not_sampled": 2380
+        },
+        "control": {
+          "sampled": 500,
+          "eligible_by_observation_count": 498,
+          "insufficient_observation_count": 2,
+          "excluded": 0,
+          "not_sampled": 220
+        },
+        "synthetic": {
+          "sampled": 2880,
+          "eligible_by_observation_count": 2880,
+          "insufficient_observation_count": 0,
+          "excluded": 0
+        }
+      },
+      "pair_coverage": {
+        "train": {
+          "planned": 1440000,
+          "evaluated": 1437249,
+          "uncomparable": 2751,
+          "excluded": 0,
+          "evaluated_rate": 0.9980895833333333,
+          "uncomparable_rate": 0.0019104166666666666,
+          "excluded_rate": 0.0
+        },
+        "control": {
+          "planned": 1440000,
+          "evaluated": 1430689,
+          "uncomparable": 9311,
+          "excluded": 0,
+          "evaluated_rate": 0.9935340277777778,
+          "uncomparable_rate": 0.006465972222222222,
+          "excluded_rate": 0.0
+        }
+      },
+      "seconds": 4.396335240453482
+    },
+    {
+      "group": "full",
+      "seed": 31415,
+      "targets_per_group": 500,
+      "synthetic_rows": 2880,
+      "tests": {
+        "near_copy": {
+          "status": "measured",
+          "measured_indicator": 0.0,
+          "coverage_bounds": [
+            0.0,
+            0.0
+          ],
+          "train_rate_bounds": [
+            0.0,
+            0.0
+          ],
+          "control_rate_bounds": [
+            0.0,
+            0.0
+          ],
+          "close_train": 0,
+          "close_control": 0,
+          "not_close_train": 2880,
+          "not_close_control": 2880,
+          "control_rate_one_possible": false,
+          "statistical_ci": null,
+          "coverage": {
+            "train_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "control_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "jointly_known": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": ""
+        },
+        "membership": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.06059999999999999,
+            0.08850400000000003
+          ],
+          "auc_coverage_bounds": [
+            0.455748,
+            0.4697
+          ],
+          "known_subset_auc": 0.4621965664957487,
+          "known_pair_ties": 0,
+          "constant_known_scores": false,
+          "statistical_ci": {
+            "auc": [
+              0.4338041352956448,
+              0.49671669127669243
+            ],
+            "indicator": [
+              0.006566617446615131,
+              0.13239172940871036
+            ],
+            "nominal_level": 0.95,
+            "method": "stratified percentile bootstrap",
+            "scope": "known targets only; conditional on this synthetic table and preprocessing",
+            "contains_chance": false
+          },
+          "coverage": {
+            "train": {
+              "planned": 500,
+              "evaluated": 496,
+              "uncomparable": 4,
+              "excluded": 0,
+              "evaluated_rate": 0.992,
+              "uncomparable_rate": 0.008,
+              "excluded_rate": 0.0
+            },
+            "control": {
+              "planned": 500,
+              "evaluated": 497,
+              "uncomparable": 3,
+              "excluded": 0,
+              "evaluated_rate": 0.994,
+              "uncomparable_rate": 0.006,
+              "excluded_rate": 0.0
+            },
+            "rank_pairs": {
+              "planned": 250000,
+              "evaluated": 246512,
+              "uncomparable": 3488,
+              "excluded": 0,
+              "evaluated_rate": 0.986048,
+              "uncomparable_rate": 0.013952,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Ziele ohne zulässigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+        }
+      },
+      "eligibility": {
+        "train": {
+          "sampled": 500,
+          "eligible_by_observation_count": 496,
+          "insufficient_observation_count": 4,
+          "excluded": 0,
+          "not_sampled": 2380
+        },
+        "control": {
+          "sampled": 500,
+          "eligible_by_observation_count": 497,
+          "insufficient_observation_count": 3,
+          "excluded": 0,
+          "not_sampled": 220
+        },
+        "synthetic": {
+          "sampled": 2880,
+          "eligible_by_observation_count": 2880,
+          "insufficient_observation_count": 0,
+          "excluded": 0
+        }
+      },
+      "pair_coverage": {
+        "train": {
+          "planned": 1440000,
+          "evaluated": 1425236,
+          "uncomparable": 14764,
+          "excluded": 0,
+          "evaluated_rate": 0.9897472222222222,
+          "uncomparable_rate": 0.010252777777777777,
+          "excluded_rate": 0.0
+        },
+        "control": {
+          "planned": 1440000,
+          "evaluated": 1428131,
+          "uncomparable": 11869,
+          "excluded": 0,
+          "evaluated_rate": 0.9917576388888889,
+          "uncomparable_rate": 0.008242361111111112,
+          "excluded_rate": 0.0
+        }
+      },
+      "seconds": 4.371209185570478
+    },
+    {
+      "group": "demographics",
+      "seed": 42,
+      "targets_per_group": 500,
+      "synthetic_rows": 2880,
+      "tests": {
+        "near_copy": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.0,
+            0.06823316764572976
+          ],
+          "train_rate_bounds": [
+            0.2454861111111111,
+            0.28402777777777777
+          ],
+          "control_rate_bounds": [
+            0.23159722222222223,
+            0.2701388888888889
+          ],
+          "close_train": 707,
+          "close_control": 667,
+          "not_close_train": 2062,
+          "not_close_control": 2102,
+          "control_rate_one_possible": false,
+          "statistical_ci": null,
+          "coverage": {
+            "train_neighbors": {
+              "planned": 2880,
+              "evaluated": 2769,
+              "uncomparable": 111,
+              "excluded": 0,
+              "evaluated_rate": 0.9614583333333333,
+              "uncomparable_rate": 0.03854166666666667,
+              "excluded_rate": 0.0
+            },
+            "control_neighbors": {
+              "planned": 2880,
+              "evaluated": 2769,
+              "uncomparable": 111,
+              "excluded": 0,
+              "evaluated_rate": 0.9614583333333333,
+              "uncomparable_rate": 0.03854166666666667,
+              "excluded_rate": 0.0
+            },
+            "jointly_known": {
+              "planned": 2880,
+              "evaluated": 2769,
+              "uncomparable": 111,
+              "excluded": 0,
+              "evaluated_rate": 0.9614583333333333,
+              "uncomparable_rate": 0.03854166666666667,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Zeilen ohne zulässigen Nachbarn: close/not-close unbekannt"
+        },
+        "membership": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.0,
+            0.1673039999999999
+          ],
+          "auc_coverage_bounds": [
+            0.422704,
+            0.583652
+          ],
+          "known_subset_auc": 0.5037876079194138,
+          "known_pair_ties": 52,
+          "constant_known_scores": false,
+          "statistical_ci": {
+            "auc": [
+              0.46676660087813393,
+              0.5379337037513766
+            ],
+            "indicator": [
+              0.0,
+              0.07586740750275323
+            ],
+            "nominal_level": 0.95,
+            "method": "stratified percentile bootstrap",
+            "scope": "known targets only; conditional on this synthetic table and preprocessing",
+            "contains_chance": true
+          },
+          "coverage": {
+            "train": {
+              "planned": 500,
+              "evaluated": 457,
+              "uncomparable": 43,
+              "excluded": 0,
+              "evaluated_rate": 0.914,
+              "uncomparable_rate": 0.086,
+              "excluded_rate": 0.0
+            },
+            "control": {
+              "planned": 500,
+              "evaluated": 459,
+              "uncomparable": 41,
+              "excluded": 0,
+              "evaluated_rate": 0.918,
+              "uncomparable_rate": 0.082,
+              "excluded_rate": 0.0
+            },
+            "rank_pairs": {
+              "planned": 250000,
+              "evaluated": 209763,
+              "uncomparable": 40237,
+              "excluded": 0,
+              "evaluated_rate": 0.839052,
+              "uncomparable_rate": 0.160948,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Ziele ohne zulässigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+        }
+      },
+      "eligibility": {
+        "train": {
+          "sampled": 500,
+          "eligible_by_observation_count": 457,
+          "insufficient_observation_count": 43,
+          "excluded": 0,
+          "not_sampled": 2380
+        },
+        "control": {
+          "sampled": 500,
+          "eligible_by_observation_count": 459,
+          "insufficient_observation_count": 41,
+          "excluded": 0,
+          "not_sampled": 220
+        },
+        "synthetic": {
+          "sampled": 2880,
+          "eligible_by_observation_count": 2769,
+          "insufficient_observation_count": 111,
+          "excluded": 0
+        }
+      },
+      "pair_coverage": {
+        "train": {
+          "planned": 1440000,
+          "evaluated": 1236459,
+          "uncomparable": 203541,
+          "excluded": 0,
+          "evaluated_rate": 0.8586520833333333,
+          "uncomparable_rate": 0.14134791666666666,
+          "excluded_rate": 0.0
+        },
+        "control": {
+          "planned": 1440000,
+          "evaluated": 1244916,
+          "uncomparable": 195084,
+          "excluded": 0,
+          "evaluated_rate": 0.864525,
+          "uncomparable_rate": 0.135475,
+          "excluded_rate": 0.0
+        }
+      },
+      "seconds": 0.25915442034602165
+    },
+    {
+      "group": "demographics",
+      "seed": 2026,
+      "targets_per_group": 500,
+      "synthetic_rows": 2880,
+      "tests": {
+        "near_copy": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.0,
+            0.027958993476234904
+          ],
+          "train_rate_bounds": [
+            0.23715277777777777,
+            0.27569444444444446
+          ],
+          "control_rate_bounds": [
+            0.2548611111111111,
+            0.2934027777777778
+          ],
+          "close_train": 683,
+          "close_control": 734,
+          "not_close_train": 2086,
+          "not_close_control": 2035,
+          "control_rate_one_possible": false,
+          "statistical_ci": null,
+          "coverage": {
+            "train_neighbors": {
+              "planned": 2880,
+              "evaluated": 2769,
+              "uncomparable": 111,
+              "excluded": 0,
+              "evaluated_rate": 0.9614583333333333,
+              "uncomparable_rate": 0.03854166666666667,
+              "excluded_rate": 0.0
+            },
+            "control_neighbors": {
+              "planned": 2880,
+              "evaluated": 2769,
+              "uncomparable": 111,
+              "excluded": 0,
+              "evaluated_rate": 0.9614583333333333,
+              "uncomparable_rate": 0.03854166666666667,
+              "excluded_rate": 0.0
+            },
+            "jointly_known": {
+              "planned": 2880,
+              "evaluated": 2769,
+              "uncomparable": 111,
+              "excluded": 0,
+              "evaluated_rate": 0.9614583333333333,
+              "uncomparable_rate": 0.03854166666666667,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Zeilen ohne zulässigen Nachbarn: close/not-close unbekannt"
+        },
+        "membership": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.0,
+            0.177184
+          ],
+          "auc_coverage_bounds": [
+            0.423988,
+            0.588592
+          ],
+          "known_subset_auc": 0.5075293633199106,
+          "known_pair_ties": 50,
+          "constant_known_scores": false,
+          "statistical_ci": {
+            "auc": [
+              0.4644539835000407,
+              0.5432922829412637
+            ],
+            "indicator": [
+              0.0,
+              0.0865845658825275
+            ],
+            "nominal_level": 0.95,
+            "method": "stratified percentile bootstrap",
+            "scope": "known targets only; conditional on this synthetic table and preprocessing",
+            "contains_chance": true
+          },
+          "coverage": {
+            "train": {
+              "planned": 500,
+              "evaluated": 457,
+              "uncomparable": 43,
+              "excluded": 0,
+              "evaluated_rate": 0.914,
+              "uncomparable_rate": 0.086,
+              "excluded_rate": 0.0
+            },
+            "control": {
+              "planned": 500,
+              "evaluated": 457,
+              "uncomparable": 43,
+              "excluded": 0,
+              "evaluated_rate": 0.914,
+              "uncomparable_rate": 0.086,
+              "excluded_rate": 0.0
+            },
+            "rank_pairs": {
+              "planned": 250000,
+              "evaluated": 208849,
+              "uncomparable": 41151,
+              "excluded": 0,
+              "evaluated_rate": 0.835396,
+              "uncomparable_rate": 0.164604,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Ziele ohne zulässigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+        }
+      },
+      "eligibility": {
+        "train": {
+          "sampled": 500,
+          "eligible_by_observation_count": 457,
+          "insufficient_observation_count": 43,
+          "excluded": 0,
+          "not_sampled": 2380
+        },
+        "control": {
+          "sampled": 500,
+          "eligible_by_observation_count": 457,
+          "insufficient_observation_count": 43,
+          "excluded": 0,
+          "not_sampled": 220
+        },
+        "synthetic": {
+          "sampled": 2880,
+          "eligible_by_observation_count": 2769,
+          "insufficient_observation_count": 111,
+          "excluded": 0
+        }
+      },
+      "pair_coverage": {
+        "train": {
+          "planned": 1440000,
+          "evaluated": 1233677,
+          "uncomparable": 206323,
+          "excluded": 0,
+          "evaluated_rate": 0.8567201388888889,
+          "uncomparable_rate": 0.1432798611111111,
+          "excluded_rate": 0.0
+        },
+        "control": {
+          "planned": 1440000,
+          "evaluated": 1237893,
+          "uncomparable": 202107,
+          "excluded": 0,
+          "evaluated_rate": 0.8596479166666666,
+          "uncomparable_rate": 0.14035208333333332,
+          "excluded_rate": 0.0
+        }
+      },
+      "seconds": 0.2695128582417965
+    },
+    {
+      "group": "demographics",
+      "seed": 31415,
+      "targets_per_group": 500,
+      "synthetic_rows": 2880,
+      "tests": {
+        "near_copy": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.0,
+            0.060925332111772756
+          ],
+          "train_rate_bounds": [
+            0.24965277777777778,
+            0.2881944444444444
+          ],
+          "control_rate_bounds": [
+            0.2420138888888889,
+            0.28055555555555556
+          ],
+          "close_train": 719,
+          "close_control": 697,
+          "not_close_train": 2050,
+          "not_close_control": 2072,
+          "control_rate_one_possible": false,
+          "statistical_ci": null,
+          "coverage": {
+            "train_neighbors": {
+              "planned": 2880,
+              "evaluated": 2769,
+              "uncomparable": 111,
+              "excluded": 0,
+              "evaluated_rate": 0.9614583333333333,
+              "uncomparable_rate": 0.03854166666666667,
+              "excluded_rate": 0.0
+            },
+            "control_neighbors": {
+              "planned": 2880,
+              "evaluated": 2769,
+              "uncomparable": 111,
+              "excluded": 0,
+              "evaluated_rate": 0.9614583333333333,
+              "uncomparable_rate": 0.03854166666666667,
+              "excluded_rate": 0.0
+            },
+            "jointly_known": {
+              "planned": 2880,
+              "evaluated": 2769,
+              "uncomparable": 111,
+              "excluded": 0,
+              "evaluated_rate": 0.9614583333333333,
+              "uncomparable_rate": 0.03854166666666667,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Zeilen ohne zulässigen Nachbarn: close/not-close unbekannt"
+        },
+        "membership": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.0,
+            0.2009240000000001
+          ],
+          "auc_coverage_bounds": [
+            0.419046,
+            0.600462
+          ],
+          "known_subset_auc": 0.5119156983278442,
+          "known_pair_ties": 51,
+          "constant_known_scores": false,
+          "statistical_ci": {
+            "auc": [
+              0.4725668349246992,
+              0.5471946067843985
+            ],
+            "indicator": [
+              0.0,
+              0.09438921356879693
+            ],
+            "nominal_level": 0.95,
+            "method": "stratified percentile bootstrap",
+            "scope": "known targets only; conditional on this synthetic table and preprocessing",
+            "contains_chance": true
+          },
+          "coverage": {
+            "train": {
+              "planned": 500,
+              "evaluated": 442,
+              "uncomparable": 58,
+              "excluded": 0,
+              "evaluated_rate": 0.884,
+              "uncomparable_rate": 0.116,
+              "excluded_rate": 0.0
+            },
+            "control": {
+              "planned": 500,
+              "evaluated": 463,
+              "uncomparable": 37,
+              "excluded": 0,
+              "evaluated_rate": 0.926,
+              "uncomparable_rate": 0.074,
+              "excluded_rate": 0.0
+            },
+            "rank_pairs": {
+              "planned": 250000,
+              "evaluated": 204646,
+              "uncomparable": 45354,
+              "excluded": 0,
+              "evaluated_rate": 0.818584,
+              "uncomparable_rate": 0.181416,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Ziele ohne zulässigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+        }
+      },
+      "eligibility": {
+        "train": {
+          "sampled": 500,
+          "eligible_by_observation_count": 442,
+          "insufficient_observation_count": 58,
+          "excluded": 0,
+          "not_sampled": 2380
+        },
+        "control": {
+          "sampled": 500,
+          "eligible_by_observation_count": 463,
+          "insufficient_observation_count": 37,
+          "excluded": 0,
+          "not_sampled": 220
+        },
+        "synthetic": {
+          "sampled": 2880,
+          "eligible_by_observation_count": 2769,
+          "insufficient_observation_count": 111,
+          "excluded": 0
+        }
+      },
+      "pair_coverage": {
+        "train": {
+          "planned": 1440000,
+          "evaluated": 1193678,
+          "uncomparable": 246322,
+          "excluded": 0,
+          "evaluated_rate": 0.8289430555555556,
+          "uncomparable_rate": 0.17105694444444444,
+          "excluded_rate": 0.0
+        },
+        "control": {
+          "planned": 1440000,
+          "evaluated": 1255722,
+          "uncomparable": 184278,
+          "excluded": 0,
+          "evaluated_rate": 0.8720291666666666,
+          "uncomparable_rate": 0.12797083333333334,
+          "excluded_rate": 0.0
+        }
+      },
+      "seconds": 0.26327597722411156
+    },
+    {
+      "group": "clinical_first",
+      "seed": 42,
+      "targets_per_group": 500,
+      "synthetic_rows": 2880,
+      "tests": {
+        "near_copy": {
+          "status": "measured",
+          "measured_indicator": 0.0013927576601671307,
+          "coverage_bounds": [
+            0.0013927576601671307,
+            0.0013927576601671307
+          ],
+          "train_rate_bounds": [
+            0.004166666666666667,
+            0.004166666666666667
+          ],
+          "control_rate_bounds": [
+            0.002777777777777778,
+            0.002777777777777778
+          ],
+          "close_train": 12,
+          "close_control": 8,
+          "not_close_train": 2868,
+          "not_close_control": 2872,
+          "control_rate_one_possible": false,
+          "statistical_ci": null,
+          "coverage": {
+            "train_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "control_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "jointly_known": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": ""
+        },
+        "membership": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.013992000000000004,
+            0.08534400000000009
+          ],
+          "auc_coverage_bounds": [
+            0.506996,
+            0.542672
+          ],
+          "known_subset_auc": 0.5257527552980119,
+          "known_pair_ties": 2,
+          "constant_known_scores": false,
+          "statistical_ci": {
+            "auc": [
+              0.48569879003322536,
+              0.5583662233855011
+            ],
+            "indicator": [
+              0.0,
+              0.11673244677100225
+            ],
+            "nominal_level": 0.95,
+            "method": "stratified percentile bootstrap",
+            "scope": "known targets only; conditional on this synthetic table and preprocessing",
+            "contains_chance": true
+          },
+          "coverage": {
+            "train": {
+              "planned": 500,
+              "evaluated": 491,
+              "uncomparable": 9,
+              "excluded": 0,
+              "evaluated_rate": 0.982,
+              "uncomparable_rate": 0.018,
+              "excluded_rate": 0.0
+            },
+            "control": {
+              "planned": 500,
+              "evaluated": 491,
+              "uncomparable": 9,
+              "excluded": 0,
+              "evaluated_rate": 0.982,
+              "uncomparable_rate": 0.018,
+              "excluded_rate": 0.0
+            },
+            "rank_pairs": {
+              "planned": 250000,
+              "evaluated": 241081,
+              "uncomparable": 8919,
+              "excluded": 0,
+              "evaluated_rate": 0.964324,
+              "uncomparable_rate": 0.035676,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Ziele ohne zulässigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+        }
+      },
+      "eligibility": {
+        "train": {
+          "sampled": 500,
+          "eligible_by_observation_count": 491,
+          "insufficient_observation_count": 9,
+          "excluded": 0,
+          "not_sampled": 2380
+        },
+        "control": {
+          "sampled": 500,
+          "eligible_by_observation_count": 491,
+          "insufficient_observation_count": 9,
+          "excluded": 0,
+          "not_sampled": 220
+        },
+        "synthetic": {
+          "sampled": 2880,
+          "eligible_by_observation_count": 2880,
+          "insufficient_observation_count": 0,
+          "excluded": 0
+        }
+      },
+      "pair_coverage": {
+        "train": {
+          "planned": 1440000,
+          "evaluated": 1413436,
+          "uncomparable": 26564,
+          "excluded": 0,
+          "evaluated_rate": 0.9815527777777778,
+          "uncomparable_rate": 0.018447222222222222,
+          "excluded_rate": 0.0
+        },
+        "control": {
+          "planned": 1440000,
+          "evaluated": 1412922,
+          "uncomparable": 27078,
+          "excluded": 0,
+          "evaluated_rate": 0.9811958333333334,
+          "uncomparable_rate": 0.018804166666666667,
+          "excluded_rate": 0.0
+        }
+      },
+      "seconds": 0.23667720705270767
+    },
+    {
+      "group": "clinical_first",
+      "seed": 2026,
+      "targets_per_group": 500,
+      "synthetic_rows": 2880,
+      "tests": {
+        "near_copy": {
+          "status": "measured",
+          "measured_indicator": 0.001393728222996516,
+          "coverage_bounds": [
+            0.001393728222996516,
+            0.001393728222996516
+          ],
+          "train_rate_bounds": [
+            0.004861111111111111,
+            0.004861111111111111
+          ],
+          "control_rate_bounds": [
+            0.003472222222222222,
+            0.003472222222222222
+          ],
+          "close_train": 14,
+          "close_control": 10,
+          "not_close_train": 2866,
+          "not_close_control": 2870,
+          "control_rate_one_possible": false,
+          "statistical_ci": null,
+          "coverage": {
+            "train_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "control_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "jointly_known": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": ""
+        },
+        "membership": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.014831999999999956,
+            0.07831999999999995
+          ],
+          "auc_coverage_bounds": [
+            0.507416,
+            0.53916
+          ],
+          "known_subset_auc": 0.5240514905149052,
+          "known_pair_ties": 0,
+          "constant_known_scores": false,
+          "statistical_ci": {
+            "auc": [
+              0.48692587497521317,
+              0.5597198468173706
+            ],
+            "indicator": [
+              0.0,
+              0.11943969363474127
+            ],
+            "nominal_level": 0.95,
+            "method": "stratified percentile bootstrap",
+            "scope": "known targets only; conditional on this synthetic table and preprocessing",
+            "contains_chance": true
+          },
+          "coverage": {
+            "train": {
+              "planned": 500,
+              "evaluated": 492,
+              "uncomparable": 8,
+              "excluded": 0,
+              "evaluated_rate": 0.984,
+              "uncomparable_rate": 0.016,
+              "excluded_rate": 0.0
+            },
+            "control": {
+              "planned": 500,
+              "evaluated": 492,
+              "uncomparable": 8,
+              "excluded": 0,
+              "evaluated_rate": 0.984,
+              "uncomparable_rate": 0.016,
+              "excluded_rate": 0.0
+            },
+            "rank_pairs": {
+              "planned": 250000,
+              "evaluated": 242064,
+              "uncomparable": 7936,
+              "excluded": 0,
+              "evaluated_rate": 0.968256,
+              "uncomparable_rate": 0.031744,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Ziele ohne zulässigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+        }
+      },
+      "eligibility": {
+        "train": {
+          "sampled": 500,
+          "eligible_by_observation_count": 492,
+          "insufficient_observation_count": 8,
+          "excluded": 0,
+          "not_sampled": 2380
+        },
+        "control": {
+          "sampled": 500,
+          "eligible_by_observation_count": 492,
+          "insufficient_observation_count": 8,
+          "excluded": 0,
+          "not_sampled": 220
+        },
+        "synthetic": {
+          "sampled": 2880,
+          "eligible_by_observation_count": 2880,
+          "insufficient_observation_count": 0,
+          "excluded": 0
+        }
+      },
+      "pair_coverage": {
+        "train": {
+          "planned": 1440000,
+          "evaluated": 1416304,
+          "uncomparable": 23696,
+          "excluded": 0,
+          "evaluated_rate": 0.9835444444444444,
+          "uncomparable_rate": 0.016455555555555557,
+          "excluded_rate": 0.0
+        },
+        "control": {
+          "planned": 1440000,
+          "evaluated": 1415932,
+          "uncomparable": 24068,
+          "excluded": 0,
+          "evaluated_rate": 0.9832861111111111,
+          "uncomparable_rate": 0.01671388888888889,
+          "excluded_rate": 0.0
+        }
+      },
+      "seconds": 0.23089155182242393
+    },
+    {
+      "group": "clinical_first",
+      "seed": 31415,
+      "targets_per_group": 500,
+      "synthetic_rows": 2880,
+      "tests": {
+        "near_copy": {
+          "status": "measured",
+          "measured_indicator": 0.0010460251046025102,
+          "coverage_bounds": [
+            0.0010460251046025102,
+            0.0010460251046025102
+          ],
+          "train_rate_bounds": [
+            0.005208333333333333,
+            0.005208333333333333
+          ],
+          "control_rate_bounds": [
+            0.004166666666666667,
+            0.004166666666666667
+          ],
+          "close_train": 15,
+          "close_control": 12,
+          "not_close_train": 2865,
+          "not_close_control": 2868,
+          "control_rate_one_possible": false,
+          "statistical_ci": null,
+          "coverage": {
+            "train_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "control_neighbors": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            },
+            "jointly_known": {
+              "planned": 2880,
+              "evaluated": 2880,
+              "uncomparable": 0,
+              "excluded": 0,
+              "evaluated_rate": 1.0,
+              "uncomparable_rate": 0.0,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": ""
+        },
+        "membership": {
+          "status": "coverage_bounded",
+          "measured_indicator": null,
+          "coverage_bounds": [
+            0.0,
+            0.06034800000000007
+          ],
+          "auc_coverage_bounds": [
+            0.476822,
+            0.530174
+          ],
+          "known_subset_auc": 0.5036951432845155,
+          "known_pair_ties": 3,
+          "constant_known_scores": false,
+          "statistical_ci": {
+            "auc": [
+              0.47187571304222903,
+              0.5406924749220408
+            ],
+            "indicator": [
+              0.0,
+              0.08138494984408151
+            ],
+            "nominal_level": 0.95,
+            "method": "stratified percentile bootstrap",
+            "scope": "known targets only; conditional on this synthetic table and preprocessing",
+            "contains_chance": true
+          },
+          "coverage": {
+            "train": {
+              "planned": 500,
+              "evaluated": 482,
+              "uncomparable": 18,
+              "excluded": 0,
+              "evaluated_rate": 0.964,
+              "uncomparable_rate": 0.036,
+              "excluded_rate": 0.0
+            },
+            "control": {
+              "planned": 500,
+              "evaluated": 491,
+              "uncomparable": 9,
+              "excluded": 0,
+              "evaluated_rate": 0.982,
+              "uncomparable_rate": 0.018,
+              "excluded_rate": 0.0
+            },
+            "rank_pairs": {
+              "planned": 250000,
+              "evaluated": 236662,
+              "uncomparable": 13338,
+              "excluded": 0,
+              "evaluated_rate": 0.946648,
+              "uncomparable_rate": 0.053352,
+              "excluded_rate": 0.0
+            }
+          },
+          "reason": "Ziele ohne zulässigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+        }
+      },
+      "eligibility": {
+        "train": {
+          "sampled": 500,
+          "eligible_by_observation_count": 482,
+          "insufficient_observation_count": 18,
+          "excluded": 0,
+          "not_sampled": 2380
+        },
+        "control": {
+          "sampled": 500,
+          "eligible_by_observation_count": 491,
+          "insufficient_observation_count": 9,
+          "excluded": 0,
+          "not_sampled": 220
+        },
+        "synthetic": {
+          "sampled": 2880,
+          "eligible_by_observation_count": 2880,
+          "insufficient_observation_count": 0,
+          "excluded": 0
+        }
+      },
+      "pair_coverage": {
+        "train": {
+          "planned": 1440000,
+          "evaluated": 1387126,
+          "uncomparable": 52874,
+          "excluded": 0,
+          "evaluated_rate": 0.9632819444444445,
+          "uncomparable_rate": 0.03671805555555555,
+          "excluded_rate": 0.0
+        },
+        "control": {
+          "planned": 1440000,
+          "evaluated": 1412919,
+          "uncomparable": 27081,
+          "excluded": 0,
+          "evaluated_rate": 0.98119375,
+          "uncomparable_rate": 0.01880625,
+          "excluded_rate": 0.0
+        }
+      },
+      "seconds": 0.22298771515488625
+    }
+  ],
+  "preprocessing": {
+    "full": {
+      "active_columns": [
+        "ALP_first",
+        "ALP_last",
+        "ALT_first",
+        "ALT_last",
+        "AST_first",
+        "AST_last",
+        "Age",
+        "Albumin_first",
+        "Albumin_last",
+        "BUN_first",
+        "BUN_last",
+        "Bilirubin_first",
+        "Bilirubin_last",
+        "CCU",
+        "CSRU",
+        "Cholesterol_first",
+        "Cholesterol_last",
+        "Creatinine_first",
+        "Creatinine_last",
+        "DiasABP_first",
+        "DiasABP_highest",
+        "DiasABP_last",
+        "DiasABP_lowest",
+        "DiasABP_median",
+        "FiO2_first",
+        "FiO2_last",
+        "GCS_first",
+        "GCS_highest",
+        "GCS_last",
+        "GCS_lowest",
+        "GCS_median",
+        "Gender",
+        "Glucose_first",
+        "Glucose_highest",
+        "Glucose_last",
+        "Glucose_lowest",
+        "Glucose_median",
+        "HCO3_first",
+        "HCO3_last",
+        "HCT_first",
+        "HCT_last",
+        "HR_first",
+        "HR_highest",
+        "HR_last",
+        "HR_lowest",
+        "HR_median",
+        "Height",
+        "K_first",
+        "K_last",
+        "Lactate_first",
+        "Lactate_last",
+        "MAP_first",
+        "MAP_highest",
+        "MAP_last",
+        "MAP_lowest",
+        "MAP_median",
+        "MechVentDuration",
+        "MechVentLast8Hour",
+        "MechVentStartTime",
+        "Mg_first",
+        "Mg_last",
+        "NIDiasABP_first",
+        "NIDiasABP_highest",
+        "NIDiasABP_last",
+        "NIDiasABP_lowest",
+        "NIDiasABP_median",
+        "NIMAP_first",
+        "NIMAP_highest",
+        "NIMAP_last",
+        "NIMAP_lowest",
+        "NIMAP_median",
+        "NISysABP_first",
+        "NISysABP_highest",
+        "NISysABP_last",
+        "NISysABP_lowest",
+        "NISysABP_median",
+        "Na_first",
+        "Na_last",
+        "PaCO2_first",
+        "PaCO2_last",
+        "PaO2_first",
+        "PaO2_last",
+        "Platelets_first",
+        "Platelets_last",
+        "RespRate_first",
+        "RespRate_highest",
+        "RespRate_last",
+        "RespRate_lowest",
+        "RespRate_median",
+        "SAPS-I",
+        "SICU",
+        "SOFA",
+        "SaO2_first",
+        "SaO2_highest",
+        "SaO2_last",
+        "SaO2_lowest",
+        "SaO2_median",
+        "SysABP_first",
+        "SysABP_highest",
+        "SysABP_last",
+        "SysABP_lowest",
+        "SysABP_median",
+        "Temp_first",
+        "Temp_highest",
+        "Temp_last",
+        "Temp_lowest",
+        "Temp_median",
+        "TroponinI_first",
+        "TroponinI_last",
+        "TroponinT_first",
+        "TroponinT_last",
+        "UrineOutputSum",
+        "WBC_first",
+        "WBC_last",
+        "Weight",
+        "Weight_first",
+        "Weight_last",
+        "In-hospital_death",
+        "pH_first",
+        "pH_last"
+      ],
+      "excluded_columns": [],
+      "required_common_features": 30,
+      "weighting": "equal_per_active_column",
+      "scaling": "training_IQR; training_range_if_IQR_zero",
+      "missing": "both missing: excluded; one missing: cost 1; common-observation minimum",
+      "requested_columns": [
+        "ALP_first",
+        "ALP_last",
+        "ALT_first",
+        "ALT_last",
+        "AST_first",
+        "AST_last",
+        "Age",
+        "Albumin_first",
+        "Albumin_last",
+        "BUN_first",
+        "BUN_last",
+        "Bilirubin_first",
+        "Bilirubin_last",
+        "CCU",
+        "CSRU",
+        "Cholesterol_first",
+        "Cholesterol_last",
+        "Creatinine_first",
+        "Creatinine_last",
+        "DiasABP_first",
+        "DiasABP_highest",
+        "DiasABP_last",
+        "DiasABP_lowest",
+        "DiasABP_median",
+        "FiO2_first",
+        "FiO2_last",
+        "GCS_first",
+        "GCS_highest",
+        "GCS_last",
+        "GCS_lowest",
+        "GCS_median",
+        "Gender",
+        "Glucose_first",
+        "Glucose_highest",
+        "Glucose_last",
+        "Glucose_lowest",
+        "Glucose_median",
+        "HCO3_first",
+        "HCO3_last",
+        "HCT_first",
+        "HCT_last",
+        "HR_first",
+        "HR_highest",
+        "HR_last",
+        "HR_lowest",
+        "HR_median",
+        "Height",
+        "K_first",
+        "K_last",
+        "Lactate_first",
+        "Lactate_last",
+        "MAP_first",
+        "MAP_highest",
+        "MAP_last",
+        "MAP_lowest",
+        "MAP_median",
+        "MechVentDuration",
+        "MechVentLast8Hour",
+        "MechVentStartTime",
+        "Mg_first",
+        "Mg_last",
+        "NIDiasABP_first",
+        "NIDiasABP_highest",
+        "NIDiasABP_last",
+        "NIDiasABP_lowest",
+        "NIDiasABP_median",
+        "NIMAP_first",
+        "NIMAP_highest",
+        "NIMAP_last",
+        "NIMAP_lowest",
+        "NIMAP_median",
+        "NISysABP_first",
+        "NISysABP_highest",
+        "NISysABP_last",
+        "NISysABP_lowest",
+        "NISysABP_median",
+        "Na_first",
+        "Na_last",
+        "PaCO2_first",
+        "PaCO2_last",
+        "PaO2_first",
+        "PaO2_last",
+        "Platelets_first",
+        "Platelets_last",
+        "RespRate_first",
+        "RespRate_highest",
+        "RespRate_last",
+        "RespRate_lowest",
+        "RespRate_median",
+        "SAPS-I",
+        "SICU",
+        "SOFA",
+        "SaO2_first",
+        "SaO2_highest",
+        "SaO2_last",
+        "SaO2_lowest",
+        "SaO2_median",
+        "SysABP_first",
+        "SysABP_highest",
+        "SysABP_last",
+        "SysABP_lowest",
+        "SysABP_median",
+        "Temp_first",
+        "Temp_highest",
+        "Temp_last",
+        "Temp_lowest",
+        "Temp_median",
+        "TroponinI_first",
+        "TroponinI_last",
+        "TroponinT_first",
+        "TroponinT_last",
+        "UrineOutputSum",
+        "WBC_first",
+        "WBC_last",
+        "Weight",
+        "Weight_first",
+        "Weight_last",
+        "In-hospital_death",
+        "pH_first",
+        "pH_last"
+      ],
+      "small_active_group": false
+    },
+    "demographics": {
+      "active_columns": [
+        "Age",
+        "Gender",
+        "Height",
+        "Weight"
+      ],
+      "excluded_columns": [],
+      "required_common_features": 3,
+      "weighting": "equal_per_active_column",
+      "scaling": "training_IQR; training_range_if_IQR_zero",
+      "missing": "both missing: excluded; one missing: cost 1; common-observation minimum",
+      "requested_columns": [
+        "Age",
+        "Gender",
+        "Height",
+        "Weight"
+      ],
+      "small_active_group": false
+    },
+    "clinical_first": {
+      "active_columns": [
+        "HR_first",
+        "GCS_first",
+        "Glucose_first",
+        "Creatinine_first",
+        "Temp_first"
+      ],
+      "excluded_columns": [],
+      "required_common_features": 3,
+      "weighting": "equal_per_active_column",
+      "scaling": "training_IQR; training_range_if_IQR_zero",
+      "missing": "both missing: excluded; one missing: cost 1; common-observation minimum",
+      "requested_columns": [
+        "HR_first",
+        "GCS_first",
+        "Glucose_first",
+        "Creatinine_first",
+        "Temp_first"
+      ],
+      "small_active_group": false
+    }
+  },
+  "metadata": {
+    "started_utc": "2026-11-18T14:42:05.062085+00:00",
+    "python": "3.12.14",
+    "platform": "Linux-6.8.0-90-generic-x86_64-with-glibc2.35",
+    "versions": {
+      "numpy": "2.5.4",
+      "pandas": "2.3.3"
+    },
+    "configuration": {
+      "near_threshold": 0.05,
+      "threshold_source": "Provisorischer Startwert, nicht kalibriert",
+      "categorical_columns": [
+        "In-hospital_death"
+      ],
+      "min_common_fraction": 0.25,
+      "min_common_features": 3,
+      "min_targets": 30,
+      "bootstrap_repeats": 200,
+      "block_rows": 64
+    },
+    "budget": 500,
+    "seeds": [
+      42,
+      2026,
+      31415
+    ],
+    "paths": {
+      "train": "/home/irene/projects/hackathon-synth-data-2026/data/prepped/mortality-prediction-kaggle/trainTestSplit/real_train.parquet",
+      "control": "/home/irene/projects/hackathon-synth-data-2026/data/prepped/mortality-prediction-kaggle/trainTestSplit/real_test.parquet",
+      "synthetic": "/home/irene/projects/hackathon-synth-data-2026/data/prepped/daten_danijel/for_submission/synth_data.parquet"
+    },
+    "source_sha256": {
+      "privacy.py": "cfc241e2d9c67125da593762505d2ebcdf489a0b794a38582956ce4bfa9a5bfb"
+    },
+    "config_sha256": null,
+    "scope": "Table release; fixed two-sided nearest-neighbor membership statistic; no Anonymeter",
+    "effective_config_sha256": "7d55e9b969e50f1551d57369311dea97fa6a5e7a87c2eb4d85183e3eba40546a",
+    "input_sha256": {
+      "train": "c86ce428eea094a09a7c67a3855ae4060c0b3f21e8a8a035fb2c8920e424a659",
+      "control": "e3bca5c9f6f2915db817a5384d7f41ef5ff0c055f0af6b7c8e54a09ac8cc0934",
+      "synthetic": "53482c8c16a25c55cd8b7a1da427cf04e7f7c0a231a0bbfd07c5568d1edea98b"
+    },
+    "data_specs": {
+      "identifier_var": "recordid",
+      "target_var": "mortality",
+      "categorical_vars": [
+        "mortality"
+      ],
+      "boolean_vars": [
+        "Gender",
+        "CCU",
+        "CSRU",
+        "SICU",
+        "MechVentLast8Hour"
+      ],
+      "numerical_vars": [
+        "SAPS-I",
+        "SOFA",
+        "Age",
+        "Height",
+        "Weight",
+        "DiasABP_first",
+        "GCS_first",
+        "Glucose_first",
+        "HR_first",
+        "MAP_first",
+        "NIDiasABP_first",
+        "NIMAP_first",
+        "NISysABP_first",
+        "RespRate_first",
+        "SaO2_first",
+        "SysABP_first",
+        "Temp_first",
+        "DiasABP_last",
+        "GCS_last",
+        "Glucose_last",
+        "HR_last",
+        "MAP_last",
+        "NIDiasABP_last",
+        "NIMAP_last",
+        "NISysABP_last",
+        "RespRate_last",
+        "SaO2_last",
+        "SysABP_last",
+        "Temp_last",
+        "DiasABP_lowest",
+        "GCS_lowest",
+        "Glucose_lowest",
+        "HR_lowest",
+        "MAP_lowest",
+        "NIDiasABP_lowest",
+        "NIMAP_lowest",
+        "NISysABP_lowest",
+        "RespRate_lowest",
+        "SaO2_lowest",
+        "SysABP_lowest",
+        "Temp_lowest",
+        "DiasABP_highest",
+        "GCS_highest",
+        "Glucose_highest",
+        "HR_highest",
+        "MAP_highest",
+        "NIDiasABP_highest",
+        "NIMAP_highest",
+        "NISysABP_highest",
+        "RespRate_highest",
+        "SaO2_highest",
+        "SysABP_highest",
+        "Temp_highest",
+        "DiasABP_median",
+        "GCS_median",
+        "Glucose_median",
+        "HR_median",
+        "MAP_median",
+        "NIDiasABP_median",
+        "NIMAP_median",
+        "NISysABP_median",
+        "RespRate_median",
+        "SaO2_median",
+        "SysABP_median",
+        "Temp_median",
+        "ALP_first",
+        "ALT_first",
+        "AST_first",
+        "Albumin_first",
+        "BUN_first",
+        "Bilirubin_first",
+        "Cholesterol_first",
+        "Creatinine_first",
+        "FiO2_first",
+        "HCO3_first",
+        "HCT_first",
+        "K_first",
+        "Lactate_first",
+        "Mg_first",
+        "Na_first",
+        "PaCO2_first",
+        "PaO2_first",
+        "Platelets_first",
+        "TroponinI_first",
+        "TroponinT_first",
+        "WBC_first",
+        "Weight_first",
+        "pH_first",
+        "ALP_last",
+        "ALT_last",
+        "AST_last",
+        "Albumin_last",
+        "BUN_last",
+        "Bilirubin_last",
+        "Cholesterol_last",
+        "Creatinine_last",
+        "FiO2_last",
+        "HCO3_last",
+        "HCT_last",
+        "K_last",
+        "Lactate_last",
+        "Mg_last",
+        "Na_last",
+        "PaCO2_last",
+        "PaO2_last",
+        "Platelets_last",
+        "TroponinI_last",
+        "TroponinT_last",
+        "WBC_last",
+        "Weight_last",
+        "pH_last",
+        "MechVentStartTime",
+        "MechVentDuration",
+        "UrineOutputSum"
+      ],
+      "input_vars": [
+        "SAPS-I",
+        "SOFA",
+        "Age",
+        "Gender",
+        "Height",
+        "Weight",
+        "CCU",
+        "CSRU",
+        "SICU",
+        "DiasABP_first",
+        "GCS_first",
+        "Glucose_first",
+        "HR_first",
+        "MAP_first",
+        "NIDiasABP_first",
+        "NIMAP_first",
+        "NISysABP_first",
+        "RespRate_first",
+        "SaO2_first",
+        "SysABP_first",
+        "Temp_first",
+        "DiasABP_last",
+        "GCS_last",
+        "Glucose_last",
+        "HR_last",
+        "MAP_last",
+        "NIDiasABP_last",
+        "NIMAP_last",
+        "NISysABP_last",
+        "RespRate_last",
+        "SaO2_last",
+        "SysABP_last",
+        "Temp_last",
+        "DiasABP_lowest",
+        "GCS_lowest",
+        "Glucose_lowest",
+        "HR_lowest",
+        "MAP_lowest",
+        "NIDiasABP_lowest",
+        "NIMAP_lowest",
+        "NISysABP_lowest",
+        "RespRate_lowest",
+        "SaO2_lowest",
+        "SysABP_lowest",
+        "Temp_lowest",
+        "DiasABP_highest",
+        "GCS_highest",
+        "Glucose_highest",
+        "HR_highest",
+        "MAP_highest",
+        "NIDiasABP_highest",
+        "NIMAP_highest",
+        "NISysABP_highest",
+        "RespRate_highest",
+        "SaO2_highest",
+        "SysABP_highest",
+        "Temp_highest",
+        "DiasABP_median",
+        "GCS_median",
+        "Glucose_median",
+        "HR_median",
+        "MAP_median",
+        "NIDiasABP_median",
+        "NIMAP_median",
+        "NISysABP_median",
+        "RespRate_median",
+        "SaO2_median",
+        "SysABP_median",
+        "Temp_median",
+        "ALP_first",
+        "ALT_first",
+        "AST_first",
+        "Albumin_first",
+        "BUN_first",
+        "Bilirubin_first",
+        "Cholesterol_first",
+        "Creatinine_first",
+        "FiO2_first",
+        "HCO3_first",
+        "HCT_first",
+        "K_first",
+        "Lactate_first",
+        "Mg_first",
+        "Na_first",
+        "PaCO2_first",
+        "PaO2_first",
+        "Platelets_first",
+        "TroponinI_first",
+        "TroponinT_first",
+        "WBC_first",
+        "Weight_first",
+        "pH_first",
+        "ALP_last",
+        "ALT_last",
+        "AST_last",
+        "Albumin_last",
+        "BUN_last",
+        "Bilirubin_last",
+        "Cholesterol_last",
+        "Creatinine_last",
+        "FiO2_last",
+        "HCO3_last",
+        "HCT_last",
+        "K_last",
+        "Lactate_last",
+        "Mg_last",
+        "Na_last",
+        "PaCO2_last",
+        "PaO2_last",
+        "Platelets_last",
+        "TroponinI_last",
+        "TroponinT_last",
+        "WBC_last",
+        "Weight_last",
+        "pH_last",
+        "MechVentStartTime",
+        "MechVentDuration",
+        "MechVentLast8Hour",
+        "UrineOutputSum"
+      ]
+    },
+    "data_checks": {
+      "train": {
+        "rows": 2880,
+        "missing_by_column": {
+          "ALP_first": 1665,
+          "ALP_last": 1665,
+          "ALT_first": 1646,
+          "ALT_last": 1646,
+          "AST_first": 1644,
+          "AST_last": 1644,
+          "Age": 0,
+          "Albumin_first": 1720,
+          "Albumin_last": 1720,
+          "BUN_first": 48,
+          "BUN_last": 48,
+          "Bilirubin_first": 1645,
+          "Bilirubin_last": 1645,
+          "CCU": 0,
+          "CSRU": 0,
+          "Cholesterol_first": 2667,
+          "Cholesterol_last": 2667,
+          "Creatinine_first": 48,
+          "Creatinine_last": 48,
+          "DiasABP_first": 918,
+          "DiasABP_highest": 918,
+          "DiasABP_last": 918,
+          "DiasABP_lowest": 918,
+          "DiasABP_median": 918,
+          "FiO2_first": 955,
+          "FiO2_last": 955,
+          "GCS_first": 53,
+          "GCS_highest": 53,
+          "GCS_last": 53,
+          "GCS_lowest": 53,
+          "GCS_median": 53,
+          "Gender": 4,
+          "Glucose_first": 80,
+          "Glucose_highest": 80,
+          "Glucose_last": 80,
+          "Glucose_lowest": 80,
+          "Glucose_median": 80,
+          "HCO3_first": 52,
+          "HCO3_last": 52,
+          "HCT_first": 48,
+          "HCT_last": 48,
+          "HR_first": 53,
+          "HR_highest": 53,
+          "HR_last": 53,
+          "HR_lowest": 53,
+          "HR_median": 53,
+          "Height": 1392,
+          "K_first": 67,
+          "K_last": 67,
+          "Lactate_first": 1307,
+          "Lactate_last": 1307,
+          "MAP_first": 911,
+          "MAP_highest": 911,
+          "MAP_last": 911,
+          "MAP_lowest": 911,
+          "MAP_median": 911,
+          "MechVentDuration": 1088,
+          "MechVentLast8Hour": 1088,
+          "MechVentStartTime": 1088,
+          "Mg_first": 70,
+          "Mg_last": 70,
+          "NIDiasABP_first": 369,
+          "NIDiasABP_highest": 369,
+          "NIDiasABP_last": 369,
+          "NIDiasABP_lowest": 369,
+          "NIDiasABP_median": 369,
+          "NIMAP_first": 369,
+          "NIMAP_highest": 369,
+          "NIMAP_last": 369,
+          "NIMAP_lowest": 369,
+          "NIMAP_median": 369,
+          "NISysABP_first": 367,
+          "NISysABP_highest": 367,
+          "NISysABP_last": 367,
+          "NISysABP_lowest": 367,
+          "NISysABP_median": 367,
+          "Na_first": 55,
+          "Na_last": 55,
+          "PaCO2_first": 714,
+          "PaCO2_last": 714,
+          "PaO2_first": 714,
+          "PaO2_last": 714,
+          "Platelets_first": 53,
+          "Platelets_last": 53,
+          "RespRate_first": 2072,
+          "RespRate_highest": 2072,
+          "RespRate_last": 2072,
+          "RespRate_lowest": 2072,
+          "RespRate_median": 2072,
+          "SAPS-I": 142,
+          "SICU": 0,
+          "SOFA": 110,
+          "SaO2_first": 1635,
+          "SaO2_highest": 1635,
+          "SaO2_last": 1635,
+          "SaO2_lowest": 1635,
+          "SaO2_median": 1635,
+          "SysABP_first": 918,
+          "SysABP_highest": 918,
+          "SysABP_last": 918,
+          "SysABP_lowest": 918,
+          "SysABP_median": 918,
+          "Temp_first": 53,
+          "Temp_highest": 53,
+          "Temp_last": 53,
+          "Temp_lowest": 53,
+          "Temp_median": 53,
+          "TroponinI_first": 2733,
+          "TroponinI_last": 2733,
+          "TroponinT_first": 2256,
+          "TroponinT_last": 2256,
+          "UrineOutputSum": 1088,
+          "WBC_first": 68,
+          "WBC_last": 68,
+          "Weight": 263,
+          "Weight_first": 946,
+          "Weight_last": 946,
+          "In-hospital_death": 0,
+          "pH_first": 705,
+          "pH_last": 705
+        },
+        "missing_ids": 0,
+        "duplicate_ids_excess": 0
+      },
+      "control": {
+        "rows": 720,
+        "missing_by_column": {
+          "ALP_first": 403,
+          "ALP_last": 403,
+          "ALT_first": 395,
+          "ALT_last": 395,
+          "AST_first": 394,
+          "AST_last": 394,
+          "Age": 0,
+          "Albumin_first": 408,
+          "Albumin_last": 408,
+          "BUN_first": 13,
+          "BUN_last": 13,
+          "Bilirubin_first": 396,
+          "Bilirubin_last": 396,
+          "CCU": 0,
+          "CSRU": 0,
+          "Cholesterol_first": 658,
+          "Cholesterol_last": 658,
+          "Creatinine_first": 13,
+          "Creatinine_last": 13,
+          "DiasABP_first": 190,
+          "DiasABP_highest": 190,
+          "DiasABP_last": 190,
+          "DiasABP_lowest": 190,
+          "DiasABP_median": 190,
+          "FiO2_first": 216,
+          "FiO2_last": 216,
+          "GCS_first": 12,
+          "GCS_highest": 12,
+          "GCS_last": 12,
+          "GCS_lowest": 12,
+          "GCS_median": 12,
+          "Gender": 0,
+          "Glucose_first": 20,
+          "Glucose_highest": 20,
+          "Glucose_last": 20,
+          "Glucose_lowest": 20,
+          "Glucose_median": 20,
+          "HCO3_first": 14,
+          "HCO3_last": 14,
+          "HCT_first": 11,
+          "HCT_last": 11,
+          "HR_first": 12,
+          "HR_highest": 12,
+          "HR_last": 12,
+          "HR_lowest": 12,
+          "HR_median": 12,
+          "Height": 346,
+          "K_first": 18,
+          "K_last": 18,
+          "Lactate_first": 301,
+          "Lactate_last": 301,
+          "MAP_first": 191,
+          "MAP_highest": 191,
+          "MAP_last": 191,
+          "MAP_lowest": 191,
+          "MAP_median": 191,
+          "MechVentDuration": 248,
+          "MechVentLast8Hour": 248,
+          "MechVentStartTime": 248,
+          "Mg_first": 20,
+          "Mg_last": 20,
+          "NIDiasABP_first": 95,
+          "NIDiasABP_highest": 95,
+          "NIDiasABP_last": 95,
+          "NIDiasABP_lowest": 95,
+          "NIDiasABP_median": 95,
+          "NIMAP_first": 95,
+          "NIMAP_highest": 95,
+          "NIMAP_last": 95,
+          "NIMAP_lowest": 95,
+          "NIMAP_median": 95,
+          "NISysABP_first": 95,
+          "NISysABP_highest": 95,
+          "NISysABP_last": 95,
+          "NISysABP_lowest": 95,
+          "NISysABP_median": 95,
+          "Na_first": 14,
+          "Na_last": 14,
+          "PaCO2_first": 149,
+          "PaCO2_last": 149,
+          "PaO2_first": 149,
+          "PaO2_last": 149,
+          "Platelets_first": 12,
+          "Platelets_last": 12,
+          "RespRate_first": 534,
+          "RespRate_highest": 534,
+          "RespRate_last": 534,
+          "RespRate_lowest": 534,
+          "RespRate_median": 534,
+          "SAPS-I": 33,
+          "SICU": 0,
+          "SOFA": 26,
+          "SaO2_first": 386,
+          "SaO2_highest": 386,
+          "SaO2_last": 386,
+          "SaO2_lowest": 386,
+          "SaO2_median": 386,
+          "SysABP_first": 190,
+          "SysABP_highest": 190,
+          "SysABP_last": 190,
+          "SysABP_lowest": 190,
+          "SysABP_median": 190,
+          "Temp_first": 12,
+          "Temp_highest": 12,
+          "Temp_last": 12,
+          "Temp_lowest": 12,
+          "Temp_median": 12,
+          "TroponinI_first": 692,
+          "TroponinI_last": 692,
+          "TroponinT_first": 558,
+          "TroponinT_last": 558,
+          "UrineOutputSum": 248,
+          "WBC_first": 16,
+          "WBC_last": 16,
+          "Weight": 60,
+          "Weight_first": 247,
+          "Weight_last": 247,
+          "In-hospital_death": 0,
+          "pH_first": 147,
+          "pH_last": 147
+        },
+        "missing_ids": 0,
+        "duplicate_ids_excess": 0
+      },
+      "synthetic": {
+        "rows": 2880,
+        "missing_by_column": {
+          "ALP_first": 1636,
+          "ALP_last": 1625,
+          "ALT_first": 1624,
+          "ALT_last": 1599,
+          "AST_first": 1610,
+          "AST_last": 1654,
+          "Age": 0,
+          "Albumin_first": 1688,
+          "Albumin_last": 1739,
+          "BUN_first": 48,
+          "BUN_last": 44,
+          "Bilirubin_first": 1668,
+          "Bilirubin_last": 1647,
+          "CCU": 0,
+          "CSRU": 0,
+          "Cholesterol_first": 2652,
+          "Cholesterol_last": 2655,
+          "Creatinine_first": 52,
+          "Creatinine_last": 45,
+          "DiasABP_first": 908,
+          "DiasABP_highest": 905,
+          "DiasABP_last": 895,
+          "DiasABP_lowest": 934,
+          "DiasABP_median": 898,
+          "FiO2_first": 946,
+          "FiO2_last": 912,
+          "GCS_first": 38,
+          "GCS_highest": 55,
+          "GCS_last": 54,
+          "GCS_lowest": 56,
+          "GCS_median": 48,
+          "Gender": 2,
+          "Glucose_first": 85,
+          "Glucose_highest": 75,
+          "Glucose_last": 61,
+          "Glucose_lowest": 61,
+          "Glucose_median": 94,
+          "HCO3_first": 58,
+          "HCO3_last": 47,
+          "HCT_first": 39,
+          "HCT_last": 38,
+          "HR_first": 48,
+          "HR_highest": 38,
+          "HR_last": 60,
+          "HR_lowest": 54,
+          "HR_median": 55,
+          "Height": 1409,
+          "K_first": 47,
+          "K_last": 60,
+          "Lactate_first": 1320,
+          "Lactate_last": 1273,
+          "MAP_first": 895,
+          "MAP_highest": 921,
+          "MAP_last": 897,
+          "MAP_lowest": 945,
+          "MAP_median": 895,
+          "MechVentDuration": 1029,
+          "MechVentLast8Hour": 1015,
+          "MechVentStartTime": 1080,
+          "Mg_first": 57,
+          "Mg_last": 80,
+          "NIDiasABP_first": 364,
+          "NIDiasABP_highest": 389,
+          "NIDiasABP_last": 400,
+          "NIDiasABP_lowest": 367,
+          "NIDiasABP_median": 372,
+          "NIMAP_first": 369,
+          "NIMAP_highest": 339,
+          "NIMAP_last": 352,
+          "NIMAP_lowest": 365,
+          "NIMAP_median": 353,
+          "NISysABP_first": 378,
+          "NISysABP_highest": 348,
+          "NISysABP_last": 351,
+          "NISysABP_lowest": 378,
+          "NISysABP_median": 368,
+          "Na_first": 50,
+          "Na_last": 60,
+          "PaCO2_first": 673,
+          "PaCO2_last": 724,
+          "PaO2_first": 666,
+          "PaO2_last": 692,
+          "Platelets_first": 43,
+          "Platelets_last": 53,
+          "RespRate_first": 2052,
+          "RespRate_highest": 2076,
+          "RespRate_last": 2060,
+          "RespRate_lowest": 2076,
+          "RespRate_median": 2054,
+          "SAPS-I": 38,
+          "SICU": 0,
+          "SOFA": 63,
+          "SaO2_first": 1636,
+          "SaO2_highest": 1572,
+          "SaO2_last": 1641,
+          "SaO2_lowest": 1624,
+          "SaO2_median": 1574,
+          "SysABP_first": 891,
+          "SysABP_highest": 910,
+          "SysABP_last": 895,
+          "SysABP_lowest": 889,
+          "SysABP_median": 890,
+          "Temp_first": 43,
+          "Temp_highest": 52,
+          "Temp_last": 49,
+          "Temp_lowest": 56,
+          "Temp_median": 56,
+          "TroponinI_first": 2736,
+          "TroponinI_last": 2729,
+          "TroponinT_first": 2221,
+          "TroponinT_last": 2233,
+          "UrineOutputSum": 1038,
+          "WBC_first": 58,
+          "WBC_last": 71,
+          "Weight": 244,
+          "Weight_first": 976,
+          "Weight_last": 932,
+          "In-hospital_death": 0,
+          "pH_first": 680,
+          "pH_last": 693
+        },
+        "missing_ids": 0,
+        "duplicate_ids_excess": 0
+      },
+      "shared_distinct_profiles_train_control": 0,
+      "synthetic_id_collisions": {
+        "train": 1,
+        "control": 0
+      },
+      "unseen_category_counts": {
+        "control": {
+          "CCU": 0,
+          "CSRU": 0,
+          "Gender": 0,
+          "MechVentLast8Hour": 0,
+          "SICU": 0,
+          "In-hospital_death": 0
+        },
+        "synthetic": {
+          "CCU": 0,
+          "CSRU": 0,
+          "Gender": 0,
+          "MechVentLast8Hour": 0,
+          "SICU": 0,
+          "In-hospital_death": 0
+        }
+      },
+      "split_note": "Profilüberschneidungen sind Prüfhinweise; Personenunabhängigkeit extern bestätigen."
+    },
+    "seconds": 15.432053063064814
+  },
+  "output_folder": null
+}
