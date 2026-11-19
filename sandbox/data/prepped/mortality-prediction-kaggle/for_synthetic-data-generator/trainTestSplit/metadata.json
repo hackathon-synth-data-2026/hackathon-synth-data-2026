@@ -1,0 +1,374 @@
+{
+    "tables": {
+        "bt": {
+            "columns": {
+                "ALP_first": {
+                    "sdtype": "numerical"
+                },
+                "ALP_last": {
+                    "sdtype": "numerical"
+                },
+                "ALT_first": {
+                    "sdtype": "numerical"
+                },
+                "ALT_last": {
+                    "sdtype": "numerical"
+                },
+                "AST_first": {
+                    "sdtype": "numerical"
+                },
+                "AST_last": {
+                    "sdtype": "numerical"
+                },
+                "Age": {
+                    "sdtype": "numerical"
+                },
+                "Albumin_first": {
+                    "sdtype": "numerical"
+                },
+                "Albumin_last": {
+                    "sdtype": "numerical"
+                },
+                "BUN_first": {
+                    "sdtype": "numerical"
+                },
+                "BUN_last": {
+                    "sdtype": "numerical"
+                },
+                "Bilirubin_first": {
+                    "sdtype": "numerical"
+                },
+                "Bilirubin_last": {
+                    "sdtype": "numerical"
+                },
+                "CCU": {
+                    "sdtype": "boolean"
+                },
+                "CSRU": {
+                    "sdtype": "boolean"
+                },
+                "Cholesterol_first": {
+                    "sdtype": "numerical"
+                },
+                "Cholesterol_last": {
+                    "sdtype": "numerical"
+                },
+                "Creatinine_first": {
+                    "sdtype": "numerical"
+                },
+                "Creatinine_last": {
+                    "sdtype": "numerical"
+                },
+                "DiasABP_first": {
+                    "sdtype": "numerical"
+                },
+                "DiasABP_highest": {
+                    "sdtype": "numerical"
+                },
+                "DiasABP_last": {
+                    "sdtype": "numerical"
+                },
+                "DiasABP_lowest": {
+                    "sdtype": "numerical"
+                },
+                "DiasABP_median": {
+                    "sdtype": "numerical"
+                },
+                "FiO2_first": {
+                    "sdtype": "numerical"
+                },
+                "FiO2_last": {
+                    "sdtype": "numerical"
+                },
+                "GCS_first": {
+                    "sdtype": "numerical"
+                },
+                "GCS_highest": {
+                    "sdtype": "numerical"
+                },
+                "GCS_last": {
+                    "sdtype": "numerical"
+                },
+                "GCS_lowest": {
+                    "sdtype": "numerical"
+                },
+                "GCS_median": {
+                    "sdtype": "numerical"
+                },
+                "Gender": {
+                    "sdtype": "boolean"
+                },
+                "Glucose_first": {
+                    "sdtype": "numerical"
+                },
+                "Glucose_highest": {
+                    "sdtype": "numerical"
+                },
+                "Glucose_last": {
+                    "sdtype": "numerical"
+                },
+                "Glucose_lowest": {
+                    "sdtype": "numerical"
+                },
+                "Glucose_median": {
+                    "sdtype": "numerical"
+                },
+                "HCO3_first": {
+                    "sdtype": "numerical"
+                },
+                "HCO3_last": {
+                    "sdtype": "numerical"
+                },
+                "HCT_first": {
+                    "sdtype": "numerical"
+                },
+                "HCT_last": {
+                    "sdtype": "numerical"
+                },
+                "HR_first": {
+                    "sdtype": "numerical"
+                },
+                "HR_highest": {
+                    "sdtype": "numerical"
+                },
+                "HR_last": {
+                    "sdtype": "numerical"
+                },
+                "HR_lowest": {
+                    "sdtype": "numerical"
+                },
+                "HR_median": {
+                    "sdtype": "numerical"
+                },
+                "Height": {
+                    "sdtype": "numerical"
+                },
+                "K_first": {
+                    "sdtype": "numerical"
+                },
+                "K_last": {
+                    "sdtype": "numerical"
+                },
+                "Lactate_first": {
+                    "sdtype": "numerical"
+                },
+                "Lactate_last": {
+                    "sdtype": "numerical"
+                },
+                "MAP_first": {
+                    "sdtype": "numerical"
+                },
+                "MAP_highest": {
+                    "sdtype": "numerical"
+                },
+                "MAP_last": {
+                    "sdtype": "numerical"
+                },
+                "MAP_lowest": {
+                    "sdtype": "numerical"
+                },
+                "MAP_median": {
+                    "sdtype": "numerical"
+                },
+                "MechVentDuration": {
+                    "sdtype": "numerical"
+                },
+                "MechVentLast8Hour": {
+                    "sdtype": "boolean"
+                },
+                "MechVentStartTime": {
+                    "sdtype": "numerical"
+                },
+                "Mg_first": {
+                    "sdtype": "numerical"
+                },
+                "Mg_last": {
+                    "sdtype": "numerical"
+                },
+                "NIDiasABP_first": {
+                    "sdtype": "numerical"
+                },
+                "NIDiasABP_highest": {
+                    "sdtype": "numerical"
+                },
+                "NIDiasABP_last": {
+                    "sdtype": "numerical"
+                },
+                "NIDiasABP_lowest": {
+                    "sdtype": "numerical"
+                },
+                "NIDiasABP_median": {
+                    "sdtype": "numerical"
+                },
+                "NIMAP_first": {
+                    "sdtype": "numerical"
+                },
+                "NIMAP_highest": {
+                    "sdtype": "numerical"
+                },
+                "NIMAP_last": {
+                    "sdtype": "numerical"
+                },
+                "NIMAP_lowest": {
+                    "sdtype": "numerical"
+                },
+                "NIMAP_median": {
+                    "sdtype": "numerical"
+                },
+                "NISysABP_first": {
+                    "sdtype": "numerical"
+                },
+                "NISysABP_highest": {
+                    "sdtype": "numerical"
+                },
+                "NISysABP_last": {
+                    "sdtype": "numerical"
+                },
+                "NISysABP_lowest": {
+                    "sdtype": "numerical"
+                },
+                "NISysABP_median": {
+                    "sdtype": "numerical"
+                },
+                "Na_first": {
+                    "sdtype": "numerical"
+                },
+                "Na_last": {
+                    "sdtype": "numerical"
+                },
+                "PaCO2_first": {
+                    "sdtype": "numerical"
+                },
+                "PaCO2_last": {
+                    "sdtype": "numerical"
+                },
+                "PaO2_first": {
+                    "sdtype": "numerical"
+                },
+                "PaO2_last": {
+                    "sdtype": "numerical"
+                },
+                "Platelets_first": {
+                    "sdtype": "numerical"
+                },
+                "Platelets_last": {
+                    "sdtype": "numerical"
+                },
+                "RespRate_first": {
+                    "sdtype": "numerical"
+                },
+                "RespRate_highest": {
+                    "sdtype": "numerical"
+                },
+                "RespRate_last": {
+                    "sdtype": "numerical"
+                },
+                "RespRate_lowest": {
+                    "sdtype": "numerical"
+                },
+                "RespRate_median": {
+                    "sdtype": "numerical"
+                },
+                "SAPS-I": {
+                    "sdtype": "numerical"
+                },
+                "SICU": {
+                    "sdtype": "boolean"
+                },
+                "SOFA": {
+                    "sdtype": "numerical"
+                },
+                "SaO2_first": {
+                    "sdtype": "numerical"
+                },
+                "SaO2_highest": {
+                    "sdtype": "numerical"
+                },
+                "SaO2_last": {
+                    "sdtype": "numerical"
+                },
+                "SaO2_lowest": {
+                    "sdtype": "numerical"
+                },
+                "SaO2_median": {
+                    "sdtype": "numerical"
+                },
+                "SysABP_first": {
+                    "sdtype": "numerical"
+                },
+                "SysABP_highest": {
+                    "sdtype": "numerical"
+                },
+                "SysABP_last": {
+                    "sdtype": "numerical"
+                },
+                "SysABP_lowest": {
+                    "sdtype": "numerical"
+                },
+                "SysABP_median": {
+                    "sdtype": "numerical"
+                },
+                "Temp_first": {
+                    "sdtype": "numerical"
+                },
+                "Temp_highest": {
+                    "sdtype": "numerical"
+                },
+                "Temp_last": {
+                    "sdtype": "numerical"
+                },
+                "Temp_lowest": {
+                    "sdtype": "numerical"
+                },
+                "Temp_median": {
+                    "sdtype": "numerical"
+                },
+                "TroponinI_first": {
+                    "sdtype": "numerical"
+                },
+                "TroponinI_last": {
+                    "sdtype": "numerical"
+                },
+                "TroponinT_first": {
+                    "sdtype": "numerical"
+                },
+                "TroponinT_last": {
+                    "sdtype": "numerical"
+                },
+                "UrineOutputSum": {
+                    "sdtype": "numerical"
+                },
+                "WBC_first": {
+                    "sdtype": "numerical"
+                },
+                "WBC_last": {
+                    "sdtype": "numerical"
+                },
+                "Weight": {
+                    "sdtype": "numerical"
+                },
+                "Weight_first": {
+                    "sdtype": "numerical"
+                },
+                "Weight_last": {
+                    "sdtype": "numerical"
+                },
+                "mortality": {
+                    "sdtype": "categorical"
+                },
+                "pH_first": {
+                    "sdtype": "numerical"
+                },
+                "pH_last": {
+                    "sdtype": "numerical"
+                },
+                "recordid": {
+                    "sdtype": "id"
+                }
+            },
+            "primary_key": "recordid"
+        }
+    },
+    "relationships": [],
+    "METADATA_SPEC_VERSION": "V1"
+}

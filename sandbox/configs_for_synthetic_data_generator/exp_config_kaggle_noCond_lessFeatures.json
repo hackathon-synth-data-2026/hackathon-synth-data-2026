@@ -1,0 +1,99 @@
+{
+"real_data_path": "/home/irene/projects/hackathon-synth-data-2026/data/prepped/mortality-prediction-kaggle/for_synthetic-data-generator/trainTestSplit",
+"data_specs": {
+"identifier_var": "recordid",
+"target_var": "mortality",
+"target_mapping": {
+"case": 1,
+"control": 0
+},
+"categorical_vars": [
+"mortality"
+],
+"boolean_vars": [
+"CSRU"
+],
+"numerical_vars": [
+"ALP_first",
+"ALT_first",
+"AST_first",
+"Age",
+"BUN_first",
+"BUN_last",
+"FiO2_last",
+"GCS_highest",
+"GCS_last",
+"HR_highest",
+"HR_last",
+"K_last",
+"MechVentDuration",
+"Mg_first",
+"NIDiasABP_median",
+"Na_first",
+"PaCO2_last",
+"PaO2_last",
+"RespRate_first",
+"SOFA",
+"SysABP_highest",
+"SysABP_last",
+"SysABP_lowest",
+"Temp_last",
+"Temp_median",
+"WBC_last",
+"Weight",
+"Weight_first",
+"pH_first"
+],
+"input_vars": [
+"ALP_first",
+"ALT_first",
+"AST_first",
+"Age",
+"BUN_first",
+"BUN_last",
+"CSRU",
+"FiO2_last",
+"GCS_highest",
+"GCS_last",
+"HR_highest",
+"HR_last",
+"K_last",
+"MechVentDuration",
+"Mg_first",
+"NIDiasABP_median",
+"Na_first",
+"PaCO2_last",
+"PaO2_last",
+"RespRate_first",
+"SOFA",
+"SysABP_highest",
+"SysABP_last",
+"SysABP_lowest",
+"Temp_last",
+"Temp_median",
+"WBC_last",
+"Weight",
+"Weight_first",
+"pH_first"
+],
+"table_name_for_synthetic_data": "bt"
+},
+"synthesizer_kwargs": {
+"synthesizer_name": "CTGAN",
+"seed_value": 888,
+"condition_var": ["mortality"],
+"nr_of_partitioning_bins": 4
+},
+"fidelity_kwargs": {
+"n_bins_histograms": 30,
+"save_histograms": true,
+"random_state_classifier": 42
+},
+"downstream_model_kwargs": {
+"model_class": null,
+"hyperparameters": null,
+"threshold": 0.5,
+"n_bootstrap": 2000
+},
+"output_path": "/home/irene/projects_output/hackathon/2026-10-28_CTGAN-kaggleDataset_lessFeatures_cond"
+}
