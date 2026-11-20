@@ -13,19 +13,13 @@ For dataset provenance, variable definitions, units, and preprocessing, see the 
 From the starterpack root, evaluate the supplied example:
 
 ```bash
-uv run --locked evaluation/main.py evaluation/config.json --synth data/example_synthetic_data.parquet
-```
-
-Evaluate your own submission:
-
-```bash
-uv run --locked evaluation/main.py evaluation/config.json --synth data/submission.parquet
+uv run --locked python -m hackathon_synth_data_2026.main src/hackathon_synth_data_2026/eval_config.json --synth data/example_synthetic_data.parquet
 ```
 
 Run submission-schema validation without calculating metrics:
 
 ```bash
-uv run --locked evaluation/main.py evaluation/config.json --synth data/submission.parquet --validate-only
+uv run --locked python -m hackathon_synth_data_2026.main src/hackathon_synth_data_2026/eval_config.json --synth data/example_synthetic_data.parquet --validate-only
 ```
 
 The evaluator prints a summary and saves detailed results in the configured output directory.
@@ -72,16 +66,18 @@ Use `uv run --locked` so evaluation uses the supplied dependency lockfile. Direc
 ```text
 starterpack/
 ├── README.md
-├── evaluation/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── uv.lock
-│   ├── config.json
-│   ├── validation.py
-│   ├── scoring.py
-│   ├── utility.py
-│   ├── fidelity.py
-│   └── privacy.py
+├── pyproject.toml
+├── uv.lock
+├── src/
+│   └── hackathon_synth_data_2026/
+│       ├── __init__.py
+│       ├── main.py
+│       ├── eval_config.json
+│       ├── validation.py
+│       ├── scoring.py
+│       ├── utility.py
+│       ├── fidelity.py
+│       └── privacy.py
 └── data/
     ├── README.md
     ├── real_train.parquet

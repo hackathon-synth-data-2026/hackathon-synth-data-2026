@@ -1,0 +1,15 @@
+UTILITY SUMMARY (TRTR = train real, TSTR = train synthetic; same test set)
+============================================================
+class prevalence (test): 0.140 (n_pos=101, n_neg=619)
+
+                   AUC    PR-AUC        F1    recall
+TRTR             0.876     0.565     0.326     0.208
+TSTR             0.749     0.372     0.093     0.050
+
+AUC gap (TSTR - TRTR): -0.127 95% CI [+0.081, +0.175]
+    -> gap is distinguishable from 0
+
+PR-AUC gap (TSTR - TRTR): -0.193 95% CI [+0.080, +0.294]
+    -> gap is distinguishable from 0
+
+threshold for F1/recall: 0.5

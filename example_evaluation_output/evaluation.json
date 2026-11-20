@@ -1,0 +1,3963 @@
+{
+  "utility": {
+    "trtr": {
+      "n_positive": 101,
+      "n_negative": 619,
+      "class_prevalence_test": 0.14027777777777778,
+      "class_prevalence_train": 0.13958333333333334,
+      "auc": 0.8756538012444217,
+      "pr_auc": 0.5651004368889125,
+      "precision": 0.75,
+      "recall": 0.2079207920792079,
+      "f1": 0.32558139534883723,
+      "accuracy": 0.8791666666666667,
+      "threshold": 0.5,
+      "model_class": "XGBClassifier",
+      "model_kwargs": {
+        "n_estimators": 100,
+        "max_depth": 6,
+        "learning_rate": 0.1,
+        "eval_metric": "logloss",
+        "random_state": 42,
+        "n_jobs": -1,
+        "enable_categorical": true,
+        "tree_method": "hist"
+      },
+      "n_train": 2880,
+      "n_test": 720,
+      "permutation_importances": [
+        {
+          "feature": "GCS_last",
+          "permutation_importance_mean": 0.09262784113629456,
+          "permutation_importance_std": 0.006956321884167296
+        },
+        {
+          "feature": "BUN_last",
+          "permutation_importance_mean": 0.028823237735728348,
+          "permutation_importance_std": 0.004276125825661288
+        },
+        {
+          "feature": "Age",
+          "permutation_importance_mean": 0.01750027991490589,
+          "permutation_importance_std": 0.006261872427646644
+        },
+        {
+          "feature": "CSRU",
+          "permutation_importance_mean": 0.007768838273164968,
+          "permutation_importance_std": 0.005666073078199069
+        },
+        {
+          "feature": "MechVentDuration",
+          "permutation_importance_mean": 0.005289591964042983,
+          "permutation_importance_std": 0.0022914624125979634
+        },
+        {
+          "feature": "HR_last",
+          "permutation_importance_mean": 0.0048673203346182746,
+          "permutation_importance_std": 0.0030498583419151302
+        },
+        {
+          "feature": "GCS_highest",
+          "permutation_importance_mean": 0.004022777075769002,
+          "permutation_importance_std": 0.0014907819949913042
+        },
+        {
+          "feature": "WBC_last",
+          "permutation_importance_mean": 0.003915609654665008,
+          "permutation_importance_std": 0.0020537631948917413
+        },
+        {
+          "feature": "Temp_median",
+          "permutation_importance_mean": 0.0032438138805803264,
+          "permutation_importance_std": 0.0016675312475219015
+        },
+        {
+          "feature": "Temp_last",
+          "permutation_importance_mean": 0.003216622146867354,
+          "permutation_importance_std": 0.002419620243999595
+        },
+        {
+          "feature": "FiO2_last",
+          "permutation_importance_mean": 0.003109454725763372,
+          "permutation_importance_std": 0.001207038476888531
+        },
+        {
+          "feature": "Weight",
+          "permutation_importance_mean": 0.0026343991426606263,
+          "permutation_importance_std": 0.002431566574013254
+        },
+        {
+          "feature": "SysABP_last",
+          "permutation_importance_mean": 0.0023128968793486916,
+          "permutation_importance_std": 0.0009881111883924037
+        },
+        {
+          "feature": "RespRate_first",
+          "permutation_importance_mean": 0.0022841056318879337,
+          "permutation_importance_std": 0.0019023161648462287
+        },
+        {
+          "feature": "ALT_first",
+          "permutation_importance_mean": 0.002264911466914077,
+          "permutation_importance_std": 0.0005127034171061997
+        },
+        {
+          "feature": "GCS_median",
+          "permutation_importance_mean": 0.002114557174618936,
+          "permutation_importance_std": 0.0009024660116767369
+        },
+        {
+          "feature": "HCO3_last",
+          "permutation_importance_mean": 0.0019993921847758613,
+          "permutation_importance_std": 0.0009946609389812281
+        },
+        {
+          "feature": "pH_first",
+          "permutation_importance_mean": 0.001994593643532405,
+          "permutation_importance_std": 0.0012430609539653928
+        },
+        {
+          "feature": "PaO2_first",
+          "permutation_importance_mean": 0.001948207744845587,
+          "permutation_importance_std": 0.0010597861968148407
+        },
+        {
+          "feature": "K_last",
+          "permutation_importance_mean": 0.0019098194148978952,
+          "permutation_importance_std": 0.0009546082439558801
+        },
+        {
+          "feature": "NISysABP_last",
+          "permutation_importance_mean": 0.0018666325437067144,
+          "permutation_importance_std": 0.0006804253274303328
+        },
+        {
+          "feature": "PaCO2_last",
+          "permutation_importance_mean": 0.0018378412962459679,
+          "permutation_importance_std": 0.001140991580915562
+        },
+        {
+          "feature": "ALP_first",
+          "permutation_importance_mean": 0.0016379020777683717,
+          "permutation_importance_std": 0.0005599303435748301
+        },
+        {
+          "feature": "RespRate_last",
+          "permutation_importance_mean": 0.0016187079127945258,
+          "permutation_importance_std": 0.0008130440247814514
+        },
+        {
+          "feature": "Mg_last",
+          "permutation_importance_mean": 0.001591516179081598,
+          "permutation_importance_std": 0.0010232200837570285
+        },
+        {
+          "feature": "HR_highest",
+          "permutation_importance_mean": 0.0014667541067515666,
+          "permutation_importance_std": 0.0011241759960219078
+        },
+        {
+          "feature": "HCO3_first",
+          "permutation_importance_mean": 0.0013643852268910516,
+          "permutation_importance_std": 0.0009114155094509205
+        },
+        {
+          "feature": "DiasABP_highest",
+          "permutation_importance_mean": 0.0013579871718997437,
+          "permutation_importance_std": 0.00026238364234599924
+        },
+        {
+          "feature": "HR_lowest",
+          "permutation_importance_mean": 0.001348390089412832,
+          "permutation_importance_std": 0.000917849156628274
+        },
+        {
+          "feature": "SysABP_highest",
+          "permutation_importance_mean": 0.001333994465682431,
+          "permutation_importance_std": 0.0006326557112954587
+        },
+        {
+          "feature": "PaO2_last",
+          "permutation_importance_mean": 0.001330795438186827,
+          "permutation_importance_std": 0.0006543868590912842
+        },
+        {
+          "feature": "SOFA",
+          "permutation_importance_mean": 0.001236424127065383,
+          "permutation_importance_std": 0.0009989997414788557
+        },
+        {
+          "feature": "AST_first",
+          "permutation_importance_mean": 0.0012348246133175756,
+          "permutation_importance_std": 0.0004316790982865359
+        },
+        {
+          "feature": "Weight_first",
+          "permutation_importance_mean": 0.0012300260720741086,
+          "permutation_importance_std": 0.002182459579667369
+        },
+        {
+          "feature": "NIDiasABP_median",
+          "permutation_importance_mean": 0.0011260576784657527,
+          "permutation_importance_std": 0.001021366870375165
+        },
+        {
+          "feature": "BUN_first",
+          "permutation_importance_mean": 0.0011212591372222968,
+          "permutation_importance_std": 0.0013037253795958605
+        },
+        {
+          "feature": "Na_first",
+          "permutation_importance_mean": 0.0010988659447528138,
+          "permutation_importance_std": 0.0013903639269432465
+        },
+        {
+          "feature": "Temp_lowest",
+          "permutation_importance_mean": 0.0009325165149794645,
+          "permutation_importance_std": 0.00042602651570372845
+        },
+        {
+          "feature": "UrineOutputSum",
+          "permutation_importance_mean": 0.0009149218637534373,
+          "permutation_importance_std": 0.0008672197137503733
+        },
+        {
+          "feature": "HCT_last",
+          "permutation_importance_mean": 0.0008413442313537023,
+          "permutation_importance_std": 0.0010061233908462103
+        },
+        {
+          "feature": "MAP_lowest",
+          "permutation_importance_mean": 0.0008397447176058837,
+          "permutation_importance_std": 0.0008660521361510431
+        },
+        {
+          "feature": "NIMAP_median",
+          "permutation_importance_mean": 0.0008189510388841969,
+          "permutation_importance_std": 0.000577457692902116
+        },
+        {
+          "feature": "TroponinI_first",
+          "permutation_importance_mean": 0.0008109534701450482,
+          "permutation_importance_std": 0.0009683876838917296
+        },
+        {
+          "feature": "Lactate_last",
+          "permutation_importance_mean": 0.0008045554151537848,
+          "permutation_importance_std": 0.001924276199445492
+        },
+        {
+          "feature": "Weight_last",
+          "permutation_importance_mean": 0.0007181816727715118,
+          "permutation_importance_std": 0.0010636573998560677
+        },
+        {
+          "feature": "Albumin_first",
+          "permutation_importance_mean": 0.0006877909115629132,
+          "permutation_importance_std": 0.0011437362171963575
+        },
+        {
+          "feature": "DiasABP_last",
+          "permutation_importance_mean": 0.0006717957740847047,
+          "permutation_importance_std": 0.0005515423998965358
+        },
+        {
+          "feature": "MAP_median",
+          "permutation_importance_mean": 0.0006574001503543148,
+          "permutation_importance_std": 0.00036868358177083346
+        },
+        {
+          "feature": "NISysABP_median",
+          "permutation_importance_mean": 0.0006510020953630069,
+          "permutation_importance_std": 0.0006874951239070814
+        },
+        {
+          "feature": "SysABP_first",
+          "permutation_importance_mean": 0.000622210847902227,
+          "permutation_importance_std": 0.000485496558604278
+        },
+        {
+          "feature": "TroponinT_last",
+          "permutation_importance_mean": 0.0005742254354676457,
+          "permutation_importance_std": 0.0006068652967402396
+        },
+        {
+          "feature": "pH_last",
+          "permutation_importance_mean": 0.0005742254354676235,
+          "permutation_importance_std": 0.0013981516097922998
+        },
+        {
+          "feature": "RespRate_median",
+          "permutation_importance_mean": 0.0005598298117372557,
+          "permutation_importance_std": 0.0002397136988030705
+        },
+        {
+          "feature": "MAP_first",
+          "permutation_importance_mean": 0.0005518322429981625,
+          "permutation_importance_std": 0.0005667901284188502
+        },
+        {
+          "feature": "TroponinT_first",
+          "permutation_importance_mean": 0.0005438346742590472,
+          "permutation_importance_std": 0.0004904016288410321
+        },
+        {
+          "feature": "SysABP_median",
+          "permutation_importance_mean": 0.0005438346742590472,
+          "permutation_importance_std": 0.0005589608298463618
+        },
+        {
+          "feature": "Mg_first",
+          "permutation_importance_mean": 0.0005390361330155802,
+          "permutation_importance_std": 0.0017585640748221504
+        },
+        {
+          "feature": "SaO2_last",
+          "permutation_importance_mean": 0.0004414657943985434,
+          "permutation_importance_std": 0.00035645837654943723
+        },
+        {
+          "feature": "Height",
+          "permutation_importance_mean": 0.000428669684415961,
+          "permutation_importance_std": 0.0009736244256002007
+        },
+        {
+          "feature": "NIDiasABP_last",
+          "permutation_importance_mean": 0.00041907260192901584,
+          "permutation_importance_std": 0.0006761158045366798
+        },
+        {
+          "feature": "Glucose_last",
+          "permutation_importance_mean": 0.00041587357443337856,
+          "permutation_importance_std": 0.0019539616996333722
+        },
+        {
+          "feature": "Bilirubin_last",
+          "permutation_importance_mean": 0.00036948767574660477,
+          "permutation_importance_std": 0.0020590961131212926
+        },
+        {
+          "feature": "Temp_first",
+          "permutation_importance_mean": 0.0003518930245205665,
+          "permutation_importance_std": 0.0004372849433840312
+        },
+        {
+          "feature": "HCT_first",
+          "permutation_importance_mean": 0.0003406964282858138,
+          "permutation_importance_std": 0.0006953765295244872
+        },
+        {
+          "feature": "RespRate_lowest",
+          "permutation_importance_mean": 0.0003231017770598088,
+          "permutation_importance_std": 0.00024297872137118314
+        },
+        {
+          "feature": "NIMAP_lowest",
+          "permutation_importance_mean": 0.0003071066395816002,
+          "permutation_importance_std": 0.0003042273466426177
+        },
+        {
+          "feature": "MechVentLast8Hour",
+          "permutation_importance_mean": 0.00022233241094712363,
+          "permutation_importance_std": 0.00021784531670980827
+        },
+        {
+          "feature": "TroponinI_last",
+          "permutation_importance_mean": 0.00019993921847764052,
+          "permutation_importance_std": 6.71986165408937e-05
+        },
+        {
+          "feature": "Gender",
+          "permutation_importance_mean": 0.00015195380604301478,
+          "permutation_importance_std": 0.00013520386096388658
+        },
+        {
+          "feature": "SaO2_lowest",
+          "permutation_importance_mean": 0.00014235672355608075,
+          "permutation_importance_std": 0.0003106064607328346
+        },
+        {
+          "feature": "SICU",
+          "permutation_importance_mean": 0.00012476207233004245,
+          "permutation_importance_std": 0.00019521932599551468
+        },
+        {
+          "feature": "CCU",
+          "permutation_importance_mean": 0.00011996353108656432,
+          "permutation_importance_std": 0.0001222869842674699
+        },
+        {
+          "feature": "MAP_last",
+          "permutation_importance_mean": 0.00010716742110399302,
+          "permutation_importance_std": 0.00023366591172241152
+        },
+        {
+          "feature": "K_first",
+          "permutation_importance_mean": 9.27717973736475e-05,
+          "permutation_importance_std": 0.0006464806381855857
+        },
+        {
+          "feature": "Glucose_median",
+          "permutation_importance_mean": 8.957276987798801e-05,
+          "permutation_importance_std": 0.0010424658290253113
+        },
+        {
+          "feature": "SysABP_lowest",
+          "permutation_importance_mean": 6.39805499128232e-05,
+          "permutation_importance_std": 0.0007068330702014188
+        },
+        {
+          "feature": "ALP_last",
+          "permutation_importance_mean": 5.1184439930263005e-05,
+          "permutation_importance_std": 0.00038393661289983476
+        },
+        {
+          "feature": "SaO2_median",
+          "permutation_importance_mean": 4.638589868680709e-05,
+          "permutation_importance_std": 0.0009848498532208524
+        },
+        {
+          "feature": "SaO2_first",
+          "permutation_importance_mean": 3.518930245205443e-05,
+          "permutation_importance_std": 0.0002127774167637317
+        },
+        {
+          "feature": "ALT_last",
+          "permutation_importance_mean": 1.2796109982593507e-05,
+          "permutation_importance_std": 0.0004940297012470845
+        },
+        {
+          "feature": "Albumin_last",
+          "permutation_importance_mean": 1.119659623477487e-05,
+          "permutation_importance_std": 0.000529777208283622
+        },
+        {
+          "feature": "Cholesterol_last",
+          "permutation_importance_mean": 0.0,
+          "permutation_importance_std": 0.0
+        },
+        {
+          "feature": "Cholesterol_first",
+          "permutation_importance_mean": 0.0,
+          "permutation_importance_std": 0.0
+        },
+        {
+          "feature": "AST_last",
+          "permutation_importance_mean": -9.59708248690072e-06,
+          "permutation_importance_std": 0.0003746551537153876
+        },
+        {
+          "feature": "WBC_first",
+          "permutation_importance_mean": -2.5592219965087094e-05,
+          "permutation_importance_std": 0.0012454492367087223
+        },
+        {
+          "feature": "DiasABP_median",
+          "permutation_importance_mean": -3.83883299476806e-05,
+          "permutation_importance_std": 0.0002619689065733416
+        },
+        {
+          "feature": "GCS_lowest",
+          "permutation_importance_mean": -5.11844399302408e-05,
+          "permutation_importance_std": 0.0003009297126344002
+        },
+        {
+          "feature": "Bilirubin_first",
+          "permutation_importance_mean": -5.4383467425844766e-05,
+          "permutation_importance_std": 0.0005670135233412072
+        },
+        {
+          "feature": "HR_first",
+          "permutation_importance_mean": -6.717957740846048e-05,
+          "permutation_importance_std": 0.0008101754240503891
+        },
+        {
+          "feature": "Lactate_first",
+          "permutation_importance_mean": -0.00011676450359086044,
+          "permutation_importance_std": 0.000772054981866916
+        },
+        {
+          "feature": "Creatinine_last",
+          "permutation_importance_mean": -0.00011996353108656432,
+          "permutation_importance_std": 0.0005292070460402386
+        },
+        {
+          "feature": "SaO2_highest",
+          "permutation_importance_mean": -0.00012956061357345395,
+          "permutation_importance_std": 0.0003930021878930287
+        },
+        {
+          "feature": "GCS_first",
+          "permutation_importance_mean": -0.0001407572098082066,
+          "permutation_importance_std": 0.0005631469727414342
+        },
+        {
+          "feature": "DiasABP_lowest",
+          "permutation_importance_mean": -0.00017114797101680512,
+          "permutation_importance_std": 0.0002779704555778009
+        },
+        {
+          "feature": "Platelets_last",
+          "permutation_importance_mean": -0.00027991490586858346,
+          "permutation_importance_std": 0.0008242153262523732
+        },
+        {
+          "feature": "MechVentStartTime",
+          "permutation_importance_mean": -0.0002895119883555397,
+          "permutation_importance_std": 0.0004809432236157184
+        },
+        {
+          "feature": "NISysABP_first",
+          "permutation_importance_mean": -0.00031590396519457495,
+          "permutation_importance_std": 0.0006717124609109064
+        },
+        {
+          "feature": "NIMAP_last",
+          "permutation_importance_mean": -0.00034709448327706615,
+          "permutation_importance_std": 0.0006644839076800237
+        },
+        {
+          "feature": "NISysABP_highest",
+          "permutation_importance_mean": -0.00037108718949437904,
+          "permutation_importance_std": 0.0007088499226849471
+        },
+        {
+          "feature": "NIMAP_highest",
+          "permutation_importance_mean": -0.0004798541243462018,
+          "permutation_importance_std": 0.0006498436769838357
+        },
+        {
+          "feature": "RespRate_highest",
+          "permutation_importance_mean": -0.0005118443993025856,
+          "permutation_importance_std": 0.0009246240986037655
+        },
+        {
+          "feature": "Glucose_first",
+          "permutation_importance_mean": -0.0006030166829283478,
+          "permutation_importance_std": 0.0003953129544804848
+        },
+        {
+          "feature": "NIDiasABP_lowest",
+          "permutation_importance_mean": -0.0006238103616500346,
+          "permutation_importance_std": 0.00158455230204452
+        },
+        {
+          "feature": "MAP_highest",
+          "permutation_importance_mean": -0.0006238103616500457,
+          "permutation_importance_std": 0.000942302315755887
+        },
+        {
+          "feature": "SAPS-I",
+          "permutation_importance_mean": -0.0007197811865192639,
+          "permutation_importance_std": 0.0009017626704925706
+        },
+        {
+          "feature": "Na_last",
+          "permutation_importance_mean": -0.000724579727762753,
+          "permutation_importance_std": 0.0006846983854602259
+        },
+        {
+          "feature": "FiO2_first",
+          "permutation_importance_mean": -0.0007277787552583903,
+          "permutation_importance_std": 0.0007453545278642094
+        },
+        {
+          "feature": "Temp_highest",
+          "permutation_importance_mean": -0.0007405748652409616,
+          "permutation_importance_std": 0.0015709969347016833
+        },
+        {
+          "feature": "NIDiasABP_highest",
+          "permutation_importance_mean": -0.0007597690302147853,
+          "permutation_importance_std": 0.0009492342603145843
+        },
+        {
+          "feature": "DiasABP_first",
+          "permutation_importance_mean": -0.0008045554151537626,
+          "permutation_importance_std": 0.0008928969421107867
+        },
+        {
+          "feature": "NISysABP_lowest",
+          "permutation_importance_mean": -0.0014043730705865288,
+          "permutation_importance_std": 0.0010223333129880502
+        },
+        {
+          "feature": "NIMAP_first",
+          "permutation_importance_mean": -0.001556326876629499,
+          "permutation_importance_std": 0.0006391273457777919
+        },
+        {
+          "feature": "PaCO2_first",
+          "permutation_importance_mean": -0.0015915161790815314,
+          "permutation_importance_std": 0.0021412375762816477
+        },
+        {
+          "feature": "HR_median",
+          "permutation_importance_mean": -0.00173387290263759,
+          "permutation_importance_std": 0.0005871413877894502
+        },
+        {
+          "feature": "Glucose_lowest",
+          "permutation_importance_mean": -0.0017434699851245129,
+          "permutation_importance_std": 0.001843747501067629
+        },
+        {
+          "feature": "Creatinine_first",
+          "permutation_importance_mean": -0.0017610646363505178,
+          "permutation_importance_std": 0.0008917328593903373
+        },
+        {
+          "feature": "Platelets_first",
+          "permutation_importance_mean": -0.0027207728850429437,
+          "permutation_importance_std": 0.0014423933945065962
+        },
+        {
+          "feature": "Glucose_highest",
+          "permutation_importance_mean": -0.00277675586621664,
+          "permutation_importance_std": 0.0011668603531763517
+        },
+        {
+          "feature": "NIDiasABP_first",
+          "permutation_importance_mean": -0.003290199779267067,
+          "permutation_importance_std": 0.0015512488075457196
+        }
+      ],
+      "fitted_model_path": "/home/irene/projects/hackathon-synth-data-2026/example_evaluation_output/utility/artifacts/trtr_model.pkl"
+    },
+    "tstr": {
+      "n_positive": 101,
+      "n_negative": 619,
+      "class_prevalence_test": 0.14027777777777778,
+      "class_prevalence_train": 0.1545138888888889,
+      "auc": 0.7485564388425919,
+      "pr_auc": 0.3723483219511844,
+      "precision": 0.8333333333333334,
+      "recall": 0.04950495049504951,
+      "f1": 0.09345794392523364,
+      "accuracy": 0.8652777777777778,
+      "threshold": 0.5,
+      "model_class": "XGBClassifier",
+      "model_kwargs": {
+        "n_estimators": 100,
+        "max_depth": 6,
+        "learning_rate": 0.1,
+        "eval_metric": "logloss",
+        "random_state": 42,
+        "n_jobs": -1,
+        "enable_categorical": true,
+        "tree_method": "hist"
+      },
+      "n_train": 2880,
+      "n_test": 720,
+      "permutation_importances": [
+        {
+          "feature": "GCS_last",
+          "permutation_importance_mean": 0.06415649642508686,
+          "permutation_importance_std": 0.008096513607349008
+        },
+        {
+          "feature": "GCS_median",
+          "permutation_importance_mean": 0.013893376413570357,
+          "permutation_importance_std": 0.0051102709503609185
+        },
+        {
+          "feature": "PaO2_first",
+          "permutation_importance_mean": 0.0074201442761401394,
+          "permutation_importance_std": 0.0024453049996554193
+        },
+        {
+          "feature": "Temp_median",
+          "permutation_importance_mean": 0.0072521953326189605,
+          "permutation_importance_std": 0.0043905134415804245
+        },
+        {
+          "feature": "BUN_last",
+          "permutation_importance_mean": 0.007233001167645125,
+          "permutation_importance_std": 0.0029038448535071387
+        },
+        {
+          "feature": "ALP_last",
+          "permutation_importance_mean": 0.006946688206785212,
+          "permutation_importance_std": 0.0023379950796505898
+        },
+        {
+          "feature": "HR_highest",
+          "permutation_importance_mean": 0.006396455477534901,
+          "permutation_importance_std": 0.0020764060471429244
+        },
+        {
+          "feature": "Bilirubin_last",
+          "permutation_importance_mean": 0.006318079303891677,
+          "permutation_importance_std": 0.0021172874105497884
+        },
+        {
+          "feature": "PaO2_last",
+          "permutation_importance_mean": 0.006114941057918488,
+          "permutation_importance_std": 0.003291401722222137
+        },
+        {
+          "feature": "SysABP_highest",
+          "permutation_importance_mean": 0.005430349173851268,
+          "permutation_importance_std": 0.0026253303046734817
+        },
+        {
+          "feature": "HR_median",
+          "permutation_importance_mean": 0.005019274140661378,
+          "permutation_importance_std": 0.0028886155466256768
+        },
+        {
+          "feature": "GCS_highest",
+          "permutation_importance_mean": 0.004700171147971088,
+          "permutation_importance_std": 0.002296639550340166
+        },
+        {
+          "feature": "PaCO2_last",
+          "permutation_importance_mean": 0.004558614181288989,
+          "permutation_importance_std": 0.004605849760627724
+        },
+        {
+          "feature": "SysABP_first",
+          "permutation_importance_mean": 0.004490634847006602,
+          "permutation_importance_std": 0.002730392104822867
+        },
+        {
+          "feature": "MAP_highest",
+          "permutation_importance_mean": 0.004417856971480738,
+          "permutation_importance_std": 0.0028386912563930886
+        },
+        {
+          "feature": "Glucose_highest",
+          "permutation_importance_mean": 0.004416257457732919,
+          "permutation_importance_std": 0.0037396580113690835
+        },
+        {
+          "feature": "NISysABP_lowest",
+          "permutation_importance_mean": 0.0043922647515156395,
+          "permutation_importance_std": 0.004278962065964082
+        },
+        {
+          "feature": "SAPS-I",
+          "permutation_importance_mean": 0.004241910459220488,
+          "permutation_importance_std": 0.001012602115595769
+        },
+        {
+          "feature": "SOFA",
+          "permutation_importance_mean": 0.004145939634351226,
+          "permutation_importance_std": 0.0032572070038397543
+        },
+        {
+          "feature": "SaO2_last",
+          "permutation_importance_mean": 0.004133143524368643,
+          "permutation_importance_std": 0.0025670197428296804
+        },
+        {
+          "feature": "RespRate_highest",
+          "permutation_importance_mean": 0.0040931556806731665,
+          "permutation_importance_std": 0.0019055096631762714
+        },
+        {
+          "feature": "Lactate_first",
+          "permutation_importance_mean": 0.003853228618500071,
+          "permutation_importance_std": 0.001396870109224046
+        },
+        {
+          "feature": "pH_last",
+          "permutation_importance_mean": 0.0036101025288313047,
+          "permutation_importance_std": 0.0011750505266596722
+        },
+        {
+          "feature": "SaO2_highest",
+          "permutation_importance_mean": 0.003398966714119045,
+          "permutation_importance_std": 0.0017859951622979685
+        },
+        {
+          "feature": "K_last",
+          "permutation_importance_mean": 0.003231017770597799,
+          "permutation_importance_std": 0.0023870726463567997
+        },
+        {
+          "feature": "ALT_last",
+          "permutation_importance_mean": 0.0031862313856588663,
+          "permutation_importance_std": 0.0022980821381260643
+        },
+        {
+          "feature": "BUN_first",
+          "permutation_importance_mean": 0.0031398454869720595,
+          "permutation_importance_std": 0.002276249688210205
+        },
+        {
+          "feature": "Platelets_first",
+          "permutation_importance_mean": 0.0030214814696332914,
+          "permutation_importance_std": 0.0017322733888898109
+        },
+        {
+          "feature": "DiasABP_median",
+          "permutation_importance_mean": 0.002979894112189951,
+          "permutation_importance_std": 0.0016471116596549766
+        },
+        {
+          "feature": "Platelets_last",
+          "permutation_importance_mean": 0.002959100433468331,
+          "permutation_importance_std": 0.002757025385199089
+        },
+        {
+          "feature": "UrineOutputSum",
+          "permutation_importance_mean": 0.002791151489947119,
+          "permutation_importance_std": 0.0013075425668483396
+        },
+        {
+          "feature": "Weight",
+          "permutation_importance_mean": 0.002727170940034318,
+          "permutation_importance_std": 0.0034227146261846383
+        },
+        {
+          "feature": "NIDiasABP_lowest",
+          "permutation_importance_mean": 0.0025192341528176066,
+          "permutation_importance_std": 0.002838406889579789
+        },
+        {
+          "feature": "DiasABP_highest",
+          "permutation_importance_mean": 0.002501639501591546,
+          "permutation_importance_std": 0.0028498397787739757
+        },
+        {
+          "feature": "HR_lowest",
+          "permutation_importance_mean": 0.002341688126809527,
+          "permutation_importance_std": 0.002374620246591641
+        },
+        {
+          "feature": "MechVentStartTime",
+          "permutation_importance_mean": 0.0022057294582447985,
+          "permutation_importance_std": 0.0014169281498176438
+        },
+        {
+          "feature": "Mg_last",
+          "permutation_importance_mean": 0.0021745389401622737,
+          "permutation_importance_std": 0.0024901004040302765
+        },
+        {
+          "feature": "MechVentDuration",
+          "permutation_importance_mean": 0.0021353508533407117,
+          "permutation_importance_std": 0.006015721021185161
+        },
+        {
+          "feature": "Creatinine_first",
+          "permutation_importance_mean": 0.002047377597210498,
+          "permutation_importance_std": 0.0009078420700102893
+        },
+        {
+          "feature": "Temp_lowest",
+          "permutation_importance_mean": 0.0019753994785585705,
+          "permutation_importance_std": 0.002321524908193546
+        },
+        {
+          "feature": "TroponinT_last",
+          "permutation_importance_mean": 0.0019706009373151477,
+          "permutation_importance_std": 0.0025995302153716607
+        },
+        {
+          "feature": "GCS_first",
+          "permutation_importance_mean": 0.001959404341080384,
+          "permutation_importance_std": 0.003624564857176925
+        },
+        {
+          "feature": "HR_first",
+          "permutation_importance_mean": 0.0019178169836370107,
+          "permutation_importance_std": 0.00416465864784336
+        },
+        {
+          "feature": "SaO2_median",
+          "permutation_importance_mean": 0.0018890257361762863,
+          "permutation_importance_std": 0.0015524424273242563
+        },
+        {
+          "feature": "Weight_last",
+          "permutation_importance_mean": 0.001836241782498227,
+          "permutation_importance_std": 0.001043437248959031
+        },
+        {
+          "feature": "NIDiasABP_median",
+          "permutation_importance_mean": 0.001817047617524359,
+          "permutation_importance_std": 0.0018788016758489877
+        },
+        {
+          "feature": "PaCO2_first",
+          "permutation_importance_mean": 0.0017578656088550026,
+          "permutation_importance_std": 0.0015668451649176254
+        },
+        {
+          "feature": "pH_first",
+          "permutation_importance_mean": 0.0017050816551768988,
+          "permutation_importance_std": 0.0017931711968942983
+        },
+        {
+          "feature": "Weight_first",
+          "permutation_importance_mean": 0.0016498984308771058,
+          "permutation_importance_std": 0.0014097971624573266
+        },
+        {
+          "feature": "Albumin_last",
+          "permutation_importance_mean": 0.0015819190965947415,
+          "permutation_importance_std": 0.0008466989424198223
+        },
+        {
+          "feature": "Glucose_last",
+          "permutation_importance_mean": 0.0015675234728642963,
+          "permutation_importance_std": 0.0019157741476854885
+        },
+        {
+          "feature": "Age",
+          "permutation_importance_mean": 0.001532334170412275,
+          "permutation_importance_std": 0.0013379012246528402
+        },
+        {
+          "feature": "WBC_last",
+          "permutation_importance_mean": 0.0015035429229515284,
+          "permutation_importance_std": 0.0015383796934248129
+        },
+        {
+          "feature": "Lactate_last",
+          "permutation_importance_mean": 0.0015019434092036986,
+          "permutation_importance_std": 0.0009597202449704874
+        },
+        {
+          "feature": "Temp_last",
+          "permutation_importance_mean": 0.0014747516754907597,
+          "permutation_importance_std": 0.001621307406183959
+        },
+        {
+          "feature": "Glucose_median",
+          "permutation_importance_mean": 0.001394775988099728,
+          "permutation_importance_std": 0.002685019073055126
+        },
+        {
+          "feature": "MAP_last",
+          "permutation_importance_mean": 0.0013371934931781127,
+          "permutation_importance_std": 0.0035233566602195605
+        },
+        {
+          "feature": "MechVentLast8Hour",
+          "permutation_importance_mean": 0.0013211983556999263,
+          "permutation_importance_std": 0.0007475121761500191
+        },
+        {
+          "feature": "DiasABP_lowest",
+          "permutation_importance_mean": 0.0012460212095523836,
+          "permutation_importance_std": 0.0029727680559605324
+        },
+        {
+          "feature": "AST_first",
+          "permutation_importance_mean": 0.0011548489259266327,
+          "permutation_importance_std": 0.0013768236755679897
+        },
+        {
+          "feature": "MAP_lowest",
+          "permutation_importance_mean": 0.0008845311025449054,
+          "permutation_importance_std": 0.0026818942597995605
+        },
+        {
+          "feature": "Temp_highest",
+          "permutation_importance_mean": 0.0008509413138406474,
+          "permutation_importance_std": 0.002113184680339091
+        },
+        {
+          "feature": "K_first",
+          "permutation_importance_mean": 0.0007213807002672046,
+          "permutation_importance_std": 0.001925211983452074
+        },
+        {
+          "feature": "SaO2_first",
+          "permutation_importance_mean": 0.0007053855627890294,
+          "permutation_importance_std": 0.0018058566882912645
+        },
+        {
+          "feature": "SysABP_lowest",
+          "permutation_importance_mean": 0.0006685967465891119,
+          "permutation_importance_std": 0.0011475728076680305
+        },
+        {
+          "feature": "NISysABP_first",
+          "permutation_importance_mean": 0.0006510020953630957,
+          "permutation_importance_std": 0.0038986161694713833
+        },
+        {
+          "feature": "HCT_first",
+          "permutation_importance_mean": 0.0006190118204066786,
+          "permutation_importance_std": 0.0013484963399951711
+        },
+        {
+          "feature": "NIMAP_last",
+          "permutation_importance_mean": 0.0006094147379197334,
+          "permutation_importance_std": 0.000882764957057736
+        },
+        {
+          "feature": "Glucose_lowest",
+          "permutation_importance_mean": 0.0005518322429981959,
+          "permutation_importance_std": 0.0014913996903699084
+        },
+        {
+          "feature": "CSRU",
+          "permutation_importance_mean": 0.0005198419680417677,
+          "permutation_importance_std": 0.00023302999543071292
+        },
+        {
+          "feature": "Mg_first",
+          "permutation_importance_mean": 0.0004878516930853727,
+          "permutation_importance_std": 0.0017453069907110686
+        },
+        {
+          "feature": "MAP_median",
+          "permutation_importance_mean": 0.0004446648218942251,
+          "permutation_importance_std": 0.0017192771420513938
+        },
+        {
+          "feature": "DiasABP_last",
+          "permutation_importance_mean": 0.0004334682256594724,
+          "permutation_importance_std": 0.005091151754786904
+        },
+        {
+          "feature": "Cholesterol_first",
+          "permutation_importance_mean": 0.0003151042083207378,
+          "permutation_importance_std": 0.0003173372390944261
+        },
+        {
+          "feature": "Cholesterol_last",
+          "permutation_importance_mean": 0.0002975095570947106,
+          "permutation_importance_std": 0.0002709936957986615
+        },
+        {
+          "feature": "NIMAP_lowest",
+          "permutation_importance_mean": 0.0002495241446600849,
+          "permutation_importance_std": 0.002747722539656267
+        },
+        {
+          "feature": "SysABP_median",
+          "permutation_importance_mean": 0.00022553143844279423,
+          "permutation_importance_std": 0.0022802183507047613
+        },
+        {
+          "feature": "NIMAP_median",
+          "permutation_importance_mean": 0.000190342135990762,
+          "permutation_importance_std": 0.0028397063622796373
+        },
+        {
+          "feature": "SICU",
+          "permutation_importance_mean": 0.00014235672355613626,
+          "permutation_importance_std": 0.00024441177204429025
+        },
+        {
+          "feature": "NIDiasABP_first",
+          "permutation_importance_mean": 5.438346742598909e-05,
+          "permutation_importance_std": 0.0009760232364942591
+        },
+        {
+          "feature": "TroponinI_first",
+          "permutation_importance_mean": 1.2796109982604608e-05,
+          "permutation_importance_std": 4.679773777036821e-05
+        },
+        {
+          "feature": "GCS_lowest",
+          "permutation_importance_mean": 9.597082487033947e-06,
+          "permutation_importance_std": 0.0008460565940274019
+        },
+        {
+          "feature": "Gender",
+          "permutation_importance_mean": 0.0,
+          "permutation_importance_std": 0.0
+        },
+        {
+          "feature": "Bilirubin_first",
+          "permutation_importance_mean": -6.398054991174629e-06,
+          "permutation_importance_std": 0.0008048971869516339
+        },
+        {
+          "feature": "CCU",
+          "permutation_importance_mean": -1.4395623730334427e-05,
+          "permutation_importance_std": 0.0001814514226700962
+        },
+        {
+          "feature": "ALT_first",
+          "permutation_importance_mean": -8.477422863443219e-05,
+          "permutation_importance_std": 0.001198505522155162
+        },
+        {
+          "feature": "WBC_first",
+          "permutation_importance_mean": -0.00012156304483427194,
+          "permutation_importance_std": 0.001687289137806222
+        },
+        {
+          "feature": "FiO2_last",
+          "permutation_importance_mean": -0.00012316255858209059,
+          "permutation_importance_std": 0.002820973205748039
+        },
+        {
+          "feature": "TroponinI_last",
+          "permutation_importance_mean": -0.00014875477854727758,
+          "permutation_importance_std": 0.0003368144527463436
+        },
+        {
+          "feature": "RespRate_first",
+          "permutation_importance_mean": -0.00046545850061575634,
+          "permutation_importance_std": 0.0003174500901787452
+        },
+        {
+          "feature": "NISysABP_last",
+          "permutation_importance_mean": -0.0004910507205808546,
+          "permutation_importance_std": 0.0023177395751404276
+        },
+        {
+          "feature": "RespRate_last",
+          "permutation_importance_mean": -0.0006989875077975438,
+          "permutation_importance_std": 0.001148024180412599
+        },
+        {
+          "feature": "FiO2_first",
+          "permutation_importance_mean": -0.0007661670852060043,
+          "permutation_importance_std": 0.0016936796320664626
+        },
+        {
+          "feature": "AST_last",
+          "permutation_importance_mean": -0.000847742286344888,
+          "permutation_importance_std": 0.003118994389279504
+        },
+        {
+          "feature": "RespRate_lowest",
+          "permutation_importance_mean": -0.0009613077624401889,
+          "permutation_importance_std": 0.0006736004198720219
+        },
+        {
+          "feature": "Glucose_first",
+          "permutation_importance_mean": -0.0009884994961530946,
+          "permutation_importance_std": 0.0016053541065603374
+        },
+        {
+          "feature": "MAP_first",
+          "permutation_importance_mean": -0.0010812712935266643,
+          "permutation_importance_std": 0.0015654034996641392
+        },
+        {
+          "feature": "DiasABP_first",
+          "permutation_importance_mean": -0.0012220285033349265,
+          "permutation_importance_std": 0.002114629768550501
+        },
+        {
+          "feature": "HCO3_last",
+          "permutation_importance_mean": -0.0012540187782913326,
+          "permutation_importance_std": 0.003471963359828101
+        },
+        {
+          "feature": "Na_first",
+          "permutation_importance_mean": -0.0013947759880995835,
+          "permutation_importance_std": 0.0024843265259664846
+        },
+        {
+          "feature": "SaO2_lowest",
+          "permutation_importance_mean": -0.001959404341080229,
+          "permutation_importance_std": 0.0018963819074568065
+        },
+        {
+          "feature": "HCT_last",
+          "permutation_importance_mean": -0.0020089892672626617,
+          "permutation_importance_std": 0.0009878004322792923
+        },
+        {
+          "feature": "Albumin_first",
+          "permutation_importance_mean": -0.002143348422079583,
+          "permutation_importance_std": 0.004706116302703935
+        },
+        {
+          "feature": "NIDiasABP_last",
+          "permutation_importance_mean": -0.00216094307330561,
+          "permutation_importance_std": 0.0021265768375500634
+        },
+        {
+          "feature": "NISysABP_highest",
+          "permutation_importance_mean": -0.002228122650714115,
+          "permutation_importance_std": 0.002514973304093422
+        },
+        {
+          "feature": "Creatinine_last",
+          "permutation_importance_mean": -0.002332091044322415,
+          "permutation_importance_std": 0.0022223089344492685
+        },
+        {
+          "feature": "HR_last",
+          "permutation_importance_mean": -0.00235288472304408,
+          "permutation_importance_std": 0.0017730730741520244
+        },
+        {
+          "feature": "ALP_first",
+          "permutation_importance_mean": -0.0024200643004525847,
+          "permutation_importance_std": 0.0024307352101732476
+        },
+        {
+          "feature": "Temp_first",
+          "permutation_importance_mean": -0.002509637070330528,
+          "permutation_importance_std": 0.0018125172891004001
+        },
+        {
+          "feature": "TroponinT_first",
+          "permutation_importance_mean": -0.002560821510260769,
+          "permutation_importance_std": 0.0015040779842075034
+        },
+        {
+          "feature": "NIMAP_first",
+          "permutation_importance_mean": -0.0025800156752346483,
+          "permutation_importance_std": 0.003690061576249795
+        },
+        {
+          "feature": "RespRate_median",
+          "permutation_importance_mean": -0.002803947599929524,
+          "permutation_importance_std": 0.0017481163244730518
+        },
+        {
+          "feature": "NISysABP_median",
+          "permutation_importance_mean": -0.003016682928389647,
+          "permutation_importance_std": 0.0033367114283429267
+        },
+        {
+          "feature": "Height",
+          "permutation_importance_mean": -0.0032038260368846606,
+          "permutation_importance_std": 0.0017095809160196345
+        },
+        {
+          "feature": "Na_last",
+          "permutation_importance_mean": -0.0034677458052751243,
+          "permutation_importance_std": 0.0024883602010922798
+        },
+        {
+          "feature": "SysABP_last",
+          "permutation_importance_mean": -0.0039076120859257825,
+          "permutation_importance_std": 0.002029593869359195
+        },
+        {
+          "feature": "NIMAP_highest",
+          "permutation_importance_mean": -0.003915609654664897,
+          "permutation_importance_std": 0.0028163508433913923
+        },
+        {
+          "feature": "NIDiasABP_highest",
+          "permutation_importance_mean": -0.004344279339080825,
+          "permutation_importance_std": 0.0020427512751283097
+        },
+        {
+          "feature": "HCO3_first",
+          "permutation_importance_mean": -0.005049664901869755,
+          "permutation_importance_std": 0.003130302347764435
+        }
+      ],
+      "fitted_model_path": "/home/irene/projects/hackathon-synth-data-2026/example_evaluation_output/utility/artifacts/tstr_model.pkl"
+    },
+    "auc_ci_low": 0.0805084365718489,
+    "auc_ci_high": 0.1748727819854571,
+    "pr_auc_diff_ci_low": 0.0797213755667321,
+    "pr_auc_diff_ci_high": 0.2943461340414793,
+    "auc_gap_trtr_minus_tstr": -0.12709736240182978,
+    "pr_auc_gap_trtr_minus_tstr": -0.19275211493772815,
+    "brier_trtr": 0.09060944616794586,
+    "brier_tstr": 0.11048997193574905,
+    "brier_diff_tstr_minus_trtr": 0.019880525767803192
+  },
+  "fidelity": {
+    "score": 0.6297692299161562,
+    "components": {
+      "marginals": 0.8707219009689761,
+      "correlation": 0.5552107211623951,
+      "dependency": 0.09743249197769832,
+      "missingness": 0.9957118055555556
+    },
+    "columns": [
+      "SAPS-I",
+      "SOFA",
+      "Age",
+      "Gender",
+      "Height",
+      "Weight",
+      "CCU",
+      "CSRU",
+      "SICU",
+      "DiasABP_first",
+      "GCS_first",
+      "Glucose_first",
+      "HR_first",
+      "MAP_first",
+      "NIDiasABP_first",
+      "NIMAP_first",
+      "NISysABP_first",
+      "RespRate_first",
+      "SaO2_first",
+      "SysABP_first",
+      "Temp_first",
+      "DiasABP_last",
+      "GCS_last",
+      "Glucose_last",
+      "HR_last",
+      "MAP_last",
+      "NIDiasABP_last",
+      "NIMAP_last",
+      "NISysABP_last",
+      "RespRate_last",
+      "SaO2_last",
+      "SysABP_last",
+      "Temp_last",
+      "DiasABP_lowest",
+      "GCS_lowest",
+      "Glucose_lowest",
+      "HR_lowest",
+      "MAP_lowest",
+      "NIDiasABP_lowest",
+      "NIMAP_lowest",
+      "NISysABP_lowest",
+      "RespRate_lowest",
+      "SaO2_lowest",
+      "SysABP_lowest",
+      "Temp_lowest",
+      "DiasABP_highest",
+      "GCS_highest",
+      "Glucose_highest",
+      "HR_highest",
+      "MAP_highest",
+      "NIDiasABP_highest",
+      "NIMAP_highest",
+      "NISysABP_highest",
+      "RespRate_highest",
+      "SaO2_highest",
+      "SysABP_highest",
+      "Temp_highest",
+      "DiasABP_median",
+      "GCS_median",
+      "Glucose_median",
+      "HR_median",
+      "MAP_median",
+      "NIDiasABP_median",
+      "NIMAP_median",
+      "NISysABP_median",
+      "RespRate_median",
+      "SaO2_median",
+      "SysABP_median",
+      "Temp_median",
+      "ALP_first",
+      "ALT_first",
+      "AST_first",
+      "Albumin_first",
+      "BUN_first",
+      "Bilirubin_first",
+      "Cholesterol_first",
+      "Creatinine_first",
+      "FiO2_first",
+      "HCO3_first",
+      "HCT_first",
+      "K_first",
+      "Lactate_first",
+      "Mg_first",
+      "Na_first",
+      "PaCO2_first",
+      "PaO2_first",
+      "Platelets_first",
+      "TroponinI_first",
+      "TroponinT_first",
+      "WBC_first",
+      "Weight_first",
+      "pH_first",
+      "ALP_last",
+      "ALT_last",
+      "AST_last",
+      "Albumin_last",
+      "BUN_last",
+      "Bilirubin_last",
+      "Cholesterol_last",
+      "Creatinine_last",
+      "FiO2_last",
+      "HCO3_last",
+      "HCT_last",
+      "K_last",
+      "Lactate_last",
+      "Mg_last",
+      "Na_last",
+      "PaCO2_last",
+      "PaO2_last",
+      "Platelets_last",
+      "TroponinI_last",
+      "TroponinT_last",
+      "WBC_last",
+      "Weight_last",
+      "pH_last",
+      "MechVentStartTime",
+      "MechVentDuration",
+      "MechVentLast8Hour",
+      "UrineOutputSum",
+      "mortality"
+    ],
+    "correlation_difference": {
+      "pearson": 0.04360884909571721,
+      "spearman": 0.050030221730491604
+    },
+    "mi_difference": 0.025573565369931453,
+    "structural": {},
+    "undefined_components": []
+  },
+  "privacy": {
+    "summary": {
+      "privacy_score": 0.8089933333333333,
+      "status": "experimentell/nicht kalibriert",
+      "score_basis": "conservative_coverage_bound",
+      "technically_complete": true,
+      "coverage_complete": false,
+      "used_conservative_bounds": true,
+      "fallback_score": false,
+      "full_copy_determines_zero": false,
+      "valid_for_ranking": true,
+      "components": {
+        "copy_rate": 0.0,
+        "near_copy": 0.06325831553999346,
+        "membership": 0.19100666666666669
+      },
+      "component_coverage_bounds": {
+        "near_copy": [
+          0.0004654274766737841,
+          0.06325831553999346
+        ],
+        "membership": [
+          0.019778666666666684,
+          0.19100666666666669
+        ]
+      },
+      "scenario_mean_coverage_bounds": {
+        "near_copy": {
+          "full": [
+            0.0,
+            0.0
+          ],
+          "demographics": [
+            0.0,
+            0.06325831553999346
+          ],
+          "clinical_first": [
+            0.0004654274766737841,
+            0.0016279205431653909
+          ]
+        },
+        "membership": {
+          "full": [
+            0.019778666666666684,
+            0.03441333333333333
+          ],
+          "demographics": [
+            0.0,
+            0.19100666666666669
+          ],
+          "clinical_first": [
+            0.0,
+            0.0495493333333333
+          ]
+        }
+      },
+      "score_coverage_bounds": [
+        0.8089933333333333,
+        0.9802213333333333
+      ],
+      "reasons": [],
+      "rule": "1 - max(copy_rate, max_group(mean_seed(near_upper)), max_group(mean_seed(membership_upper)))",
+      "note": "Experimentelle Wettbewerbsheuristik. Coverage-Grenzen sind keine Konfidenzintervalle oder Datenschutzgarantie."
+    },
+    "copies": {
+      "rows": 2880,
+      "copied_rows": 0,
+      "copy_rate": 0.0,
+      "duplicate_rows_excess": 0,
+      "duplicate_rows_all": 0,
+      "status": "measured",
+      "coverage": {
+        "planned": 2880,
+        "evaluated": 2880,
+        "uncomparable": 0,
+        "excluded": 0,
+        "evaluated_rate": 1.0,
+        "uncomparable_rate": 0.0,
+        "excluded_rate": 0.0
+      }
+    },
+    "runs": [
+      {
+        "group": "full",
+        "seed": 42,
+        "targets_per_group": 500,
+        "synthetic_rows": 2880,
+        "tests": {
+          "near_copy": {
+            "status": "measured",
+            "measured_indicator": 0.0,
+            "coverage_bounds": [
+              0.0,
+              0.0
+            ],
+            "train_rate_bounds": [
+              0.0,
+              0.0
+            ],
+            "control_rate_bounds": [
+              0.0,
+              0.0
+            ],
+            "close_train": 0,
+            "close_control": 0,
+            "not_close_train": 2880,
+            "not_close_control": 2880,
+            "control_rate_one_possible": false,
+            "statistical_ci": null,
+            "coverage": {
+              "train_neighbors": {
+                "planned": 2880,
+                "evaluated": 2880,
+                "uncomparable": 0,
+                "excluded": 0,
+                "evaluated_rate": 1.0,
+                "uncomparable_rate": 0.0,
+                "excluded_rate": 0.0
+              },
+              "control_neighbors": {
+                "planned": 2880,
+                "evaluated": 2880,
+                "uncomparable": 0,
+                "excluded": 0,
+                "evaluated_rate": 1.0,
+                "uncomparable_rate": 0.0,
+                "excluded_rate": 0.0
+              },
+              "jointly_known": {
+                "planned": 2880,
+                "evaluated": 2880,
+                "uncomparable": 0,
+                "excluded": 0,
+                "evaluated_rate": 1.0,
+                "uncomparable_rate": 0.0,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": ""
+          },
+          "membership": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.007776000000000005,
+              0.015776000000000012
+            ],
+            "auc_coverage_bounds": [
+              0.492112,
+              0.496112
+            ],
+            "known_subset_auc": 0.49408835341365465,
+            "known_pair_ties": 0,
+            "constant_known_scores": false,
+            "statistical_ci": {
+              "auc": [
+                0.46284658634538156,
+                0.5361263052208836
+              ],
+              "indicator": [
+                0.0,
+                0.07430682730923688
+              ],
+              "nominal_level": 0.95,
+              "method": "stratified percentile bootstrap",
+              "scope": "known targets only; conditional on this synthetic table and preprocessing",
+              "contains_chance": true
+            },
+            "coverage": {
+              "train": {
+                "planned": 500,
+                "evaluated": 500,
+                "uncomparable": 0,
+                "excluded": 0,
+                "evaluated_rate": 1.0,
+                "uncomparable_rate": 0.0,
+                "excluded_rate": 0.0
+              },
+              "control": {
+                "planned": 500,
+                "evaluated": 498,
+                "uncomparable": 2,
+                "excluded": 0,
+                "evaluated_rate": 0.996,
+                "uncomparable_rate": 0.004,
+                "excluded_rate": 0.0
+              },
+              "rank_pairs": {
+                "planned": 250000,
+                "evaluated": 249000,
+                "uncomparable": 1000,
+                "excluded": 0,
+                "evaluated_rate": 0.996,
+                "uncomparable_rate": 0.004,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Ziele ohne zul\u00e4ssigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+          }
+        },
+        "eligibility": {
+          "train": {
+            "sampled": 500,
+            "eligible_by_observation_count": 500,
+            "insufficient_observation_count": 0,
+            "excluded": 0,
+            "not_sampled": 2380
+          },
+          "control": {
+            "sampled": 500,
+            "eligible_by_observation_count": 498,
+            "insufficient_observation_count": 2,
+            "excluded": 0,
+            "not_sampled": 220
+          },
+          "synthetic": {
+            "sampled": 2880,
+            "eligible_by_observation_count": 2880,
+            "insufficient_observation_count": 0,
+            "excluded": 0
+          }
+        },
+        "pair_coverage": {
+          "train": {
+            "planned": 1440000,
+            "evaluated": 1438020,
+            "uncomparable": 1980,
+            "excluded": 0,
+            "evaluated_rate": 0.998625,
+            "uncomparable_rate": 0.001375,
+            "excluded_rate": 0.0
+          },
+          "control": {
+            "planned": 1440000,
+            "evaluated": 1433857,
+            "uncomparable": 6143,
+            "excluded": 0,
+            "evaluated_rate": 0.9957340277777778,
+            "uncomparable_rate": 0.004265972222222222,
+            "excluded_rate": 0.0
+          }
+        },
+        "seconds": 4.337105568498373
+      },
+      {
+        "group": "full",
+        "seed": 2026,
+        "targets_per_group": 500,
+        "synthetic_rows": 2880,
+        "tests": {
+          "near_copy": {
+            "status": "measured",
+            "measured_indicator": 0.0,
+            "coverage_bounds": [
+              0.0,
+              0.0
+            ],
+            "train_rate_bounds": [
+              0.0,
+              0.0
+            ],
+            "control_rate_bounds": [
+              0.0,
+              0.0
+            ],
+            "close_train": 0,
+            "close_control": 0,
+            "not_close_train": 2880,
+            "not_close_control": 2880,
+            "control_rate_one_possible": false,
+            "statistical_ci": null,
+            "coverage": {
+              "train_neighbors": {
+                "planned": 2880,
+                "evaluated": 2880,
+                "uncomparable": 0,
+                "excluded": 0,
+                "evaluated_rate": 1.0,
+                "uncomparable_rate": 0.0,
+                "excluded_rate": 0.0
+              },
+              "control_neighbors": {
+                "planned": 2880,
+                "evaluated": 2880,
+                "uncomparable": 0,
+                "excluded": 0,
+                "evaluated_rate": 1.0,
+                "uncomparable_rate": 0.0,
+                "excluded_rate": 0.0
+              },
+              "jointly_known": {
+                "planned": 2880,
+                "evaluated": 2880,
+                "uncomparable": 0,
+                "excluded": 0,
+                "evaluated_rate": 1.0,
+                "uncomparable_rate": 0.0,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": ""
+          },
+          "membership": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.02932800000000002,
+              0.03732800000000003
+            ],
+            "auc_coverage_bounds": [
+              0.514664,
+              0.518664
+            ],
+            "known_subset_auc": 0.5167309236947791,
+            "known_pair_ties": 0,
+            "constant_known_scores": false,
+            "statistical_ci": {
+              "auc": [
+                0.47897399598393575,
+                0.5537740963855422
+              ],
+              "indicator": [
+                0.0,
+                0.1075481927710844
+              ],
+              "nominal_level": 0.95,
+              "method": "stratified percentile bootstrap",
+              "scope": "known targets only; conditional on this synthetic table and preprocessing",
+              "contains_chance": true
+            },
+            "coverage": {
+              "train": {
+                "planned": 500,
+                "evaluated": 500,
+                "uncomparable": 0,
+                "excluded": 0,
+                "evaluated_rate": 1.0,
+                "uncomparable_rate": 0.0,
+                "excluded_rate": 0.0
+              },
+              "control": {
+                "planned": 500,
+                "evaluated": 498,
+                "uncomparable": 2,
+                "excluded": 0,
+                "evaluated_rate": 0.996,
+                "uncomparable_rate": 0.004,
+                "excluded_rate": 0.0
+              },
+              "rank_pairs": {
+                "planned": 250000,
+                "evaluated": 249000,
+                "uncomparable": 1000,
+                "excluded": 0,
+                "evaluated_rate": 0.996,
+                "uncomparable_rate": 0.004,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Ziele ohne zul\u00e4ssigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+          }
+        },
+        "eligibility": {
+          "train": {
+            "sampled": 500,
+            "eligible_by_observation_count": 500,
+            "insufficient_observation_count": 0,
+            "excluded": 0,
+            "not_sampled": 2380
+          },
+          "control": {
+            "sampled": 500,
+            "eligible_by_observation_count": 498,
+            "insufficient_observation_count": 2,
+            "excluded": 0,
+            "not_sampled": 220
+          },
+          "synthetic": {
+            "sampled": 2880,
+            "eligible_by_observation_count": 2880,
+            "insufficient_observation_count": 0,
+            "excluded": 0
+          }
+        },
+        "pair_coverage": {
+          "train": {
+            "planned": 1440000,
+            "evaluated": 1437113,
+            "uncomparable": 2887,
+            "excluded": 0,
+            "evaluated_rate": 0.9979951388888889,
+            "uncomparable_rate": 0.002004861111111111,
+            "excluded_rate": 0.0
+          },
+          "control": {
+            "planned": 1440000,
+            "evaluated": 1430557,
+            "uncomparable": 9443,
+            "excluded": 0,
+            "evaluated_rate": 0.9934423611111111,
+            "uncomparable_rate": 0.006557638888888889,
+            "excluded_rate": 0.0
+          }
+        },
+        "seconds": 4.3261226415634155
+      },
+      {
+        "group": "full",
+        "seed": 31415,
+        "targets_per_group": 500,
+        "synthetic_rows": 2880,
+        "tests": {
+          "near_copy": {
+            "status": "measured",
+            "measured_indicator": 0.0,
+            "coverage_bounds": [
+              0.0,
+              0.0
+            ],
+            "train_rate_bounds": [
+              0.0,
+              0.0
+            ],
+            "control_rate_bounds": [
+              0.0,
+              0.0
+            ],
+            "close_train": 0,
+            "close_control": 0,
+            "not_close_train": 2880,
+            "not_close_control": 2880,
+            "control_rate_one_possible": false,
+            "statistical_ci": null,
+            "coverage": {
+              "train_neighbors": {
+                "planned": 2880,
+                "evaluated": 2880,
+                "uncomparable": 0,
+                "excluded": 0,
+                "evaluated_rate": 1.0,
+                "uncomparable_rate": 0.0,
+                "excluded_rate": 0.0
+              },
+              "control_neighbors": {
+                "planned": 2880,
+                "evaluated": 2880,
+                "uncomparable": 0,
+                "excluded": 0,
+                "evaluated_rate": 1.0,
+                "uncomparable_rate": 0.0,
+                "excluded_rate": 0.0
+              },
+              "jointly_known": {
+                "planned": 2880,
+                "evaluated": 2880,
+                "uncomparable": 0,
+                "excluded": 0,
+                "evaluated_rate": 1.0,
+                "uncomparable_rate": 0.0,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": ""
+          },
+          "membership": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.02223200000000003,
+              0.05013599999999996
+            ],
+            "auc_coverage_bounds": [
+              0.474932,
+              0.488884
+            ],
+            "known_subset_auc": 0.4816520088271565,
+            "known_pair_ties": 0,
+            "constant_known_scores": false,
+            "statistical_ci": {
+              "auc": [
+                0.45247462598169663,
+                0.5170044460310248
+              ],
+              "indicator": [
+                0.0,
+                0.09505074803660674
+              ],
+              "nominal_level": 0.95,
+              "method": "stratified percentile bootstrap",
+              "scope": "known targets only; conditional on this synthetic table and preprocessing",
+              "contains_chance": true
+            },
+            "coverage": {
+              "train": {
+                "planned": 500,
+                "evaluated": 496,
+                "uncomparable": 4,
+                "excluded": 0,
+                "evaluated_rate": 0.992,
+                "uncomparable_rate": 0.008,
+                "excluded_rate": 0.0
+              },
+              "control": {
+                "planned": 500,
+                "evaluated": 497,
+                "uncomparable": 3,
+                "excluded": 0,
+                "evaluated_rate": 0.994,
+                "uncomparable_rate": 0.006,
+                "excluded_rate": 0.0
+              },
+              "rank_pairs": {
+                "planned": 250000,
+                "evaluated": 246512,
+                "uncomparable": 3488,
+                "excluded": 0,
+                "evaluated_rate": 0.986048,
+                "uncomparable_rate": 0.013952,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Ziele ohne zul\u00e4ssigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+          }
+        },
+        "eligibility": {
+          "train": {
+            "sampled": 500,
+            "eligible_by_observation_count": 496,
+            "insufficient_observation_count": 4,
+            "excluded": 0,
+            "not_sampled": 2380
+          },
+          "control": {
+            "sampled": 500,
+            "eligible_by_observation_count": 497,
+            "insufficient_observation_count": 3,
+            "excluded": 0,
+            "not_sampled": 220
+          },
+          "synthetic": {
+            "sampled": 2880,
+            "eligible_by_observation_count": 2880,
+            "insufficient_observation_count": 0,
+            "excluded": 0
+          }
+        },
+        "pair_coverage": {
+          "train": {
+            "planned": 1440000,
+            "evaluated": 1425120,
+            "uncomparable": 14880,
+            "excluded": 0,
+            "evaluated_rate": 0.9896666666666667,
+            "uncomparable_rate": 0.010333333333333333,
+            "excluded_rate": 0.0
+          },
+          "control": {
+            "planned": 1440000,
+            "evaluated": 1428031,
+            "uncomparable": 11969,
+            "excluded": 0,
+            "evaluated_rate": 0.9916881944444444,
+            "uncomparable_rate": 0.008311805555555555,
+            "excluded_rate": 0.0
+          }
+        },
+        "seconds": 4.524592734873295
+      },
+      {
+        "group": "demographics",
+        "seed": 42,
+        "targets_per_group": 500,
+        "synthetic_rows": 2880,
+        "tests": {
+          "near_copy": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.0,
+              0.06816143497757848
+            ],
+            "train_rate_bounds": [
+              0.23159722222222223,
+              0.27847222222222223
+            ],
+            "control_rate_bounds": [
+              0.22569444444444445,
+              0.2725694444444444
+            ],
+            "close_train": 667,
+            "close_control": 650,
+            "not_close_train": 2078,
+            "not_close_control": 2095,
+            "control_rate_one_possible": false,
+            "statistical_ci": null,
+            "coverage": {
+              "train_neighbors": {
+                "planned": 2880,
+                "evaluated": 2745,
+                "uncomparable": 135,
+                "excluded": 0,
+                "evaluated_rate": 0.953125,
+                "uncomparable_rate": 0.046875,
+                "excluded_rate": 0.0
+              },
+              "control_neighbors": {
+                "planned": 2880,
+                "evaluated": 2745,
+                "uncomparable": 135,
+                "excluded": 0,
+                "evaluated_rate": 0.953125,
+                "uncomparable_rate": 0.046875,
+                "excluded_rate": 0.0
+              },
+              "jointly_known": {
+                "planned": 2880,
+                "evaluated": 2745,
+                "uncomparable": 135,
+                "excluded": 0,
+                "evaluated_rate": 0.953125,
+                "uncomparable_rate": 0.046875,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Zeilen ohne zul\u00e4ssigen Nachbarn: close/not-close unbekannt"
+          },
+          "membership": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.0,
+              0.18175600000000003
+            ],
+            "auc_coverage_bounds": [
+              0.409122,
+              0.57007
+            ],
+            "known_subset_auc": 0.487600291757841,
+            "known_pair_ties": 41,
+            "constant_known_scores": false,
+            "statistical_ci": {
+              "auc": [
+                0.44828735286966714,
+                0.521248623446461
+              ],
+              "indicator": [
+                0.0,
+                0.10342529426066571
+              ],
+              "nominal_level": 0.95,
+              "method": "stratified percentile bootstrap",
+              "scope": "known targets only; conditional on this synthetic table and preprocessing",
+              "contains_chance": true
+            },
+            "coverage": {
+              "train": {
+                "planned": 500,
+                "evaluated": 457,
+                "uncomparable": 43,
+                "excluded": 0,
+                "evaluated_rate": 0.914,
+                "uncomparable_rate": 0.086,
+                "excluded_rate": 0.0
+              },
+              "control": {
+                "planned": 500,
+                "evaluated": 459,
+                "uncomparable": 41,
+                "excluded": 0,
+                "evaluated_rate": 0.918,
+                "uncomparable_rate": 0.082,
+                "excluded_rate": 0.0
+              },
+              "rank_pairs": {
+                "planned": 250000,
+                "evaluated": 209763,
+                "uncomparable": 40237,
+                "excluded": 0,
+                "evaluated_rate": 0.839052,
+                "uncomparable_rate": 0.160948,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Ziele ohne zul\u00e4ssigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+          }
+        },
+        "eligibility": {
+          "train": {
+            "sampled": 500,
+            "eligible_by_observation_count": 457,
+            "insufficient_observation_count": 43,
+            "excluded": 0,
+            "not_sampled": 2380
+          },
+          "control": {
+            "sampled": 500,
+            "eligible_by_observation_count": 459,
+            "insufficient_observation_count": 41,
+            "excluded": 0,
+            "not_sampled": 220
+          },
+          "synthetic": {
+            "sampled": 2880,
+            "eligible_by_observation_count": 2745,
+            "insufficient_observation_count": 135,
+            "excluded": 0
+          }
+        },
+        "pair_coverage": {
+          "train": {
+            "planned": 1440000,
+            "evaluated": 1227163,
+            "uncomparable": 212837,
+            "excluded": 0,
+            "evaluated_rate": 0.8521965277777778,
+            "uncomparable_rate": 0.14780347222222223,
+            "excluded_rate": 0.0
+          },
+          "control": {
+            "planned": 1440000,
+            "evaluated": 1235444,
+            "uncomparable": 204556,
+            "excluded": 0,
+            "evaluated_rate": 0.8579472222222222,
+            "uncomparable_rate": 0.14205277777777778,
+            "excluded_rate": 0.0
+          }
+        },
+        "seconds": 0.27808354422450066
+      },
+      {
+        "group": "demographics",
+        "seed": 2026,
+        "targets_per_group": 500,
+        "synthetic_rows": 2880,
+        "tests": {
+          "near_copy": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.0,
+              0.03965360072926162
+            ],
+            "train_rate_bounds": [
+              0.22152777777777777,
+              0.26840277777777777
+            ],
+            "control_rate_bounds": [
+              0.23819444444444443,
+              0.28506944444444443
+            ],
+            "close_train": 638,
+            "close_control": 686,
+            "not_close_train": 2107,
+            "not_close_control": 2059,
+            "control_rate_one_possible": false,
+            "statistical_ci": null,
+            "coverage": {
+              "train_neighbors": {
+                "planned": 2880,
+                "evaluated": 2745,
+                "uncomparable": 135,
+                "excluded": 0,
+                "evaluated_rate": 0.953125,
+                "uncomparable_rate": 0.046875,
+                "excluded_rate": 0.0
+              },
+              "control_neighbors": {
+                "planned": 2880,
+                "evaluated": 2745,
+                "uncomparable": 135,
+                "excluded": 0,
+                "evaluated_rate": 0.953125,
+                "uncomparable_rate": 0.046875,
+                "excluded_rate": 0.0
+              },
+              "jointly_known": {
+                "planned": 2880,
+                "evaluated": 2745,
+                "uncomparable": 135,
+                "excluded": 0,
+                "evaluated_rate": 0.953125,
+                "uncomparable_rate": 0.046875,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Zeilen ohne zul\u00e4ssigen Nachbarn: close/not-close unbekannt"
+          },
+          "membership": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.0,
+              0.17220400000000002
+            ],
+            "auc_coverage_bounds": [
+              0.413898,
+              0.578502
+            ],
+            "known_subset_auc": 0.49545125904361526,
+            "known_pair_ties": 67,
+            "constant_known_scores": false,
+            "statistical_ci": {
+              "auc": [
+                0.4597675832778706,
+                0.5334165473619696
+              ],
+              "indicator": [
+                0.0,
+                0.08046483344425881
+              ],
+              "nominal_level": 0.95,
+              "method": "stratified percentile bootstrap",
+              "scope": "known targets only; conditional on this synthetic table and preprocessing",
+              "contains_chance": true
+            },
+            "coverage": {
+              "train": {
+                "planned": 500,
+                "evaluated": 457,
+                "uncomparable": 43,
+                "excluded": 0,
+                "evaluated_rate": 0.914,
+                "uncomparable_rate": 0.086,
+                "excluded_rate": 0.0
+              },
+              "control": {
+                "planned": 500,
+                "evaluated": 457,
+                "uncomparable": 43,
+                "excluded": 0,
+                "evaluated_rate": 0.914,
+                "uncomparable_rate": 0.086,
+                "excluded_rate": 0.0
+              },
+              "rank_pairs": {
+                "planned": 250000,
+                "evaluated": 208849,
+                "uncomparable": 41151,
+                "excluded": 0,
+                "evaluated_rate": 0.835396,
+                "uncomparable_rate": 0.164604,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Ziele ohne zul\u00e4ssigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+          }
+        },
+        "eligibility": {
+          "train": {
+            "sampled": 500,
+            "eligible_by_observation_count": 457,
+            "insufficient_observation_count": 43,
+            "excluded": 0,
+            "not_sampled": 2380
+          },
+          "control": {
+            "sampled": 500,
+            "eligible_by_observation_count": 457,
+            "insufficient_observation_count": 43,
+            "excluded": 0,
+            "not_sampled": 220
+          },
+          "synthetic": {
+            "sampled": 2880,
+            "eligible_by_observation_count": 2745,
+            "insufficient_observation_count": 135,
+            "excluded": 0
+          }
+        },
+        "pair_coverage": {
+          "train": {
+            "planned": 1440000,
+            "evaluated": 1224503,
+            "uncomparable": 215497,
+            "excluded": 0,
+            "evaluated_rate": 0.8503493055555555,
+            "uncomparable_rate": 0.14965069444444445,
+            "excluded_rate": 0.0
+          },
+          "control": {
+            "planned": 1440000,
+            "evaluated": 1228557,
+            "uncomparable": 211443,
+            "excluded": 0,
+            "evaluated_rate": 0.8531645833333333,
+            "uncomparable_rate": 0.14683541666666666,
+            "excluded_rate": 0.0
+          }
+        },
+        "seconds": 0.2659750431776047
+      },
+      {
+        "group": "demographics",
+        "seed": 31415,
+        "targets_per_group": 500,
+        "synthetic_rows": 2880,
+        "tests": {
+          "near_copy": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.0,
+              0.08195991091314031
+            ],
+            "train_rate_bounds": [
+              0.2375,
+              0.284375
+            ],
+            "control_rate_bounds": [
+              0.2204861111111111,
+              0.2673611111111111
+            ],
+            "close_train": 684,
+            "close_control": 635,
+            "not_close_train": 2061,
+            "not_close_control": 2110,
+            "control_rate_one_possible": false,
+            "statistical_ci": null,
+            "coverage": {
+              "train_neighbors": {
+                "planned": 2880,
+                "evaluated": 2745,
+                "uncomparable": 135,
+                "excluded": 0,
+                "evaluated_rate": 0.953125,
+                "uncomparable_rate": 0.046875,
+                "excluded_rate": 0.0
+              },
+              "control_neighbors": {
+                "planned": 2880,
+                "evaluated": 2745,
+                "uncomparable": 135,
+                "excluded": 0,
+                "evaluated_rate": 0.953125,
+                "uncomparable_rate": 0.046875,
+                "excluded_rate": 0.0
+              },
+              "jointly_known": {
+                "planned": 2880,
+                "evaluated": 2745,
+                "uncomparable": 135,
+                "excluded": 0,
+                "evaluated_rate": 0.953125,
+                "uncomparable_rate": 0.046875,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Zeilen ohne zul\u00e4ssigen Nachbarn: close/not-close unbekannt"
+          },
+          "membership": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.0,
+              0.21906000000000003
+            ],
+            "auc_coverage_bounds": [
+              0.428114,
+              0.60953
+            ],
+            "known_subset_auc": 0.5229933641507775,
+            "known_pair_ties": 49,
+            "constant_known_scores": false,
+            "statistical_ci": {
+              "auc": [
+                0.4851580900677267,
+                0.5584711526245321
+              ],
+              "indicator": [
+                0.0,
+                0.11694230524906413
+              ],
+              "nominal_level": 0.95,
+              "method": "stratified percentile bootstrap",
+              "scope": "known targets only; conditional on this synthetic table and preprocessing",
+              "contains_chance": true
+            },
+            "coverage": {
+              "train": {
+                "planned": 500,
+                "evaluated": 442,
+                "uncomparable": 58,
+                "excluded": 0,
+                "evaluated_rate": 0.884,
+                "uncomparable_rate": 0.116,
+                "excluded_rate": 0.0
+              },
+              "control": {
+                "planned": 500,
+                "evaluated": 463,
+                "uncomparable": 37,
+                "excluded": 0,
+                "evaluated_rate": 0.926,
+                "uncomparable_rate": 0.074,
+                "excluded_rate": 0.0
+              },
+              "rank_pairs": {
+                "planned": 250000,
+                "evaluated": 204646,
+                "uncomparable": 45354,
+                "excluded": 0,
+                "evaluated_rate": 0.818584,
+                "uncomparable_rate": 0.181416,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Ziele ohne zul\u00e4ssigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+          }
+        },
+        "eligibility": {
+          "train": {
+            "sampled": 500,
+            "eligible_by_observation_count": 442,
+            "insufficient_observation_count": 58,
+            "excluded": 0,
+            "not_sampled": 2380
+          },
+          "control": {
+            "sampled": 500,
+            "eligible_by_observation_count": 463,
+            "insufficient_observation_count": 37,
+            "excluded": 0,
+            "not_sampled": 220
+          },
+          "synthetic": {
+            "sampled": 2880,
+            "eligible_by_observation_count": 2745,
+            "insufficient_observation_count": 135,
+            "excluded": 0
+          }
+        },
+        "pair_coverage": {
+          "train": {
+            "planned": 1440000,
+            "evaluated": 1184728,
+            "uncomparable": 255272,
+            "excluded": 0,
+            "evaluated_rate": 0.8227277777777777,
+            "uncomparable_rate": 0.17727222222222222,
+            "excluded_rate": 0.0
+          },
+          "control": {
+            "planned": 1440000,
+            "evaluated": 1246170,
+            "uncomparable": 193830,
+            "excluded": 0,
+            "evaluated_rate": 0.8653958333333334,
+            "uncomparable_rate": 0.13460416666666666,
+            "excluded_rate": 0.0
+          }
+        },
+        "seconds": 0.261946938931942
+      },
+      {
+        "group": "clinical_first",
+        "seed": 42,
+        "targets_per_group": 500,
+        "synthetic_rows": 2880,
+        "tests": {
+          "near_copy": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.0,
+              0.0006975933031042904
+            ],
+            "train_rate_bounds": [
+              0.0045138888888888885,
+              0.005208333333333333
+            ],
+            "control_rate_bounds": [
+              0.0045138888888888885,
+              0.005208333333333333
+            ],
+            "close_train": 13,
+            "close_control": 13,
+            "not_close_train": 2865,
+            "not_close_control": 2865,
+            "control_rate_one_possible": false,
+            "statistical_ci": null,
+            "coverage": {
+              "train_neighbors": {
+                "planned": 2880,
+                "evaluated": 2878,
+                "uncomparable": 2,
+                "excluded": 0,
+                "evaluated_rate": 0.9993055555555556,
+                "uncomparable_rate": 0.0006944444444444445,
+                "excluded_rate": 0.0
+              },
+              "control_neighbors": {
+                "planned": 2880,
+                "evaluated": 2878,
+                "uncomparable": 2,
+                "excluded": 0,
+                "evaluated_rate": 0.9993055555555556,
+                "uncomparable_rate": 0.0006944444444444445,
+                "excluded_rate": 0.0
+              },
+              "jointly_known": {
+                "planned": 2880,
+                "evaluated": 2878,
+                "uncomparable": 2,
+                "excluded": 0,
+                "evaluated_rate": 0.9993055555555556,
+                "uncomparable_rate": 0.0006944444444444445,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Zeilen ohne zul\u00e4ssigen Nachbarn: close/not-close unbekannt"
+          },
+          "membership": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.0,
+              0.03611999999999993
+            ],
+            "auc_coverage_bounds": [
+              0.482384,
+              0.51806
+            ],
+            "known_subset_auc": 0.5002302130819102,
+            "known_pair_ties": 4,
+            "constant_known_scores": false,
+            "statistical_ci": {
+              "auc": [
+                0.4608983598873408,
+                0.5346795786478403
+              ],
+              "indicator": [
+                0.0,
+                0.07820328022531842
+              ],
+              "nominal_level": 0.95,
+              "method": "stratified percentile bootstrap",
+              "scope": "known targets only; conditional on this synthetic table and preprocessing",
+              "contains_chance": true
+            },
+            "coverage": {
+              "train": {
+                "planned": 500,
+                "evaluated": 491,
+                "uncomparable": 9,
+                "excluded": 0,
+                "evaluated_rate": 0.982,
+                "uncomparable_rate": 0.018,
+                "excluded_rate": 0.0
+              },
+              "control": {
+                "planned": 500,
+                "evaluated": 491,
+                "uncomparable": 9,
+                "excluded": 0,
+                "evaluated_rate": 0.982,
+                "uncomparable_rate": 0.018,
+                "excluded_rate": 0.0
+              },
+              "rank_pairs": {
+                "planned": 250000,
+                "evaluated": 241081,
+                "uncomparable": 8919,
+                "excluded": 0,
+                "evaluated_rate": 0.964324,
+                "uncomparable_rate": 0.035676,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Ziele ohne zul\u00e4ssigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+          }
+        },
+        "eligibility": {
+          "train": {
+            "sampled": 500,
+            "eligible_by_observation_count": 491,
+            "insufficient_observation_count": 9,
+            "excluded": 0,
+            "not_sampled": 2380
+          },
+          "control": {
+            "sampled": 500,
+            "eligible_by_observation_count": 491,
+            "insufficient_observation_count": 9,
+            "excluded": 0,
+            "not_sampled": 220
+          },
+          "synthetic": {
+            "sampled": 2880,
+            "eligible_by_observation_count": 2878,
+            "insufficient_observation_count": 2,
+            "excluded": 0
+          }
+        },
+        "pair_coverage": {
+          "train": {
+            "planned": 1440000,
+            "evaluated": 1412239,
+            "uncomparable": 27761,
+            "excluded": 0,
+            "evaluated_rate": 0.9807215277777778,
+            "uncomparable_rate": 0.01927847222222222,
+            "excluded_rate": 0.0
+          },
+          "control": {
+            "planned": 1440000,
+            "evaluated": 1411553,
+            "uncomparable": 28447,
+            "excluded": 0,
+            "evaluated_rate": 0.9802451388888889,
+            "uncomparable_rate": 0.019754861111111112,
+            "excluded_rate": 0.0
+          }
+        },
+        "seconds": 0.22636885941028595
+      },
+      {
+        "group": "clinical_first",
+        "seed": 2026,
+        "targets_per_group": 500,
+        "synthetic_rows": 2880,
+        "tests": {
+          "near_copy": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.000349162011173184,
+              0.0017445917655268665
+            ],
+            "train_rate_bounds": [
+              0.005902777777777778,
+              0.006597222222222222
+            ],
+            "control_rate_bounds": [
+              0.004861111111111111,
+              0.005555555555555556
+            ],
+            "close_train": 17,
+            "close_control": 14,
+            "not_close_train": 2861,
+            "not_close_control": 2864,
+            "control_rate_one_possible": false,
+            "statistical_ci": null,
+            "coverage": {
+              "train_neighbors": {
+                "planned": 2880,
+                "evaluated": 2878,
+                "uncomparable": 2,
+                "excluded": 0,
+                "evaluated_rate": 0.9993055555555556,
+                "uncomparable_rate": 0.0006944444444444445,
+                "excluded_rate": 0.0
+              },
+              "control_neighbors": {
+                "planned": 2880,
+                "evaluated": 2878,
+                "uncomparable": 2,
+                "excluded": 0,
+                "evaluated_rate": 0.9993055555555556,
+                "uncomparable_rate": 0.0006944444444444445,
+                "excluded_rate": 0.0
+              },
+              "jointly_known": {
+                "planned": 2880,
+                "evaluated": 2878,
+                "uncomparable": 2,
+                "excluded": 0,
+                "evaluated_rate": 0.9993055555555556,
+                "uncomparable_rate": 0.0006944444444444445,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Zeilen ohne zul\u00e4ssigen Nachbarn: close/not-close unbekannt"
+          },
+          "membership": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.0,
+              0.03331600000000001
+            ],
+            "auc_coverage_bounds": [
+              0.483342,
+              0.515086
+            ],
+            "known_subset_auc": 0.4991882312115804,
+            "known_pair_ties": 3,
+            "constant_known_scores": false,
+            "statistical_ci": {
+              "auc": [
+                0.4608600927853791,
+                0.5354947451913544
+              ],
+              "indicator": [
+                0.0,
+                0.07827981442924181
+              ],
+              "nominal_level": 0.95,
+              "method": "stratified percentile bootstrap",
+              "scope": "known targets only; conditional on this synthetic table and preprocessing",
+              "contains_chance": true
+            },
+            "coverage": {
+              "train": {
+                "planned": 500,
+                "evaluated": 492,
+                "uncomparable": 8,
+                "excluded": 0,
+                "evaluated_rate": 0.984,
+                "uncomparable_rate": 0.016,
+                "excluded_rate": 0.0
+              },
+              "control": {
+                "planned": 500,
+                "evaluated": 492,
+                "uncomparable": 8,
+                "excluded": 0,
+                "evaluated_rate": 0.984,
+                "uncomparable_rate": 0.016,
+                "excluded_rate": 0.0
+              },
+              "rank_pairs": {
+                "planned": 250000,
+                "evaluated": 242064,
+                "uncomparable": 7936,
+                "excluded": 0,
+                "evaluated_rate": 0.968256,
+                "uncomparable_rate": 0.031744,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Ziele ohne zul\u00e4ssigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+          }
+        },
+        "eligibility": {
+          "train": {
+            "sampled": 500,
+            "eligible_by_observation_count": 492,
+            "insufficient_observation_count": 8,
+            "excluded": 0,
+            "not_sampled": 2380
+          },
+          "control": {
+            "sampled": 500,
+            "eligible_by_observation_count": 492,
+            "insufficient_observation_count": 8,
+            "excluded": 0,
+            "not_sampled": 220
+          },
+          "synthetic": {
+            "sampled": 2880,
+            "eligible_by_observation_count": 2878,
+            "insufficient_observation_count": 2,
+            "excluded": 0
+          }
+        },
+        "pair_coverage": {
+          "train": {
+            "planned": 1440000,
+            "evaluated": 1415105,
+            "uncomparable": 24895,
+            "excluded": 0,
+            "evaluated_rate": 0.9827118055555556,
+            "uncomparable_rate": 0.017288194444444443,
+            "excluded_rate": 0.0
+          },
+          "control": {
+            "planned": 1440000,
+            "evaluated": 1414604,
+            "uncomparable": 25396,
+            "excluded": 0,
+            "evaluated_rate": 0.9823638888888889,
+            "uncomparable_rate": 0.017636111111111113,
+            "excluded_rate": 0.0
+          }
+        },
+        "seconds": 0.2257748395204544
+      },
+      {
+        "group": "clinical_first",
+        "seed": 31415,
+        "targets_per_group": 500,
+        "synthetic_rows": 2880,
+        "tests": {
+          "near_copy": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.0010471204188481683,
+              0.002441576560865016
+            ],
+            "train_rate_bounds": [
+              0.00625,
+              0.006944444444444444
+            ],
+            "control_rate_bounds": [
+              0.0045138888888888885,
+              0.005208333333333333
+            ],
+            "close_train": 18,
+            "close_control": 13,
+            "not_close_train": 2860,
+            "not_close_control": 2865,
+            "control_rate_one_possible": false,
+            "statistical_ci": null,
+            "coverage": {
+              "train_neighbors": {
+                "planned": 2880,
+                "evaluated": 2878,
+                "uncomparable": 2,
+                "excluded": 0,
+                "evaluated_rate": 0.9993055555555556,
+                "uncomparable_rate": 0.0006944444444444445,
+                "excluded_rate": 0.0
+              },
+              "control_neighbors": {
+                "planned": 2880,
+                "evaluated": 2878,
+                "uncomparable": 2,
+                "excluded": 0,
+                "evaluated_rate": 0.9993055555555556,
+                "uncomparable_rate": 0.0006944444444444445,
+                "excluded_rate": 0.0
+              },
+              "jointly_known": {
+                "planned": 2880,
+                "evaluated": 2878,
+                "uncomparable": 2,
+                "excluded": 0,
+                "evaluated_rate": 0.9993055555555556,
+                "uncomparable_rate": 0.0006944444444444445,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Zeilen ohne zul\u00e4ssigen Nachbarn: close/not-close unbekannt"
+          },
+          "membership": {
+            "status": "coverage_bounded",
+            "measured_indicator": null,
+            "coverage_bounds": [
+              0.0,
+              0.07921199999999995
+            ],
+            "auc_coverage_bounds": [
+              0.460394,
+              0.513746
+            ],
+            "known_subset_auc": 0.4863412799689008,
+            "known_pair_ties": 3,
+            "constant_known_scores": false,
+            "statistical_ci": {
+              "auc": [
+                0.45374193998191514,
+                0.5276012308693411
+              ],
+              "indicator": [
+                0.0,
+                0.09251612003616971
+              ],
+              "nominal_level": 0.95,
+              "method": "stratified percentile bootstrap",
+              "scope": "known targets only; conditional on this synthetic table and preprocessing",
+              "contains_chance": true
+            },
+            "coverage": {
+              "train": {
+                "planned": 500,
+                "evaluated": 482,
+                "uncomparable": 18,
+                "excluded": 0,
+                "evaluated_rate": 0.964,
+                "uncomparable_rate": 0.036,
+                "excluded_rate": 0.0
+              },
+              "control": {
+                "planned": 500,
+                "evaluated": 491,
+                "uncomparable": 9,
+                "excluded": 0,
+                "evaluated_rate": 0.982,
+                "uncomparable_rate": 0.018,
+                "excluded_rate": 0.0
+              },
+              "rank_pairs": {
+                "planned": 250000,
+                "evaluated": 236662,
+                "uncomparable": 13338,
+                "excluded": 0,
+                "evaluated_rate": 0.946648,
+                "uncomparable_rate": 0.053352,
+                "excluded_rate": 0.0
+              }
+            },
+            "reason": "Ziele ohne zul\u00e4ssigen Nachbarn bleiben als unbekannte Rangpaare im Nenner"
+          }
+        },
+        "eligibility": {
+          "train": {
+            "sampled": 500,
+            "eligible_by_observation_count": 482,
+            "insufficient_observation_count": 18,
+            "excluded": 0,
+            "not_sampled": 2380
+          },
+          "control": {
+            "sampled": 500,
+            "eligible_by_observation_count": 491,
+            "insufficient_observation_count": 9,
+            "excluded": 0,
+            "not_sampled": 220
+          },
+          "synthetic": {
+            "sampled": 2880,
+            "eligible_by_observation_count": 2878,
+            "insufficient_observation_count": 2,
+            "excluded": 0
+          }
+        },
+        "pair_coverage": {
+          "train": {
+            "planned": 1440000,
+            "evaluated": 1385818,
+            "uncomparable": 54182,
+            "excluded": 0,
+            "evaluated_rate": 0.9623736111111111,
+            "uncomparable_rate": 0.03762638888888889,
+            "excluded_rate": 0.0
+          },
+          "control": {
+            "planned": 1440000,
+            "evaluated": 1411550,
+            "uncomparable": 28450,
+            "excluded": 0,
+            "evaluated_rate": 0.9802430555555556,
+            "uncomparable_rate": 0.019756944444444445,
+            "excluded_rate": 0.0
+          }
+        },
+        "seconds": 0.2202341891825199
+      }
+    ],
+    "preprocessing": {
+      "full": {
+        "active_columns": [
+          "ALP_first",
+          "ALP_last",
+          "ALT_first",
+          "ALT_last",
+          "AST_first",
+          "AST_last",
+          "Age",
+          "Albumin_first",
+          "Albumin_last",
+          "BUN_first",
+          "BUN_last",
+          "Bilirubin_first",
+          "Bilirubin_last",
+          "CCU",
+          "CSRU",
+          "Cholesterol_first",
+          "Cholesterol_last",
+          "Creatinine_first",
+          "Creatinine_last",
+          "DiasABP_first",
+          "DiasABP_highest",
+          "DiasABP_last",
+          "DiasABP_lowest",
+          "DiasABP_median",
+          "FiO2_first",
+          "FiO2_last",
+          "GCS_first",
+          "GCS_highest",
+          "GCS_last",
+          "GCS_lowest",
+          "GCS_median",
+          "Gender",
+          "Glucose_first",
+          "Glucose_highest",
+          "Glucose_last",
+          "Glucose_lowest",
+          "Glucose_median",
+          "HCO3_first",
+          "HCO3_last",
+          "HCT_first",
+          "HCT_last",
+          "HR_first",
+          "HR_highest",
+          "HR_last",
+          "HR_lowest",
+          "HR_median",
+          "Height",
+          "K_first",
+          "K_last",
+          "Lactate_first",
+          "Lactate_last",
+          "MAP_first",
+          "MAP_highest",
+          "MAP_last",
+          "MAP_lowest",
+          "MAP_median",
+          "MechVentDuration",
+          "MechVentLast8Hour",
+          "MechVentStartTime",
+          "Mg_first",
+          "Mg_last",
+          "NIDiasABP_first",
+          "NIDiasABP_highest",
+          "NIDiasABP_last",
+          "NIDiasABP_lowest",
+          "NIDiasABP_median",
+          "NIMAP_first",
+          "NIMAP_highest",
+          "NIMAP_last",
+          "NIMAP_lowest",
+          "NIMAP_median",
+          "NISysABP_first",
+          "NISysABP_highest",
+          "NISysABP_last",
+          "NISysABP_lowest",
+          "NISysABP_median",
+          "Na_first",
+          "Na_last",
+          "PaCO2_first",
+          "PaCO2_last",
+          "PaO2_first",
+          "PaO2_last",
+          "Platelets_first",
+          "Platelets_last",
+          "RespRate_first",
+          "RespRate_highest",
+          "RespRate_last",
+          "RespRate_lowest",
+          "RespRate_median",
+          "SAPS-I",
+          "SICU",
+          "SOFA",
+          "SaO2_first",
+          "SaO2_highest",
+          "SaO2_last",
+          "SaO2_lowest",
+          "SaO2_median",
+          "SysABP_first",
+          "SysABP_highest",
+          "SysABP_last",
+          "SysABP_lowest",
+          "SysABP_median",
+          "Temp_first",
+          "Temp_highest",
+          "Temp_last",
+          "Temp_lowest",
+          "Temp_median",
+          "TroponinI_first",
+          "TroponinI_last",
+          "TroponinT_first",
+          "TroponinT_last",
+          "UrineOutputSum",
+          "WBC_first",
+          "WBC_last",
+          "Weight",
+          "Weight_first",
+          "Weight_last",
+          "In-hospital_death",
+          "pH_first",
+          "pH_last"
+        ],
+        "excluded_columns": [],
+        "required_common_features": 30,
+        "weighting": "equal_per_active_column",
+        "scaling": "training_IQR; training_range_if_IQR_zero",
+        "missing": "both missing: excluded; one missing: cost 1; common-observation minimum",
+        "requested_columns": [
+          "ALP_first",
+          "ALP_last",
+          "ALT_first",
+          "ALT_last",
+          "AST_first",
+          "AST_last",
+          "Age",
+          "Albumin_first",
+          "Albumin_last",
+          "BUN_first",
+          "BUN_last",
+          "Bilirubin_first",
+          "Bilirubin_last",
+          "CCU",
+          "CSRU",
+          "Cholesterol_first",
+          "Cholesterol_last",
+          "Creatinine_first",
+          "Creatinine_last",
+          "DiasABP_first",
+          "DiasABP_highest",
+          "DiasABP_last",
+          "DiasABP_lowest",
+          "DiasABP_median",
+          "FiO2_first",
+          "FiO2_last",
+          "GCS_first",
+          "GCS_highest",
+          "GCS_last",
+          "GCS_lowest",
+          "GCS_median",
+          "Gender",
+          "Glucose_first",
+          "Glucose_highest",
+          "Glucose_last",
+          "Glucose_lowest",
+          "Glucose_median",
+          "HCO3_first",
+          "HCO3_last",
+          "HCT_first",
+          "HCT_last",
+          "HR_first",
+          "HR_highest",
+          "HR_last",
+          "HR_lowest",
+          "HR_median",
+          "Height",
+          "K_first",
+          "K_last",
+          "Lactate_first",
+          "Lactate_last",
+          "MAP_first",
+          "MAP_highest",
+          "MAP_last",
+          "MAP_lowest",
+          "MAP_median",
+          "MechVentDuration",
+          "MechVentLast8Hour",
+          "MechVentStartTime",
+          "Mg_first",
+          "Mg_last",
+          "NIDiasABP_first",
+          "NIDiasABP_highest",
+          "NIDiasABP_last",
+          "NIDiasABP_lowest",
+          "NIDiasABP_median",
+          "NIMAP_first",
+          "NIMAP_highest",
+          "NIMAP_last",
+          "NIMAP_lowest",
+          "NIMAP_median",
+          "NISysABP_first",
+          "NISysABP_highest",
+          "NISysABP_last",
+          "NISysABP_lowest",
+          "NISysABP_median",
+          "Na_first",
+          "Na_last",
+          "PaCO2_first",
+          "PaCO2_last",
+          "PaO2_first",
+          "PaO2_last",
+          "Platelets_first",
+          "Platelets_last",
+          "RespRate_first",
+          "RespRate_highest",
+          "RespRate_last",
+          "RespRate_lowest",
+          "RespRate_median",
+          "SAPS-I",
+          "SICU",
+          "SOFA",
+          "SaO2_first",
+          "SaO2_highest",
+          "SaO2_last",
+          "SaO2_lowest",
+          "SaO2_median",
+          "SysABP_first",
+          "SysABP_highest",
+          "SysABP_last",
+          "SysABP_lowest",
+          "SysABP_median",
+          "Temp_first",
+          "Temp_highest",
+          "Temp_last",
+          "Temp_lowest",
+          "Temp_median",
+          "TroponinI_first",
+          "TroponinI_last",
+          "TroponinT_first",
+          "TroponinT_last",
+          "UrineOutputSum",
+          "WBC_first",
+          "WBC_last",
+          "Weight",
+          "Weight_first",
+          "Weight_last",
+          "In-hospital_death",
+          "pH_first",
+          "pH_last"
+        ],
+        "small_active_group": false
+      },
+      "demographics": {
+        "active_columns": [
+          "Age",
+          "Gender",
+          "Height",
+          "Weight"
+        ],
+        "excluded_columns": [],
+        "required_common_features": 3,
+        "weighting": "equal_per_active_column",
+        "scaling": "training_IQR; training_range_if_IQR_zero",
+        "missing": "both missing: excluded; one missing: cost 1; common-observation minimum",
+        "requested_columns": [
+          "Age",
+          "Gender",
+          "Height",
+          "Weight"
+        ],
+        "small_active_group": false
+      },
+      "clinical_first": {
+        "active_columns": [
+          "HR_first",
+          "GCS_first",
+          "Glucose_first",
+          "Creatinine_first",
+          "Temp_first"
+        ],
+        "excluded_columns": [],
+        "required_common_features": 3,
+        "weighting": "equal_per_active_column",
+        "scaling": "training_IQR; training_range_if_IQR_zero",
+        "missing": "both missing: excluded; one missing: cost 1; common-observation minimum",
+        "requested_columns": [
+          "HR_first",
+          "GCS_first",
+          "Glucose_first",
+          "Creatinine_first",
+          "Temp_first"
+        ],
+        "small_active_group": false
+      }
+    },
+    "metadata": {
+      "started_utc": "2026-11-20T12:33:50.661854+00:00",
+      "python": "3.12.14",
+      "platform": "Linux-6.8.0-90-generic-x86_64-with-glibc2.35",
+      "versions": {
+        "numpy": "2.5.4",
+        "pandas": "2.3.3"
+      },
+      "configuration": {
+        "near_threshold": 0.05,
+        "threshold_source": "Provisorischer Startwert, nicht kalibriert",
+        "categorical_columns": [
+          "In-hospital_death"
+        ],
+        "min_common_fraction": 0.25,
+        "min_common_features": 3,
+        "min_targets": 30,
+        "bootstrap_repeats": 200,
+        "block_rows": 64
+      },
+      "budget": 500,
+      "seeds": [
+        42,
+        2026,
+        31415
+      ],
+      "paths": {
+        "train": "/home/irene/projects/hackathon-synth-data-2026/data/real_train.parquet",
+        "control": "/home/irene/projects/hackathon-synth-data-2026/data/real_test.parquet",
+        "synthetic": "/home/irene/projects/hackathon-synth-data-2026/data/example_synthetic_data.parquet"
+      },
+      "source_sha256": {
+        "privacy.py": "cfc241e2d9c67125da593762505d2ebcdf489a0b794a38582956ce4bfa9a5bfb"
+      },
+      "config_sha256": null,
+      "scope": "Table release; fixed two-sided nearest-neighbor membership statistic; no Anonymeter",
+      "effective_config_sha256": "7d55e9b969e50f1551d57369311dea97fa6a5e7a87c2eb4d85183e3eba40546a",
+      "input_sha256": {
+        "train": "c86ce428eea094a09a7c67a3855ae4060c0b3f21e8a8a035fb2c8920e424a659",
+        "control": "e3bca5c9f6f2915db817a5384d7f41ef5ff0c055f0af6b7c8e54a09ac8cc0934",
+        "synthetic": "4447a3d2803555fde1479b76adda2073a46334529118acae81795dc63877e7e4"
+      },
+      "data_specs": {
+        "identifier_var": "recordid",
+        "target_var": "mortality",
+        "categorical_vars": [
+          "mortality"
+        ],
+        "boolean_vars": [
+          "Gender",
+          "CCU",
+          "CSRU",
+          "SICU",
+          "MechVentLast8Hour"
+        ],
+        "numerical_vars": [
+          "SAPS-I",
+          "SOFA",
+          "Age",
+          "Height",
+          "Weight",
+          "DiasABP_first",
+          "GCS_first",
+          "Glucose_first",
+          "HR_first",
+          "MAP_first",
+          "NIDiasABP_first",
+          "NIMAP_first",
+          "NISysABP_first",
+          "RespRate_first",
+          "SaO2_first",
+          "SysABP_first",
+          "Temp_first",
+          "DiasABP_last",
+          "GCS_last",
+          "Glucose_last",
+          "HR_last",
+          "MAP_last",
+          "NIDiasABP_last",
+          "NIMAP_last",
+          "NISysABP_last",
+          "RespRate_last",
+          "SaO2_last",
+          "SysABP_last",
+          "Temp_last",
+          "DiasABP_lowest",
+          "GCS_lowest",
+          "Glucose_lowest",
+          "HR_lowest",
+          "MAP_lowest",
+          "NIDiasABP_lowest",
+          "NIMAP_lowest",
+          "NISysABP_lowest",
+          "RespRate_lowest",
+          "SaO2_lowest",
+          "SysABP_lowest",
+          "Temp_lowest",
+          "DiasABP_highest",
+          "GCS_highest",
+          "Glucose_highest",
+          "HR_highest",
+          "MAP_highest",
+          "NIDiasABP_highest",
+          "NIMAP_highest",
+          "NISysABP_highest",
+          "RespRate_highest",
+          "SaO2_highest",
+          "SysABP_highest",
+          "Temp_highest",
+          "DiasABP_median",
+          "GCS_median",
+          "Glucose_median",
+          "HR_median",
+          "MAP_median",
+          "NIDiasABP_median",
+          "NIMAP_median",
+          "NISysABP_median",
+          "RespRate_median",
+          "SaO2_median",
+          "SysABP_median",
+          "Temp_median",
+          "ALP_first",
+          "ALT_first",
+          "AST_first",
+          "Albumin_first",
+          "BUN_first",
+          "Bilirubin_first",
+          "Cholesterol_first",
+          "Creatinine_first",
+          "FiO2_first",
+          "HCO3_first",
+          "HCT_first",
+          "K_first",
+          "Lactate_first",
+          "Mg_first",
+          "Na_first",
+          "PaCO2_first",
+          "PaO2_first",
+          "Platelets_first",
+          "TroponinI_first",
+          "TroponinT_first",
+          "WBC_first",
+          "Weight_first",
+          "pH_first",
+          "ALP_last",
+          "ALT_last",
+          "AST_last",
+          "Albumin_last",
+          "BUN_last",
+          "Bilirubin_last",
+          "Cholesterol_last",
+          "Creatinine_last",
+          "FiO2_last",
+          "HCO3_last",
+          "HCT_last",
+          "K_last",
+          "Lactate_last",
+          "Mg_last",
+          "Na_last",
+          "PaCO2_last",
+          "PaO2_last",
+          "Platelets_last",
+          "TroponinI_last",
+          "TroponinT_last",
+          "WBC_last",
+          "Weight_last",
+          "pH_last",
+          "MechVentStartTime",
+          "MechVentDuration",
+          "UrineOutputSum"
+        ],
+        "input_vars": [
+          "SAPS-I",
+          "SOFA",
+          "Age",
+          "Gender",
+          "Height",
+          "Weight",
+          "CCU",
+          "CSRU",
+          "SICU",
+          "DiasABP_first",
+          "GCS_first",
+          "Glucose_first",
+          "HR_first",
+          "MAP_first",
+          "NIDiasABP_first",
+          "NIMAP_first",
+          "NISysABP_first",
+          "RespRate_first",
+          "SaO2_first",
+          "SysABP_first",
+          "Temp_first",
+          "DiasABP_last",
+          "GCS_last",
+          "Glucose_last",
+          "HR_last",
+          "MAP_last",
+          "NIDiasABP_last",
+          "NIMAP_last",
+          "NISysABP_last",
+          "RespRate_last",
+          "SaO2_last",
+          "SysABP_last",
+          "Temp_last",
+          "DiasABP_lowest",
+          "GCS_lowest",
+          "Glucose_lowest",
+          "HR_lowest",
+          "MAP_lowest",
+          "NIDiasABP_lowest",
+          "NIMAP_lowest",
+          "NISysABP_lowest",
+          "RespRate_lowest",
+          "SaO2_lowest",
+          "SysABP_lowest",
+          "Temp_lowest",
+          "DiasABP_highest",
+          "GCS_highest",
+          "Glucose_highest",
+          "HR_highest",
+          "MAP_highest",
+          "NIDiasABP_highest",
+          "NIMAP_highest",
+          "NISysABP_highest",
+          "RespRate_highest",
+          "SaO2_highest",
+          "SysABP_highest",
+          "Temp_highest",
+          "DiasABP_median",
+          "GCS_median",
+          "Glucose_median",
+          "HR_median",
+          "MAP_median",
+          "NIDiasABP_median",
+          "NIMAP_median",
+          "NISysABP_median",
+          "RespRate_median",
+          "SaO2_median",
+          "SysABP_median",
+          "Temp_median",
+          "ALP_first",
+          "ALT_first",
+          "AST_first",
+          "Albumin_first",
+          "BUN_first",
+          "Bilirubin_first",
+          "Cholesterol_first",
+          "Creatinine_first",
+          "FiO2_first",
+          "HCO3_first",
+          "HCT_first",
+          "K_first",
+          "Lactate_first",
+          "Mg_first",
+          "Na_first",
+          "PaCO2_first",
+          "PaO2_first",
+          "Platelets_first",
+          "TroponinI_first",
+          "TroponinT_first",
+          "WBC_first",
+          "Weight_first",
+          "pH_first",
+          "ALP_last",
+          "ALT_last",
+          "AST_last",
+          "Albumin_last",
+          "BUN_last",
+          "Bilirubin_last",
+          "Cholesterol_last",
+          "Creatinine_last",
+          "FiO2_last",
+          "HCO3_last",
+          "HCT_last",
+          "K_last",
+          "Lactate_last",
+          "Mg_last",
+          "Na_last",
+          "PaCO2_last",
+          "PaO2_last",
+          "Platelets_last",
+          "TroponinI_last",
+          "TroponinT_last",
+          "WBC_last",
+          "Weight_last",
+          "pH_last",
+          "MechVentStartTime",
+          "MechVentDuration",
+          "MechVentLast8Hour",
+          "UrineOutputSum"
+        ]
+      },
+      "data_checks": {
+        "train": {
+          "rows": 2880,
+          "missing_by_column": {
+            "ALP_first": 1665,
+            "ALP_last": 1665,
+            "ALT_first": 1646,
+            "ALT_last": 1646,
+            "AST_first": 1644,
+            "AST_last": 1644,
+            "Age": 0,
+            "Albumin_first": 1720,
+            "Albumin_last": 1720,
+            "BUN_first": 48,
+            "BUN_last": 48,
+            "Bilirubin_first": 1645,
+            "Bilirubin_last": 1645,
+            "CCU": 0,
+            "CSRU": 0,
+            "Cholesterol_first": 2667,
+            "Cholesterol_last": 2667,
+            "Creatinine_first": 48,
+            "Creatinine_last": 48,
+            "DiasABP_first": 918,
+            "DiasABP_highest": 918,
+            "DiasABP_last": 918,
+            "DiasABP_lowest": 918,
+            "DiasABP_median": 918,
+            "FiO2_first": 955,
+            "FiO2_last": 955,
+            "GCS_first": 53,
+            "GCS_highest": 53,
+            "GCS_last": 53,
+            "GCS_lowest": 53,
+            "GCS_median": 53,
+            "Gender": 4,
+            "Glucose_first": 80,
+            "Glucose_highest": 80,
+            "Glucose_last": 80,
+            "Glucose_lowest": 80,
+            "Glucose_median": 80,
+            "HCO3_first": 52,
+            "HCO3_last": 52,
+            "HCT_first": 48,
+            "HCT_last": 48,
+            "HR_first": 53,
+            "HR_highest": 53,
+            "HR_last": 53,
+            "HR_lowest": 53,
+            "HR_median": 53,
+            "Height": 1392,
+            "K_first": 67,
+            "K_last": 67,
+            "Lactate_first": 1307,
+            "Lactate_last": 1307,
+            "MAP_first": 911,
+            "MAP_highest": 911,
+            "MAP_last": 911,
+            "MAP_lowest": 911,
+            "MAP_median": 911,
+            "MechVentDuration": 1088,
+            "MechVentLast8Hour": 1088,
+            "MechVentStartTime": 1088,
+            "Mg_first": 70,
+            "Mg_last": 70,
+            "NIDiasABP_first": 369,
+            "NIDiasABP_highest": 369,
+            "NIDiasABP_last": 369,
+            "NIDiasABP_lowest": 369,
+            "NIDiasABP_median": 369,
+            "NIMAP_first": 369,
+            "NIMAP_highest": 369,
+            "NIMAP_last": 369,
+            "NIMAP_lowest": 369,
+            "NIMAP_median": 369,
+            "NISysABP_first": 367,
+            "NISysABP_highest": 367,
+            "NISysABP_last": 367,
+            "NISysABP_lowest": 367,
+            "NISysABP_median": 367,
+            "Na_first": 55,
+            "Na_last": 55,
+            "PaCO2_first": 714,
+            "PaCO2_last": 714,
+            "PaO2_first": 714,
+            "PaO2_last": 714,
+            "Platelets_first": 53,
+            "Platelets_last": 53,
+            "RespRate_first": 2072,
+            "RespRate_highest": 2072,
+            "RespRate_last": 2072,
+            "RespRate_lowest": 2072,
+            "RespRate_median": 2072,
+            "SAPS-I": 142,
+            "SICU": 0,
+            "SOFA": 110,
+            "SaO2_first": 1635,
+            "SaO2_highest": 1635,
+            "SaO2_last": 1635,
+            "SaO2_lowest": 1635,
+            "SaO2_median": 1635,
+            "SysABP_first": 918,
+            "SysABP_highest": 918,
+            "SysABP_last": 918,
+            "SysABP_lowest": 918,
+            "SysABP_median": 918,
+            "Temp_first": 53,
+            "Temp_highest": 53,
+            "Temp_last": 53,
+            "Temp_lowest": 53,
+            "Temp_median": 53,
+            "TroponinI_first": 2733,
+            "TroponinI_last": 2733,
+            "TroponinT_first": 2256,
+            "TroponinT_last": 2256,
+            "UrineOutputSum": 1088,
+            "WBC_first": 68,
+            "WBC_last": 68,
+            "Weight": 263,
+            "Weight_first": 946,
+            "Weight_last": 946,
+            "In-hospital_death": 0,
+            "pH_first": 705,
+            "pH_last": 705
+          },
+          "missing_ids": 0,
+          "duplicate_ids_excess": 0
+        },
+        "control": {
+          "rows": 720,
+          "missing_by_column": {
+            "ALP_first": 403,
+            "ALP_last": 403,
+            "ALT_first": 395,
+            "ALT_last": 395,
+            "AST_first": 394,
+            "AST_last": 394,
+            "Age": 0,
+            "Albumin_first": 408,
+            "Albumin_last": 408,
+            "BUN_first": 13,
+            "BUN_last": 13,
+            "Bilirubin_first": 396,
+            "Bilirubin_last": 396,
+            "CCU": 0,
+            "CSRU": 0,
+            "Cholesterol_first": 658,
+            "Cholesterol_last": 658,
+            "Creatinine_first": 13,
+            "Creatinine_last": 13,
+            "DiasABP_first": 190,
+            "DiasABP_highest": 190,
+            "DiasABP_last": 190,
+            "DiasABP_lowest": 190,
+            "DiasABP_median": 190,
+            "FiO2_first": 216,
+            "FiO2_last": 216,
+            "GCS_first": 12,
+            "GCS_highest": 12,
+            "GCS_last": 12,
+            "GCS_lowest": 12,
+            "GCS_median": 12,
+            "Gender": 0,
+            "Glucose_first": 20,
+            "Glucose_highest": 20,
+            "Glucose_last": 20,
+            "Glucose_lowest": 20,
+            "Glucose_median": 20,
+            "HCO3_first": 14,
+            "HCO3_last": 14,
+            "HCT_first": 11,
+            "HCT_last": 11,
+            "HR_first": 12,
+            "HR_highest": 12,
+            "HR_last": 12,
+            "HR_lowest": 12,
+            "HR_median": 12,
+            "Height": 346,
+            "K_first": 18,
+            "K_last": 18,
+            "Lactate_first": 301,
+            "Lactate_last": 301,
+            "MAP_first": 191,
+            "MAP_highest": 191,
+            "MAP_last": 191,
+            "MAP_lowest": 191,
+            "MAP_median": 191,
+            "MechVentDuration": 248,
+            "MechVentLast8Hour": 248,
+            "MechVentStartTime": 248,
+            "Mg_first": 20,
+            "Mg_last": 20,
+            "NIDiasABP_first": 95,
+            "NIDiasABP_highest": 95,
+            "NIDiasABP_last": 95,
+            "NIDiasABP_lowest": 95,
+            "NIDiasABP_median": 95,
+            "NIMAP_first": 95,
+            "NIMAP_highest": 95,
+            "NIMAP_last": 95,
+            "NIMAP_lowest": 95,
+            "NIMAP_median": 95,
+            "NISysABP_first": 95,
+            "NISysABP_highest": 95,
+            "NISysABP_last": 95,
+            "NISysABP_lowest": 95,
+            "NISysABP_median": 95,
+            "Na_first": 14,
+            "Na_last": 14,
+            "PaCO2_first": 149,
+            "PaCO2_last": 149,
+            "PaO2_first": 149,
+            "PaO2_last": 149,
+            "Platelets_first": 12,
+            "Platelets_last": 12,
+            "RespRate_first": 534,
+            "RespRate_highest": 534,
+            "RespRate_last": 534,
+            "RespRate_lowest": 534,
+            "RespRate_median": 534,
+            "SAPS-I": 33,
+            "SICU": 0,
+            "SOFA": 26,
+            "SaO2_first": 386,
+            "SaO2_highest": 386,
+            "SaO2_last": 386,
+            "SaO2_lowest": 386,
+            "SaO2_median": 386,
+            "SysABP_first": 190,
+            "SysABP_highest": 190,
+            "SysABP_last": 190,
+            "SysABP_lowest": 190,
+            "SysABP_median": 190,
+            "Temp_first": 12,
+            "Temp_highest": 12,
+            "Temp_last": 12,
+            "Temp_lowest": 12,
+            "Temp_median": 12,
+            "TroponinI_first": 692,
+            "TroponinI_last": 692,
+            "TroponinT_first": 558,
+            "TroponinT_last": 558,
+            "UrineOutputSum": 248,
+            "WBC_first": 16,
+            "WBC_last": 16,
+            "Weight": 60,
+            "Weight_first": 247,
+            "Weight_last": 247,
+            "In-hospital_death": 0,
+            "pH_first": 147,
+            "pH_last": 147
+          },
+          "missing_ids": 0,
+          "duplicate_ids_excess": 0
+        },
+        "synthetic": {
+          "rows": 2880,
+          "missing_by_column": {
+            "ALP_first": 1672,
+            "ALP_last": 1657,
+            "ALT_first": 1638,
+            "ALT_last": 1642,
+            "AST_first": 1635,
+            "AST_last": 1680,
+            "Age": 0,
+            "Albumin_first": 1774,
+            "Albumin_last": 1735,
+            "BUN_first": 49,
+            "BUN_last": 51,
+            "Bilirubin_first": 1656,
+            "Bilirubin_last": 1651,
+            "CCU": 0,
+            "CSRU": 0,
+            "Cholesterol_first": 2668,
+            "Cholesterol_last": 2656,
+            "Creatinine_first": 43,
+            "Creatinine_last": 41,
+            "DiasABP_first": 939,
+            "DiasABP_highest": 889,
+            "DiasABP_last": 895,
+            "DiasABP_lowest": 897,
+            "DiasABP_median": 913,
+            "FiO2_first": 950,
+            "FiO2_last": 939,
+            "GCS_first": 65,
+            "GCS_highest": 55,
+            "GCS_last": 57,
+            "GCS_lowest": 42,
+            "GCS_median": 62,
+            "Gender": 3,
+            "Glucose_first": 83,
+            "Glucose_highest": 73,
+            "Glucose_last": 74,
+            "Glucose_lowest": 77,
+            "Glucose_median": 91,
+            "HCO3_first": 60,
+            "HCO3_last": 50,
+            "HCT_first": 37,
+            "HCT_last": 40,
+            "HR_first": 50,
+            "HR_highest": 48,
+            "HR_last": 51,
+            "HR_lowest": 58,
+            "HR_median": 50,
+            "Height": 1400,
+            "K_first": 73,
+            "K_last": 64,
+            "Lactate_first": 1304,
+            "Lactate_last": 1290,
+            "MAP_first": 924,
+            "MAP_highest": 896,
+            "MAP_last": 924,
+            "MAP_lowest": 897,
+            "MAP_median": 879,
+            "MechVentDuration": 1031,
+            "MechVentLast8Hour": 1084,
+            "MechVentStartTime": 1088,
+            "Mg_first": 68,
+            "Mg_last": 63,
+            "NIDiasABP_first": 363,
+            "NIDiasABP_highest": 359,
+            "NIDiasABP_last": 383,
+            "NIDiasABP_lowest": 380,
+            "NIDiasABP_median": 350,
+            "NIMAP_first": 311,
+            "NIMAP_highest": 360,
+            "NIMAP_last": 392,
+            "NIMAP_lowest": 376,
+            "NIMAP_median": 384,
+            "NISysABP_first": 386,
+            "NISysABP_highest": 382,
+            "NISysABP_last": 373,
+            "NISysABP_lowest": 380,
+            "NISysABP_median": 376,
+            "Na_first": 65,
+            "Na_last": 67,
+            "PaCO2_first": 703,
+            "PaCO2_last": 708,
+            "PaO2_first": 771,
+            "PaO2_last": 720,
+            "Platelets_first": 56,
+            "Platelets_last": 52,
+            "RespRate_first": 2120,
+            "RespRate_highest": 2099,
+            "RespRate_last": 2068,
+            "RespRate_lowest": 2088,
+            "RespRate_median": 2087,
+            "SAPS-I": 18,
+            "SICU": 0,
+            "SOFA": 62,
+            "SaO2_first": 1563,
+            "SaO2_highest": 1643,
+            "SaO2_last": 1625,
+            "SaO2_lowest": 1629,
+            "SaO2_median": 1634,
+            "SysABP_first": 932,
+            "SysABP_highest": 903,
+            "SysABP_last": 954,
+            "SysABP_lowest": 928,
+            "SysABP_median": 938,
+            "Temp_first": 61,
+            "Temp_highest": 59,
+            "Temp_last": 51,
+            "Temp_lowest": 50,
+            "Temp_median": 53,
+            "TroponinI_first": 2749,
+            "TroponinI_last": 2742,
+            "TroponinT_first": 2261,
+            "TroponinT_last": 2215,
+            "UrineOutputSum": 1092,
+            "WBC_first": 71,
+            "WBC_last": 79,
+            "Weight": 259,
+            "Weight_first": 960,
+            "Weight_last": 911,
+            "In-hospital_death": 0,
+            "pH_first": 725,
+            "pH_last": 662
+          },
+          "missing_ids": 0,
+          "duplicate_ids_excess": 0
+        },
+        "shared_distinct_profiles_train_control": 0,
+        "synthetic_id_collisions": {
+          "train": 0,
+          "control": 0
+        },
+        "unseen_category_counts": {
+          "control": {
+            "CCU": 0,
+            "CSRU": 0,
+            "Gender": 0,
+            "MechVentLast8Hour": 0,
+            "SICU": 0,
+            "In-hospital_death": 0
+          },
+          "synthetic": {
+            "CCU": 0,
+            "CSRU": 0,
+            "Gender": 0,
+            "MechVentLast8Hour": 0,
+            "SICU": 0,
+            "In-hospital_death": 0
+          }
+        },
+        "split_note": "Profil\u00fcberschneidungen sind Pr\u00fcfhinweise; Personenunabh\u00e4ngigkeit extern best\u00e4tigen."
+      },
+      "seconds": 15.428449042141438
+    },
+    "output_folder": null
+  },
+  "ranking": {
+    "final_points": 69.92230039370902,
+    "scores": {
+      "utility": 0.6589064485617813,
+      "fidelity": 0.6297692299161562,
+      "privacy": 0.8089933333333333
+    },
+    "weights": {
+      "utility": 0.3333333333333333,
+      "fidelity": 0.3333333333333333,
+      "privacy": 0.3333333333333333
+    },
+    "point_contributions": {
+      "utility": 21.963548285392704,
+      "fidelity": 20.992307663871873,
+      "privacy": 26.96644444444444
+    },
+    "utility_reference": {
+      "ap_trtr": 0.5651004368889125,
+      "ap_tstr": 0.3723483219511844,
+      "ap_difference_tstr_minus_trtr": -0.19275211493772815
+    }
+  }
+}

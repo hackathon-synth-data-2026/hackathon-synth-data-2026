@@ -1,7 +1,7 @@
 {
-  "real_data_path": "/home/irene/projects/hackathon-synth-data-2026/data/prepped/mortality-prediction-kaggle/trainTestSplit",
-  "synthetic_data_path": "/home/irene/projects/hackathon-synth-data-2026/data/prepped/daten_danijel/for_submission/synth_data.parquet",
-  "evaluation_output_path": "/home/irene/projects/hackathon-synth-data-2026/data/prepped/daten_danijel/for_submission/eval",
+  "real_data_path": "/home/irene/projects/hackathon-synth-data-2026/data",
+  "synthetic_data_path": "/home/irene/projects/hackathon-synth-data-2026/data/example_synthetic_data.parquet",
+  "evaluation_output_path": "/home/irene/projects/hackathon-synth-data-2026/example_evaluation_output",
   "validate_only": false,
   "data_specs": {
   "identifier_var": "recordid",

@@ -5,13 +5,6 @@ build/
 dist/
 wheels/
 
-# Ignore everything inside data
-/data/*
-
-# Allow selected subfolders
-!/data/prepped/
-!/data/mortality-prediction-kaggle/
-
 *.egg-info
 
 # Virtual environments

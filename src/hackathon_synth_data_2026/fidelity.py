@@ -423,9 +423,15 @@ def run_fidelity_eval(
             / "real_train.parquet"
         )
 
+    from .validation import normalize_submission
+    real = normalize_submission(
+        load_table(real_path), spec)
+    synthetic = normalize_submission(
+        load_table(synthetic_data_path), spec)
+
     result = evaluate_fidelity(
-        load_table(real_path),
-        load_table(synthetic_data_path),
+        real,
+        synthetic,
         target_col=spec["target_var"],
         id_col=spec.get("identifier_var", "recordid"),
         time_col=spec.get("time_var"),

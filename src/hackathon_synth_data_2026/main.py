@@ -16,12 +16,16 @@ Evaluate synthetic-data utility, fidelity, and privacy.
 
 Expected files
 --------------
-    evaluation/
-    ├── main.py
-    ├── utility.py
-    ├── fidelity.py
-    ├── privacy.py
-    └── config.json
+├── src/
+│   └── hackathon_synth_data_2026/
+│       ├── __init__.py
+│       ├── main.py
+│       ├── eval_config.json
+│       ├── validation.py
+│       ├── scoring.py
+│       ├── utility.py
+│       ├── fidelity.py
+│       └── privacy.py
 
 Input data
 ----------
@@ -38,36 +42,18 @@ Usage examples
 --------------
 Run these commands from the starterpack root.
 
-1. Use config.json beside main.py, including its synthetic_data_path:
+1. Specify the synthetic data path in the command line
 
-    uv run evaluation/main.py
+   uv run --locked python -m hackathon_synth_data_2026.main src/hackathon_synth_data_2026/eval_config.json --synth data/example_synthetic_data.parquet
 
-2. Specify a configuration file explicitly:
+2. Specify the synthetic data path inside the configuration file explicitly:
 
-    uv run evaluation/main.py evaluation/config.json
+   uv run --locked python -m hackathon_synth_data_2026.main src/hackathon_synth_data_2026/eval_config.json
 
-3. Evaluate your own synthetic dataset:
+3. Run submission-schema validation without calculating metrics:
 
-    uv run evaluation/main.py --synth data/submission.parquet
+   uv run --locked python -m hackathon_synth_data_2026.main src/hackathon_synth_data_2026/eval_config.json --synth data/example_synthetic_data.parquet --validate-only
 
-4. Specify both the configuration and synthetic dataset:
-
-    uv run evaluation/main.py evaluation/config.json --synth data/submission.csv
-
-5. Save reports in a different output directory:
-
-    uv run evaluation/main.py --synth data/submission.parquet --output-path results/my-run
-
-6. Run only the utility evaluator's submission-schema checks:
-
-    uv run evaluation/main.py --synth data/submission.parquet --validate-only
-
-    This skips all metric calculations. It does not check every
-    fidelity- or privacy-specific requirement.
-
-7. Show command-line help:
-
-    uv run evaluation/main.py --help
 
 Path resolution
 ---------------
@@ -193,7 +179,7 @@ def main():
     ):
         parser.error("Set data_specs.target_var in config.json")
 
-    from utility import run_utility_eval
+    from .utility import run_utility_eval
     synthetic_path = config["synthetic_data_path"]
     print("\n=== Utility evaluation ===", flush=True)
     run_utility_eval(config, synthetic_path)
@@ -204,10 +190,11 @@ def main():
         )
         return
 
-    from fidelity import run_fidelity_eval
+    from .fidelity import run_fidelity_eval
     print("\n=== Fidelity evaluation ===", flush=True)
     run_fidelity_eval(config, synthetic_path)
-    from privacy import run_privacy_eval
+
+    from .privacy import run_privacy_eval
     print("\n=== Privacy evaluation ===", flush=True)
     run_privacy_eval(config, synthetic_path)
 
@@ -222,7 +209,7 @@ def main():
         with report_file.open(encoding="utf-8") as handle:
             report[name] = json.load(handle)
 
-    from scoring import calculate_final_score
+    from .scoring import calculate_final_score
     report["ranking"] = calculate_final_score(
     report,
     weights={
