@@ -193,7 +193,7 @@ Normalizing before export is useful for finding problems early, but it does not 
 ### Validate before a full run
 
 ```bash
-uv run --locked evaluation/main.py evaluation/config.json --synth data/submission.parquet --validate-only
+uv run --locked python -m hackathon_synth_data_2026.main src/hackathon_synth_data_2026/eval_config.json --synth data/example_synthetic_data.parquet --validate-only
 ```
 
 Currently, this option runs the utility evaluator's submission-schema checks and skips metric evaluation.
@@ -204,30 +204,22 @@ It does **not** guarantee that every fidelity- or privacy-specific requirement i
 
 ### Use the default configuration
 
-By default, `main.py` reads `config.json` from the same directory:
-
 ```bash
-uv run --locked evaluation/main.py
+uv run --locked python -m hackathon_synth_data_2026.main src/hackathon_synth_data_2026/eval_config.json 
 ```
 
-This also uses `synthetic_data_path` from the configuration.
-
-### Specify a configuration
-
-```bash
-uv run --locked evaluation/main.py evaluation/config.json
-```
+This uses `synthetic_data_path` from the configuration. You can modify the paths inside `eval_config.json`
 
 ### Specify a submission
 
 ```bash
-uv run --locked evaluation/main.py evaluation/config.json --synth data/submission.parquet
+uv run --locked python -m hackathon_synth_data_2026.main src/hackathon_synth_data_2026/eval_config.json --synth data/example_synthetic_data.parquet
 ```
 
 ### Choose an output directory
 
 ```bash
-uv run --locked evaluation/main.py evaluation/config.json --synth data/submission.parquet --output-path results/my-run
+uv run --locked python -m hackathon_synth_data_2026.main src/hackathon_synth_data_2026/eval_config.json --synth data/example_synthetic_data.parquet --output-path results/my-run
 ```
 
 Use a separate output directory for each experiment if you want to preserve earlier reports.
@@ -235,7 +227,7 @@ Use a separate output directory for each experiment if you want to preserve earl
 ### Show help
 
 ```bash
-uv run evaluation/main.py --help
+uv run --locked python -m hackathon_synth_data_2026.main --help
 ```
 
 ### Path resolution
