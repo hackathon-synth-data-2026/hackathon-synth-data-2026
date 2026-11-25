@@ -51,6 +51,16 @@ uv --version
 
 Alternative methods are available in the [uv installation guide](https://docs.astral.sh/uv/getting-started/installation/).
 
+### Additional requirement for macOS
+
+XGBoost requires the OpenMP reuntime. Install it using Homebrew:
+
+```bash
+brew install libomp
+```
+
+This is a system dependency; uv does not install it automatically.
+
 ### Obtain the starterpack
 
 Clone the repository or download and extract the starterpack ZIP. Open a terminal in its root directory.
