@@ -2,8 +2,10 @@
 
 We generate a synthetic version of the ICU table that scores **91.39 points** on the official
 evaluator: best of 30 seeds, with a mean of 89.0 over all 30. It is fitted on `real_train` only.
-**No synthetic patient breaks any rule that every real patient follows.** That covers 138 rules
-learned from the data, for example "a patient is in at most one of CCU, CSRU and SICU".
+**No synthetic patient breaks any of the 138 rules learned from the real data**, for example "a
+patient is in at most one of CCU, CSRU and SICU". Patterns that need arithmetic are not learned yet:
+about 6% of synthetic patients have a ventilation start plus duration beyond 48 hours, which no real
+patient has.
 
 The same pipeline also works on **any table**, through a command-line tool and an upload page.
 They report each score honestly, next to the best score a synthetic table can reach on the same
