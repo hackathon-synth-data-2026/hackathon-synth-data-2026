@@ -655,7 +655,7 @@ def metric_tips(rep):
                            f"generator never saw. 1.000 means exactly as useful as real data; performing above 100% "
                            f"counts against the score too, because the outcome would look easier to predict than it is.")
     elif "fidelity_real" in rep:
-        tips["Utility"] = "Utility needs a column to predict that the real data itself can predict."
+        tips["Utility"] = "Utility needs a main outcome that the real data itself can predict."
     if "fidelity" in rep:
         if rep.get("fidelity_basis") == "unseen rows":
             tips["Fidelity"] = (f"How closely distributions, correlations, dependencies and missing values match real "
@@ -813,10 +813,13 @@ def create_page():
             suggested = candidates[-1] if candidates else None
         if previous is not None:
             suggested = previous[1]
-        target_choice = st.selectbox("Column to predict", choices,
+        target_choice = st.selectbox("Main outcome", choices,
                                     index=choices.index(suggested) if suggested is not None else 0,
                                     key=f"target_{data_hash}",
-                                    help="We suggest an outcome column when possible. Choose (none) if your table has no outcome.")
+                                    help="The result this data will be used to study, for example mortality. We keep its "
+                                         "link to the other columns realistic, and test it: a model trained on the "
+                                         "synthetic data must predict it on real rows. Nothing is predicted about real "
+                                         "patients. Choose (none) if your table has no outcome.")
         target = None if target_choice == "(none)" else target_choice
         with st.expander("Advanced settings · ready to use defaults", expanded=False):
             seed = st.number_input("Seed", 0, 10_000, previous[2] if previous else 0)

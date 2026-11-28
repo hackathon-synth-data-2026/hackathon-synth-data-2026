@@ -77,7 +77,7 @@ uv run --with streamlit --with openpyxl streamlit run synthenauts/app.py
 
 ```bash
 uv run python synthenauts/anysynth.py my_table.csv --target outcome --out my_table_synthetic.csv
-uv run python synthenauts/anysynth.py my_table.parquet          # no column to predict
+uv run python synthenauts/anysynth.py my_table.parquet          # no outcome column
 ```
 
 ## How the ICU generator works (`synth.py`)
@@ -172,12 +172,13 @@ The same pipeline, with nothing written for the ICU data. It learns from the dat
 - **Rules.** Order and category rules, as above. On the ICU table it finds all 138 by itself. On
   the Kaggle stroke data it finds 21, for example "if work_type = children then age ≤ 16".
 - **Swap blocks.** Columns linked by a rule, or always recorded together, move as one block.
-- **The column to predict.** It can be yes/no, a category, a number, or nothing at all.
+- **The main outcome.** The result the data will be used to study, such as mortality. It can be
+  yes/no, a category, a number, or nothing at all. Nothing is predicted about real patients.
 
 **Using the page:**
 - **Sidebar.**
   - Upload a CSV, TSV, Parquet, Excel or JSON file, or press *Use the ICU example table*.
-  - Pick the column to predict (optional).
+  - Pick the main outcome (optional).
   - Press *Generate*.
   - *Options*: seed, number of rows, share held out for the report, identifier columns,
     quasi-identifiers to jitter, fast mode, competition mode, and *Ignore saved results*.
@@ -220,7 +221,7 @@ The same pipeline, with nothing written for the ICU data. It learns from the dat
     held-out rows.
   - A neutral *note* explains tables whose information sits mostly in single columns.
 
-**Faithful by default.** The column to predict keeps the real amount of noise. *Competition mode*
+**Faithful by default.** The main outcome keeps the real amount of noise. *Competition mode*
 (`--competition`) redraws it with less noise, as the ICU submission does. That raises
 hackathon-style scores, but models trained on the data then look more accurate than they would
 on real data.
